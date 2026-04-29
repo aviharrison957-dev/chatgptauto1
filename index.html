@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MapGap Report</title>
+    <meta name="description" content="A one-time local presence audit for service businesses that need clearer Google Maps, reviews, website, and missed-call priorities.">
+    <link rel="stylesheet" href="assets/css/styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="MapGap Report home">
+        <span class="brand-mark">MG</span>
+        <span>MapGap Report</span>
+      </a>
+      <nav class="top-nav" aria-label="Primary navigation">
+        <a href="#scorecard">Free scorecard</a>
+        <a href="#audit">Paid audit</a>
+        <a href="report-builder.html">Report builder</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">For local service businesses</p>
+          <h1>Find the Google Maps and website gaps that cost calls.</h1>
+          <p class="lede">MapGap Report gives plumbers, HVAC shops, landscapers, locksmiths, auto repair shops, and similar businesses a short ranked fix list. No ranking promises. No monthly contract required.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#scorecard">Run the free scorecard</a>
+            <a class="button secondary" href="#audit">See the paid report</a>
+          </div>
+        </div>
+        <div class="hero-panel" aria-label="Example report sections">
+          <div class="signal-row"><span>Google profile completeness</span><strong>24%</strong></div>
+          <div class="meter"><span style="width: 24%"></span></div>
+          <div class="signal-row"><span>Review response process</span><strong>Weak</strong></div>
+          <div class="meter"><span style="width: 42%"></span></div>
+          <div class="signal-row"><span>Local page signals</span><strong>Missing</strong></div>
+          <div class="meter"><span style="width: 31%"></span></div>
+          <div class="signal-row"><span>Phone follow-up risk</span><strong>High</strong></div>
+          <div class="meter"><span style="width: 68%"></span></div>
+        </div>
+      </section>
+
+      <section class="section split" id="scorecard">
+        <div>
+          <p class="eyebrow">Free preview</p>
+          <h2>Run a quick gap scorecard.</h2>
+          <p>The free scorecard checks the obvious issues a customer can answer in two minutes. It does not scrape private data or claim to know your rankings.</p>
+        </div>
+        <form class="scorecard" id="scorecardForm">
+          <label>
+            Business name
+            <input name="businessName" type="text" placeholder="Example Plumbing Co.">
+          </label>
+          <label>
+            Trade
+            <select name="trade">
+              <option value="service business">Service business</option>
+              <option value="plumbing">Plumbing</option>
+              <option value="hvac">HVAC</option>
+              <option value="landscaping">Landscaping</option>
+              <option value="pest control">Pest control</option>
+              <option value="auto repair">Auto repair</option>
+              <option value="locksmith">Locksmith</option>
+            </select>
+          </label>
+          <label>
+            Main city served
+            <input name="city" type="text" placeholder="Brooklyn">
+          </label>
+          <div class="check-grid">
+            <label><input type="checkbox" name="claimedProfile"> Google Business Profile is claimed</label>
+            <label><input type="checkbox" name="servicesListed"> Services are listed on Google</label>
+            <label><input type="checkbox" name="recentPhotos"> Photos were added in the last 90 days</label>
+            <label><input type="checkbox" name="reviewSystem"> Every job gets a review request</label>
+            <label><input type="checkbox" name="respondsReviews"> Reviews get owner responses</label>
+            <label><input type="checkbox" name="cityPages"> Website mentions city and services clearly</label>
+            <label><input type="checkbox" name="napConsistent"> Name, address, and phone match across listings</label>
+            <label><input type="checkbox" name="missedCallPlan"> Missed calls get same-day follow-up</label>
+          </div>
+          <button class="button primary" type="submit">Calculate score</button>
+        </form>
+      </section>
+
+      <section class="section result-band" id="scoreResult" hidden>
+        <div>
+          <p class="eyebrow">Scorecard result</p>
+          <h2 id="scoreTitle">Your score</h2>
+          <p id="scoreSummary"></p>
+        </div>
+        <ol class="fix-list" id="fixList"></ol>
+      </section>
+
+      <section class="section" id="audit">
+        <div class="section-heading">
+          <p class="eyebrow">Paid report</p>
+          <h2>What the $249 audit includes.</h2>
+        </div>
+        <div class="pricing-layout">
+          <article class="price-card">
+            <h3>MapGap Report</h3>
+            <p class="price">$249</p>
+            <p>One reviewed report delivered as a PDF-ready page.</p>
+            <ul>
+              <li>Google Business Profile gap review</li>
+              <li>Review process and response check</li>
+              <li>Local website signal check</li>
+              <li>Basic citation consistency checklist</li>
+              <li>Missed-call risk section</li>
+              <li>30-day fix list ranked by impact and effort</li>
+            </ul>
+            <button class="button primary" id="buyAuditButton" type="button">Buy the audit</button>
+            <p class="payment-note" id="paymentNote"></p>
+          </article>
+          <article class="plain-panel">
+            <h3>Who should buy it</h3>
+            <p>Owner-operated local service businesses that rely on phone calls and know their online basics are messy.</p>
+            <h3>Who should not buy it</h3>
+            <p>Businesses looking for guaranteed rankings, ads management, fake reviews, or someone to take over every marketing task.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>MapGap Report</span>
+      <span>No ranking guarantees. Customer owns every account and fix.</span>
+    </footer>
+
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/scorecard.js"></script>
+  </body>
+</html>

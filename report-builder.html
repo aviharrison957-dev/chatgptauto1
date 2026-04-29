@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MapGap Report Builder</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">MG</span>
+        <span>MapGap Report</span>
+      </a>
+      <nav class="top-nav" aria-label="Primary navigation">
+        <a href="index.html">Sales page</a>
+        <button class="button icon-button" type="button" onclick="window.print()" title="Print or save as PDF">Print</button>
+      </nav>
+    </header>
+
+    <main class="builder-shell">
+      <section class="builder-inputs">
+        <p class="eyebrow">Operator tool</p>
+        <h1>Report builder</h1>
+        <p>Paste findings from the customer's site, Google profile, and public listings. The report updates on the right and can be printed to PDF.</p>
+
+        <label>Business name <input id="rbName" type="text" value="Example Plumbing Co."></label>
+        <label>Trade <input id="rbTrade" type="text" value="plumbing"></label>
+        <label>City served <input id="rbCity" type="text" value="Brooklyn"></label>
+        <label>Top concern <input id="rbConcern" type="text" value="low call volume from Google"></label>
+        <label>Profile findings <textarea id="rbProfile">Services are not fully listed. Photos are older than 90 days. Business description does not mention the main city.</textarea></label>
+        <label>Review findings <textarea id="rbReviews">Recent reviews have no owner responses. There is no visible review request process after completed jobs.</textarea></label>
+        <label>Website findings <textarea id="rbWebsite">Homepage title does not include trade plus city. Phone number is visible, but service-area language is thin.</textarea></label>
+        <label>Phone findings <textarea id="rbPhone">No clear missed-call follow-up message is shown on the website. Calls after hours may go to voicemail.</textarea></label>
+        <label>Top fixes <textarea id="rbFixes">Complete Google service list|Add five recent job photos|Rewrite homepage title for trade plus city|Create a review request script|Add same-day missed-call callback rule</textarea></label>
+        <button class="button primary" id="updateReport" type="button">Update report</button>
+      </section>
+
+      <section class="report-page" id="reportPreview" aria-live="polite"></section>
+    </main>
+
+    <script src="assets/js/report-builder.js"></script>
+  </body>
+</html>
