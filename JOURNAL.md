@@ -12,6 +12,12 @@
 - Blocking: No live payment account is available in-session; the build will wire Stripe Payment Links as a configuration point and document the exact post-handoff action Avi must take to activate live payments.
 - Next: Commit and push this journal/research update, then build the selected static product and operator toolkit.
 
+## 2026-04-29 18:07 America/New_York
+- Done: Built the static MapGap Report site, free scorecard, central payment config, and operator report builder. Added handoff instructions for Stripe activation and fulfillment.
+- In progress: Deployment setup and browser testing.
+- Blocking: Live Stripe checkout still requires Avi's Stripe account. GitHub Pages may require the repository to be public.
+- Next: Commit and push the handoff/deployment prep, then configure the free deployment and test the deployed URL.
+
 # Research Gate
 
 ## Candidate 1: One-time local presence audit for owner-operated service businesses

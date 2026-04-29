@@ -1,6 +1,6 @@
 # MapGap Report
 
-Deployed URL: pending deployment
+Deployed URL: pending GitHub Pages deployment
 
 MapGap Report sells a one-time local presence audit for owner-operated service businesses.
 
