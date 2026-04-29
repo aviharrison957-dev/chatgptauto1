@@ -18,6 +18,13 @@
 - Blocking: Live Stripe checkout still requires Avi's Stripe account. GitHub Pages may require the repository to be public.
 - Next: Commit and push the handoff/deployment prep, then configure the free deployment and test the deployed URL.
 
+## 2026-04-29 18:23 America/New_York
+- Done: Made the repository public, enabled GitHub Pages from `main` root, and verified the deployed site at https://aviharrison957-dev.github.io/chatgptauto1/.
+- Test result: HTTP checks returned 200 for the home page, report builder, and config file. Headless Chrome test filled the scorecard, got `Test Plumbing: 25/100`, clicked the audit button, saw the Stripe activation message, opened the report builder, and confirmed the sample report title rendered.
+- In progress: Final README update and push.
+- Blocking: Live payment cannot be completed by the agent because Avi must create and verify his own Stripe account.
+- Next: Avi creates Stripe Payment Links, pastes them into `assets/js/config.js`, commits, pushes, and starts the first 20-business outreach loop from `HANDOFF.md`.
+
 # Research Gate
 
 ## Candidate 1: One-time local presence audit for owner-operated service businesses

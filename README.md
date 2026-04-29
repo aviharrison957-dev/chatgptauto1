@@ -1,6 +1,6 @@
 # MapGap Report
 
-Deployed URL: pending GitHub Pages deployment
+Deployed URL: https://aviharrison957-dev.github.io/chatgptauto1/
 
 MapGap Report sells a one-time local presence audit for owner-operated service businesses.
 
@@ -11,6 +11,10 @@ MapGap Report sells a one-time local presence audit for owner-operated service b
 - Operator report builder: `report-builder.html`
 - Payment config: `assets/js/config.js`
 - Handoff instructions: `HANDOFF.md`
+
+## Payment Status
+
+The checkout button is wired to `assets/js/config.js`. Avi must create a live Stripe Payment Link and paste it into `auditPaymentUrl` before customers can pay.
 
 ## Local Preview
 
