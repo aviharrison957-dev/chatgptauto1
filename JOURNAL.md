@@ -15,6 +15,14 @@
 - Blocking: Live end-to-end payment/webhook/API tests require Avi-owned Stripe, Google, Anthropic, Resend, and Netlify credentials. Local tests will verify code paths that do not need those live secrets, and any untested secret-dependent path will be documented.
 - Next: Add the first Netlify/serverless scaffold, commit it, push it, then continue with provider integrations in small commits.
 
+## 2026-05-01 13:02 America/New_York
+- Done: Added `netlify.toml` and `netlify/functions/stripe-webhook.js`, then committed and pushed in small checkpoints.
+- Done: Webhook now verifies Stripe signatures, handles `checkout.session.completed`, extracts customer email plus `google_business_profile_url`, calls Google Places API (New), calls Anthropic for email-safe HTML, sends the audit through Resend, and emails Avi only on fulfillment failure.
+- Done: Added local test scripts. `npm run test:webhook-nosig` returned `statusCode=400` with `{"error":"Invalid Stripe webhook signature"}`.
+- Done: Updated `index.html` minimally to describe email delivery, added Stripe custom-field guidance to `assets/js/config.js`, and expanded `HANDOFF.md`/`README.md` around Netlify, env vars, Stripe webhook, and fallback operations.
+- Blocking: No Netlify CLI/session/token is present on this machine (`NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID` are missing), so I cannot create the live Netlify deployment from here. No Google/Anthropic/Resend/Stripe secrets are present locally, so the live audit-generation and email path cannot be executed in this session.
+- Next: Avi creates/imports the Netlify site from GitHub, adds the documented environment variables, configures the Stripe Payment Link custom field and webhook endpoint, then runs `npm run test:audit-live` with real Google and Anthropic keys.
+
 ## 2026-04-29 17:00 America/New_York
 - Done: Initialized the operating journal before substantive work.
 - In progress: Repository recovery setup.
