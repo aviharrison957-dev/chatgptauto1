@@ -36,10 +36,11 @@ exports.handler = async function handler(event) {
     return jsonResponse(200, { received: true, ignored: stripeEvent.type });
   }
 
-  const session = await hydrateCheckoutSession(stripeEvent.data.object);
-  const orderContext = getOrderContext(session);
-
+  let session = stripeEvent.data.object || {};
+  let orderContext = getOrderContext(session);
   try {
+    session = await hydrateCheckoutSession(session);
+    orderContext = getOrderContext(session);
     validateOrderContext(orderContext);
     const place = await fetchPlaceDetails(orderContext.googleBusinessInput);
     const auditHtml = await generateAuditHtml(place, orderContext);
@@ -397,6 +398,8 @@ function jsonResponse(statusCode, body) {
 exports._private = {
   extractGoogleBusinessInput,
   extractPlaceId,
+  fetchPlaceDetails,
+  generateAuditHtml,
   getOrderContext,
   summarizePlaceForPrompt,
   verifyStripeWebhook
