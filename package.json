@@ -1,0 +1,9 @@
+{
+  "name": "mapgap-report",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test:webhook-nosig": "node scripts/test-webhook-nosig.js",
+    "test:audit-live": "node scripts/local-audit-smoke.js"
+  }
+}
