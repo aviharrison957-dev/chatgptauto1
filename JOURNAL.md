@@ -1,5 +1,20 @@
 # Journal
 
+## 2026-05-01 12:57 America/New_York
+- Done: Read the current repo state requested for continuation: `JOURNAL.md`, `HANDOFF.md`, `index.html`, `assets/js/config.js`, `assets/js/scorecard.js`, `report-builder.html`, and `research/selection.md`.
+- In progress: Replace the manual paid-audit fulfillment path with Netlify serverless automation while keeping the existing static frontend and manual builder as fallback.
+- Plan:
+  - Add Netlify deployment config and an `/api/stripe-webhook` redirect to a serverless function.
+  - Implement Stripe webhook signature verification for `checkout.session.completed`.
+  - Extract customer email plus the Google Business Profile URL or Place ID from Stripe custom fields.
+  - Fetch public business data from Google Places API (New) Place Details.
+  - Generate an email-safe HTML audit through Anthropic with a structured, non-fabrication prompt.
+  - Send the audit to the customer through Resend; on any failure, email Avi only with order details and error context for manual fulfillment.
+  - Update `HANDOFF.md` with Netlify, Stripe custom field, webhook, API key, and deployment steps.
+  - Preserve `report-builder.html` as fallback only and keep the free scorecard behavior unchanged.
+- Blocking: Live end-to-end payment/webhook/API tests require Avi-owned Stripe, Google, Anthropic, Resend, and Netlify credentials. Local tests will verify code paths that do not need those live secrets, and any untested secret-dependent path will be documented.
+- Next: Add the first Netlify/serverless scaffold, commit it, push it, then continue with provider integrations in small commits.
+
 ## 2026-04-29 17:00 America/New_York
 - Done: Initialized the operating journal before substantive work.
 - In progress: Repository recovery setup.
