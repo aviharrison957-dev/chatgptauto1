@@ -58,6 +58,7 @@ In Netlify, open **Site configuration** then **Environment variables**. Add thes
 Optional but recommended later:
 
 - `ANTHROPIC_MODEL`: set this only if Anthropic replaces the default model and you want to pin a newer one without code changes.
+- `RESEND_FROM_EMAIL`: set to a verified Resend sender, for example `MapGap Report <reports@yourdomain.com>`.
 
 After adding or changing environment variables, trigger a new Netlify deploy.
 
@@ -69,7 +70,7 @@ After adding or changing environment variables, trigger a new Netlify deploy.
 4. Confirm the domain is verified.
 5. Create `RESEND_API_KEY`.
 
-The function currently sends from `MapGap Report <onboarding@resend.dev>` for zero-extra-config testing. For real customer delivery, replace the `from` value in `netlify/functions/stripe-webhook.js` with a verified sender on Avi's domain, then commit and push.
+The function defaults to `MapGap Report <onboarding@resend.dev>` for zero-extra-config testing. For real customer delivery, set `RESEND_FROM_EMAIL` in Netlify to a verified sender on Avi's domain.
 
 ### 4. Create Stripe Payment Link
 

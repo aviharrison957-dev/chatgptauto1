@@ -347,7 +347,7 @@ async function sendFallbackAlert(error, orderContext, session) {
 async function sendEmail({ to, subject, html, replyTo, tags }) {
   const resendApiKey = requiredEnv("RESEND_API_KEY");
   const payload = {
-    from: "MapGap Report <onboarding@resend.dev>",
+    from: process.env.RESEND_FROM_EMAIL || "MapGap Report <onboarding@resend.dev>",
     to: [to],
     subject,
     html,

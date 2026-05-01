@@ -23,6 +23,13 @@
 - Blocking: No Netlify CLI/session/token is present on this machine (`NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID` are missing), so I cannot create the live Netlify deployment from here. No Google/Anthropic/Resend/Stripe secrets are present locally, so the live audit-generation and email path cannot be executed in this session.
 - Next: Avi creates/imports the Netlify site from GitHub, adds the documented environment variables, configures the Stripe Payment Link custom field and webhook endpoint, then runs `npm run test:audit-live` with real Google and Anthropic keys.
 
+## 2026-05-01 13:02 America/New_York
+- Done: Made Resend sender configurable with optional `RESEND_FROM_EMAIL` while keeping the requested required env var list unchanged.
+- Test result: `npm run test:webhook-nosig` passed and returned 400 for a POST without `Stripe-Signature`.
+- Test result: `node -e "require('./netlify/functions/stripe-webhook.js')"` loaded the webhook module successfully.
+- Test result: `npm run test:audit-live` could not run because `GOOGLE_PLACES_API_KEY` and `ANTHROPIC_API_KEY` are not set in this environment. This is a real blocker, not a code stub; the script is ready to run once Avi provides live keys.
+- Blocking: Netlify deployment and live provider smoke tests remain owner-credential tasks.
+
 ## 2026-04-29 17:00 America/New_York
 - Done: Initialized the operating journal before substantive work.
 - In progress: Repository recovery setup.
