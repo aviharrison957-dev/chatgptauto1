@@ -1,5 +1,22 @@
 # Journal
 
+> ## ▶ RESUME / STATUS (2026-06-23)
+> **Code-complete and pushed to origin/main. Audit quality is UNVERIFIED — blocked on 2 owner keys. Nothing faked.**
+>
+> **Done this session:** Full post-payment pipeline rebuilt and hardened — Stripe webhook (verifies
+> signature, 400 on invalid) → async **background worker** → Google Places (New) → website signals →
+> **OpenRouter** audit (strict validated JSON, anti-fabrication + no-ranking-promise prompt) → premium
+> email-safe HTML template (visual design verified) → **Resend** to customer; any failure emails the
+> owner instead. Anthropic dependency removed. 27 offline tests green (`npm test`). Living docs written:
+> `NEEDS_FROM_AVI.md`, `PROPOSALS.md`, rewritten `HANDOFF.md`/`README.md`.
+>
+> **Left (all owner-side, see `NEEDS_FROM_AVI.md`):**
+> 1. **FIRST:** set `OPENROUTER_API_KEY` + `GOOGLE_PLACES_API_KEY`, run `npm run generate:samples`, and
+>    judge the real audits in `sample-audits/`. Quality is unproven until this is done.
+> 2. Tier-2 keys (`RESEND_API_KEY`, `OWNER_FALLBACK_EMAIL`, `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`).
+> 3. Tier-3: deploy to Netlify + create the Stripe Payment Link (no Netlify token in-session → documented,
+>    not executed). Full step-by-step in `HANDOFF.md`.
+
 ## 2026-06-23 19:27 America/New_York — Review pass + async background worker + hardening
 
 Ran a fresh-eyes code review (independent subagent, Opus) over the whole pipeline. Verdicts:
