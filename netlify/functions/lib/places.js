@@ -19,16 +19,17 @@ const SAFE_FIELDS = [
   "googleMapsUri"
 ];
 
-// Richer set for a more specific audit. If Google rejects any of these (400), we retry with SAFE_FIELDS
-// so a single deprecated/renamed field can never break fulfillment.
-const RICH_FIELDS = SAFE_FIELDS.concat([
+// Richer set for a more specific audit. If Google rejects the mask (400), we drop only the offending
+// optional field(s) and retry, then fall back to SAFE_FIELDS — so one deprecated/renamed field can
+// never strip the others or break fulfillment.
+const OPTIONAL_FIELDS = [
   "primaryType",
   "primaryTypeDisplayName",
   "editorialSummary",
   "addressComponents",
-  "currentOpeningHours",
   "pureServiceAreaBusiness"
-]);
+];
+const RICH_FIELDS = SAFE_FIELDS.concat(OPTIONAL_FIELDS);
 
 const PLACE_DETAILS_BASE = "https://places.googleapis.com/v1/places";
 
@@ -47,8 +48,14 @@ async function fetchPlaceDetails(input) {
 
   let response = await fetchPlaceDetailsWithMask(placeId, apiKey, RICH_FIELDS);
   if (response.status === 400) {
-    // Most likely an unsupported field in the rich mask; retry with the conservative set.
-    response = await fetchPlaceDetailsWithMask(placeId, apiKey, SAFE_FIELDS);
+    const errText = await response.text();
+    // Drop only the optional fields Google named in the error; keep every other rich field.
+    const offending = OPTIONAL_FIELDS.filter((field) => errText.includes(field));
+    const reduced = offending.length ? RICH_FIELDS.filter((field) => !offending.includes(field)) : SAFE_FIELDS;
+    response = await fetchPlaceDetailsWithMask(placeId, apiKey, reduced);
+    if (response.status === 400) {
+      response = await fetchPlaceDetailsWithMask(placeId, apiKey, SAFE_FIELDS);
+    }
   }
   if (!response.ok) {
     throw new Error(`Google Place Details failed: ${response.status} ${await response.text()}`);

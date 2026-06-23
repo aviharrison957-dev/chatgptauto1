@@ -44,11 +44,14 @@ exports.handler = async function handler(event) {
     // Never surface a broken audit to the customer; alert the owner for manual fulfillment instead.
     try {
       await sendFallbackAlert(error, getOrderContext(session), session);
+      // Owner notified -> manual path chosen; tell Stripe it's handled so it does not retry.
+      return jsonResponse(200, { received: true, fulfilled: false, ownerAlerted: true });
     } catch (alertError) {
+      // Could not even reach the owner (e.g. the email provider is down). Return 5xx so Stripe retries
+      // later, when a transient outage may have cleared. The customer was not emailed on this attempt.
       console.error("Fallback alert also failed:", alertError?.message || alertError);
+      return jsonResponse(500, { received: false, error: "fulfillment_and_alert_failed" });
     }
-    // Return 200: the safety net is the owner alert, not a Stripe retry storm against a hard failure.
-    return jsonResponse(200, { received: true, fulfilled: false });
   }
 };
 
