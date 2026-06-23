@@ -31,6 +31,18 @@ function hostOf(url) {
   }
 }
 
+// Defense-in-depth: never fetch internal/loopback/link-local/metadata targets server-side, even though
+// the URL traces to a Google-listed business website. Basic literal/hostname check (not DNS-rebinding proof).
+function isBlockedHost(host) {
+  const h = String(host || "").replace(/^\[|\]$/g, "");
+  if (!h) return true;
+  if (h === "localhost" || h.endsWith(".localhost") || h.endsWith(".internal") || h === "metadata.google.internal") return true;
+  if (/^(127\.|10\.|192\.168\.|169\.254\.|0\.)/.test(h)) return true;
+  if (/^172\.(1[6-9]|2\d|3[01])\./.test(h)) return true;
+  if (h === "::1" || h === "::" || /^(fc|fd|fe80)/i.test(h)) return true;
+  return false;
+}
+
 async function fetchWebsiteSignals(rawUrl) {
   const requestedUrl = normalizeUrl(rawUrl);
   if (!requestedUrl) {
@@ -38,6 +50,9 @@ async function fetchWebsiteSignals(rawUrl) {
   }
 
   const host = hostOf(requestedUrl);
+  if (isBlockedHost(host)) {
+    return { available: false, requestedUrl, host, reason: "Website host is a private/internal address; skipped for safety." };
+  }
   const isSocialOnly = SOCIAL_HOSTS.some((social) => host === social || host.endsWith(`.${social}`));
 
   try {
