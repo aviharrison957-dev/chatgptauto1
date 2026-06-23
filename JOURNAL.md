@@ -1,5 +1,68 @@
 # Journal
 
+## 2026-06-23 18:50 America/New_York — Ship-readiness build (OpenRouter swap + audit quality)
+
+Operator: Claude (Opus). Goal this session: make the *post-payment* pipeline fully ship-ready —
+the path that turns a paid Stripe Checkout into a delivered, specific, high-quality emailed audit
+with no human in the loop. Front end and idea already exist and are kept as-is.
+
+- Read first: the full repo (JOURNAL, HANDOFF, README, research/selection.md, index.html,
+  config.js, scorecard.js, report-builder.html, report-builder.js, stripe-webhook.js,
+  netlify.toml, both scripts/). The webhook was well-structured but had three gaps:
+  (1) it called the Anthropic API directly, (2) the audit prompt was thin/generic, the single
+  biggest product risk, and (3) there was no quality gate, NEEDS_FROM_AVI.md, or PROPOSALS.md.
+- Repo was not cloned locally; cloned from github.com/aviharrison957-dev/chatgptauto1 into
+  /Users/avi/Desktop/claudemac/chatgptauto1. `gh` is authed as aviharrison957-dev. Pushing to main.
+
+Decisions made this session:
+- MODEL PROVIDER: removing the hard Anthropic dependency. The audit call now goes through
+  OpenRouter (https://openrouter.ai/api/v1/chat/completions, OpenAI-compatible). Auth via
+  `OPENROUTER_API_KEY`; model via `OPENROUTER_MODEL`.
+- DEFAULT MODEL: `anthropic/claude-sonnet-4.5`. Justification: the #1 risk is generic, fabricated,
+  or fluffy output, so the deciding factor is groundedness + instruction-following, not price.
+  Verified live against OpenRouter's catalog (https://openrouter.ai/api/v1/models): the slug
+  exists, 1M context, $3/M in + $15/M out → ~$0.02-0.03 per audit, negligible against the $249
+  price. Sonnet is best-in-class at careful, non-fabricating, structured writing and clean
+  HTML/JSON. Owner can override with `OPENROUTER_MODEL` (alternatives confirmed available:
+  `anthropic/claude-sonnet-4.6` newest, `google/gemini-2.5-pro`, `openai/gpt-4.1`, or
+  `google/gemini-2.5-flash` to cut latency/cost).
+- AUDIT ARCHITECTURE: the model returns a strict, validated JSON analysis of the *specific*
+  business; our own deterministic, email-safe inline-styled HTML template renders it. This
+  separates ANALYSIS (model's job — specificity, no fabrication) from PRESENTATION (our job —
+  consistent premium design). It guarantees the deliverable always looks like a $249 product and
+  contains only real, data-tied findings.
+- RICHER INPUTS: expanded the Google Places (New) FieldMask (adds primaryType/displayName,
+  editorialSummary, pureServiceAreaBusiness, addressComponents) AND added a defensive homepage
+  fetch (`lib/website.js`) so the "website local-signal gaps" section cites real on-page facts
+  (title tag, click-to-call, LocalBusiness schema, NAP, HTTPS) instead of hand-waving. Treated as
+  implementation of an already-required section, not scope expansion. Website fetch failures never
+  fail the audit — they downgrade that section to an explicit "could not retrieve" note.
+- FAILURE MODEL: env var renamed to `OWNER_FALLBACK_EMAIL` per brief (legacy `AVI_FALLBACK_EMAIL`
+  still honored as a fallback). On any pipeline error the customer is NOT emailed; the owner gets
+  the order context + error to fulfill manually via report-builder.html.
+
+Environment facts (this machine):
+- Node v22 (global fetch OK). Outbound network works. gh authed.
+- `OPENROUTER_API_KEY` = UNSET and `GOOGLE_PLACES_API_KEY` = UNSET → the live QUALITY GATE
+  (real Places data + real model output → sample-audits/) cannot run here. Per brief: code is
+  written fully, the exact command is documented, and both keys are the TOP blockers in
+  NEEDS_FROM_AVI.md. AUDIT QUALITY IS UNVERIFIED until those real samples exist. No fake samples.
+- An ANTHROPIC_API_KEY exists in env but does NOT unblock the gate: without Google Places there is
+  no real business data to feed any model, and fabricating input data is forbidden.
+
+Plan / order of work (commit + push after each):
+1. Living docs: this entry, NEEDS_FROM_AVI.md, PROPOSALS.md. [in progress]
+2. lib/ modules: stripe, places, website, openrouter, render, audit, email. Swap provider.
+3. Rewrite webhook to use the modules; keep 400-on-invalid-signature; OWNER_FALLBACK_EMAIL.
+4. Quality gate: scripts/generate-samples.js (real Place IDs → real audits → sample-audits/),
+   updated smoke tests, template design-preview (clearly-labeled synthetic, not a real sample).
+5. Frontend wiring sanity + HANDOFF/README rewrite for OpenRouter + Netlify deploy.
+6. Harden: run no-secret tests, load every module, end-to-end review.
+
+Blocking: OPENROUTER_API_KEY, GOOGLE_PLACES_API_KEY (quality gate); plus RESEND/STRIPE/Netlify
+for live end-to-end — all owner-supplied. See NEEDS_FROM_AVI.md.
+Next: write NEEDS_FROM_AVI.md + PROPOSALS.md, commit, then build lib/ modules.
+
 ## 2026-05-01 12:57 America/New_York
 - Done: Read the current repo state requested for continuation: `JOURNAL.md`, `HANDOFF.md`, `index.html`, `assets/js/config.js`, `assets/js/scorecard.js`, `report-builder.html`, and `research/selection.md`.
 - In progress: Replace the manual paid-audit fulfillment path with Netlify serverless automation while keeping the existing static frontend and manual builder as fallback.
