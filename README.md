@@ -1,39 +1,45 @@
 # MapGap Report
 
+A $249 one-time local-presence audit for owner-operated local service businesses (HVAC, plumbing,
+locksmith, pest control, landscaping, auto repair). The customer pays, provides their Google Business
+Profile link, and is automatically emailed a specific, prioritized audit — no human in the loop.
+
+**Primary deployment target: Netlify** (GitHub Pages can't run the Stripe webhook function).
 Previous GitHub Pages URL: https://aviharrison957-dev.github.io/chatgptauto1/
 
-Primary deployment target: Netlify. GitHub Pages cannot run the Stripe webhook function required for automated fulfillment.
+## Layout
 
-MapGap Report sells a one-time local presence audit for owner-operated service businesses.
-
-## Product
-
-- Public sales page: `index.html`
+- Public sales page: `index.html` (+ `assets/`)
 - Free local gap scorecard: `assets/js/scorecard.js`
-- Operator report builder: `report-builder.html`
-- Automated Stripe webhook: `netlify/functions/stripe-webhook.js`
-- Payment config: `assets/js/config.js`
-- Handoff instructions: `HANDOFF.md`
+- Payment link config (paste 1 Stripe URL): `assets/js/config.js`
+- Webhook entry point: `netlify/functions/stripe-webhook.js`
+- Pipeline modules: `netlify/functions/lib/*.js`
+- Manual fallback report tool: `report-builder.html`
+- Quality gate (real samples): `scripts/generate-samples.js` → `sample-audits/`
+- **Owner setup, step by step: `HANDOFF.md`** · Credential checklist: `NEEDS_FROM_AVI.md`
 
-## Payment Status
+## Automated fulfillment
 
-The checkout button is wired to `assets/js/config.js`. Avi must create a live Stripe Payment Link with the required `google_business_profile_url` custom field and paste it into `auditPaymentUrl` before customers can pay.
+Stripe `checkout.session.completed` → verify signature (invalid → HTTP 400) → Google Places API (New)
+for the business data → read the homepage for on-page signals → **OpenRouter** generates the audit as
+structured JSON → our template renders email-safe HTML → **Resend** emails it to the customer. Any
+failure emails the owner (`OWNER_FALLBACK_EMAIL`) for manual fulfillment instead of sending the
+customer a broken report.
 
-## Fulfillment Status
+The AI provider is OpenRouter (`OPENROUTER_API_KEY`); the model is configurable via `OPENROUTER_MODEL`
+(default `anthropic/claude-sonnet-4.5`). Full env-var list is in `HANDOFF.md`.
 
-Paid fulfillment is designed for Netlify Functions:
+## Status
 
-- Stripe calls `/api/stripe-webhook`.
-- The function verifies the webhook signature.
-- Google Places API (New) fetches public business data.
-- Anthropic generates the HTML audit.
-- Resend emails the audit directly to the customer.
-- Failures email Avi only so `report-builder.html` can be used as the fallback.
+Code-complete. **Audit quality is UNVERIFIED until real samples are generated** — that needs
+`OPENROUTER_API_KEY` + `GOOGLE_PLACES_API_KEY` (see `NEEDS_FROM_AVI.md`). No samples were faked.
 
-## Local Preview
+## Local checks
 
-Open `index.html` in a browser for the static frontend. Run local function tests with:
+```bash
+npm test                 # offline unit + webhook tests (no keys)
+npm run preview:template # writes design-preview/audit-template-preview.html (synthetic data)
 
-```powershell
-npm run test:webhook-nosig
+# with keys:
+OPENROUTER_API_KEY=... GOOGLE_PLACES_API_KEY=... npm run generate:samples
 ```
