@@ -2,8 +2,15 @@
   "name": "mapgap-report",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
+    "test": "node scripts/test-pipeline-units.js && node scripts/test-webhook-nosig.js",
+    "test:units": "node scripts/test-pipeline-units.js",
     "test:webhook-nosig": "node scripts/test-webhook-nosig.js",
-    "test:audit-live": "node scripts/local-audit-smoke.js"
+    "test:audit-live": "node scripts/local-audit-smoke.js",
+    "generate:samples": "node scripts/generate-samples.js",
+    "preview:template": "node scripts/preview-template.js"
   }
 }
