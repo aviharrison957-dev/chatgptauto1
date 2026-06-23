@@ -40,6 +40,8 @@ function isBlockedHost(host) {
   if (/^(127\.|10\.|192\.168\.|169\.254\.|0\.)/.test(h)) return true;
   if (/^172\.(1[6-9]|2\d|3[01])\./.test(h)) return true;
   if (h === "::1" || h === "::" || /^(fc|fd|fe80)/i.test(h)) return true;
+  // IPv4-mapped IPv6 (e.g. ::ffff:169.254.169.254 / ::ffff:a9fe:a9fe) bypasses the checks above.
+  if (/^::ffff:/i.test(h)) return true;
   return false;
 }
 
@@ -47,6 +49,9 @@ async function fetchWebsiteSignals(rawUrl) {
   const requestedUrl = normalizeUrl(rawUrl);
   if (!requestedUrl) {
     return { available: false, reason: "No website is linked on the Google Business Profile." };
+  }
+  if (!/^https?:\/\//i.test(requestedUrl)) {
+    return { available: false, requestedUrl, reason: "Website URL uses an unsupported scheme." };
   }
 
   const host = hostOf(requestedUrl);
@@ -74,6 +79,11 @@ async function fetchWebsiteSignals(rawUrl) {
       https: finalUrl.startsWith("https://"),
       redirectedToDifferentHost: hostOf(finalUrl) !== host
     };
+
+    // If a redirect landed on a private/internal host, don't read or use the body.
+    if (isBlockedHost(hostOf(finalUrl))) {
+      return { ...base, reachable: false, reason: "Redirect target is a private/internal address; skipped for safety." };
+    }
 
     if (!response.ok) {
       return { ...base, reachable: false, reason: `Homepage returned HTTP ${response.status}.` };

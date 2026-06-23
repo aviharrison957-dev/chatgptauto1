@@ -1,5 +1,36 @@
 # Journal
 
+## 2026-06-23 19:27 America/New_York — Review pass + async background worker + hardening
+
+Ran a fresh-eyes code review (independent subagent, Opus) over the whole pipeline. Verdicts:
+Stripe signature check **correct**; "customer never emailed on failure" invariant **holds**. It
+found one HIGH and several MED/LOW issues. Acted on all of them:
+
+- **HIGH (architecture): silent customer loss on slow model.** The OpenRouter timeout (45s) exceeds
+  Netlify's ~10s synchronous-function ceiling, so a slow model would get the Lambda killed externally
+  before any catch ran → customer not emailed AND owner not alerted. Verified via Netlify docs that
+  **background functions are available on all plans (Free included), 15-min budget.** Implemented the
+  fix as core reliability: `stripe-webhook.js` verifies the Stripe signature (still 400 on invalid)
+  then hands off to `audit-worker-background.js`, signed with an internal HMAC over the body using
+  `STRIPE_WEBHOOK_SECRET` (no new env var; `lib/internal.js`). Worker runs the pipeline with the long
+  budget. If the hand-off itself fails, the webhook fulfills inline as a fallback. PROPOSALS P2 was
+  this idea; promoted to built because it's a real silent-loss bug, not an enhancement.
+- **MED (SSRF):** `isBlockedHost` now also blocks IPv4-mapped IPv6 (`::ffff:`), the redirect *target*
+  host is re-checked after the fetch, and non-http(s) schemes are rejected before fetching.
+- **MED (double-send):** `sendEmail` no longer parses the Resend response body after a 200 — a body-
+  read failure post-delivery would have wrongly triggered a fallback alert for an already-sent audit.
+- **LOW:** webhook now logs the real rejection reason (a malformed-body case previously surfaced only
+  the generic "invalid signature" text).
+
+Tests: offline suite now 27 checks (added internal-signature round-trip/tamper/missing-secret and
+website SSRF-guard cases). `npm test` green; both functions + all 10 lib modules load. Website signal
+extraction verified live against real sites earlier; template design verified visually via a
+screenshot of the synthetic preview (premium layout, severity colors, fix list, disclaimers all good).
+
+Docs updated: HANDOFF (async flow, second function, resolved timeout note), README, PROPOSALS (P2
+marked done). Quality gate still blocked on OPENROUTER_API_KEY + GOOGLE_PLACES_API_KEY → sample-audits/
+intentionally empty, quality UNVERIFIED, nothing faked. Next: final end-to-end self-review + resume note.
+
 ## 2026-06-23 18:50 America/New_York — Ship-readiness build (OpenRouter swap + audit quality)
 
 Operator: Claude (Opus). Goal this session: make the *post-payment* pipeline fully ship-ready —

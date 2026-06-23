@@ -20,17 +20,13 @@ Legend — Effort: S (≤1 session) · M (1–2 sessions) · L (multi-session). 
 - **Note:** Current mitigation = the work is fast and single-shot; impact of a dupe is one extra
   identical email. Low real-world frequency.
 
-### P2 — Async background worker for model latency  · Effort: S–M
-- **Idea:** Split fulfillment into a fast synchronous webhook (verify signature → 200) plus a
-  Netlify **background function** that does Places + model + email with a 15-minute budget.
-- **Why it helps:** Netlify's synchronous functions cap at ~10s. A premium model writing a full
-  audit can occasionally exceed that, causing a timeout (and Stripe retries). The background
-  pattern removes that ceiling entirely and is the "correct at scale" design.
-- **Depends on:** Confirming background functions are enabled on your Netlify plan; reuses
-  `STRIPE_WEBHOOK_SECRET` for the internal trigger signature (no new secret).
-- **Note:** Current mitigation = structured-JSON output keeps the model's response compact (faster),
-  and `OPENROUTER_MODEL` lets you pick a fast model (e.g. `google/gemini-2.5-flash`) if you ever see
-  timeouts in the function logs. Build this only if real-world latency proves to be a problem.
+### P2 — Async background worker for model latency  · ✅ IMPLEMENTED THIS SESSION
+- **Done:** A code review flagged that a slow model could exceed Netlify's ~10s synchronous-function
+  ceiling and silently drop a paid order. Because Netlify background functions are available on all
+  plans (including Free, with a 15-minute budget), this was implemented as core reliability, not a
+  later add: the webhook verifies the Stripe signature (→ 400 on invalid) then hands off to
+  `netlify/functions/audit-worker-background.js`, signed with `STRIPE_WEBHOOK_SECRET` (no new secret).
+  If the hand-off ever fails, the webhook fulfills inline as a fallback. Left here for the record.
 
 ### P3 — Maintenance upsell automation ($149/mo)  · Effort: M
 - **Idea:** Automate the existing $149/month maintenance offer: monthly GBP-post drafts, review-

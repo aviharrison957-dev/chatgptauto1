@@ -20,7 +20,9 @@ async function sendEmail({ to, subject, html, replyTo, tags }) {
   if (!response.ok) {
     throw new Error(`Resend email failed: ${response.status} ${await response.text()}`);
   }
-  return response.json();
+  // Resend has accepted the message. Do NOT parse the body here: if reading the response stream failed
+  // after a 200, it would throw and wrongly trigger a fallback alert for an email already delivered.
+  return { ok: true };
 }
 
 async function sendCustomerAudit(customerEmail, auditHtml, place, orderContext) {

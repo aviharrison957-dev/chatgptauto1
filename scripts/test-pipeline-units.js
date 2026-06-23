@@ -5,12 +5,24 @@ const { extractPlaceId, cleanQueryFromInput, summarizePlaceForPrompt } = require
 const { extractGoogleBusinessInput } = require("../netlify/functions/lib/stripe");
 const { normalizeAnalysis, extractJson } = require("../netlify/functions/lib/audit");
 const { renderAuditHtml } = require("../netlify/functions/lib/render");
+const { fetchWebsiteSignals } = require("../netlify/functions/lib/website");
+const { signInternal, verifyInternalSignature } = require("../netlify/functions/lib/internal");
 const { SAMPLE_MODEL_OUTPUT, SAMPLE_PLACE } = require("./_sample-fixture");
 
 let passed = 0;
 function check(name, fn) {
   try {
     fn();
+    passed += 1;
+    console.log(`  ok  ${name}`);
+  } catch (error) {
+    console.error(`  FAIL ${name}\n       ${error.message}`);
+    process.exitCode = 1;
+  }
+}
+async function checkAsync(name, fn) {
+  try {
+    await fn();
     passed += 1;
     console.log(`  ok  ${name}`);
   } catch (error) {
@@ -121,4 +133,48 @@ check("renderAuditHtml: produces email-safe HTML with real content + disclaimers
   assert.ok(html.includes('style="'), "uses inline styles");
 });
 
-console.log(`\n${passed} checks passed${process.exitCode ? " (with failures above)" : ""}.`);
+// --- internal worker-trigger signature -------------------------------------
+const INTERNAL_SECRET = "whsec_test_secret_value";
+check("internal signature: verifies a correct round-trip", () => {
+  const body = JSON.stringify({ session: { id: "cs_test" } });
+  const sig = signInternal(body, INTERNAL_SECRET);
+  verifyInternalSignature(body, { "x-mapgap-signature": sig }, INTERNAL_SECRET);
+});
+check("internal signature: rejects a tampered body", () => {
+  const sig = signInternal(JSON.stringify({ session: { id: "cs_a" } }), INTERNAL_SECRET);
+  assert.throws(() => verifyInternalSignature(JSON.stringify({ session: { id: "cs_b" } }), { "x-mapgap-signature": sig }, INTERNAL_SECRET));
+});
+check("internal signature: rejects a wrong secret", () => {
+  const body = JSON.stringify({ session: { id: "cs_c" } });
+  const sig = signInternal(body, INTERNAL_SECRET);
+  assert.throws(() => verifyInternalSignature(body, { "x-mapgap-signature": sig }, "whsec_other"));
+});
+check("internal signature: rejects a missing header", () => {
+  assert.throws(() => verifyInternalSignature("{}", {}, INTERNAL_SECRET));
+});
+
+// --- website SSRF guard (returns before any network for blocked hosts) ------
+(async () => {
+  await checkAsync("website: blocks IPv4-mapped IPv6 metadata (::ffff:)", async () => {
+    const s = await fetchWebsiteSignals("http://[::ffff:a9fe:a9fe]/");
+    assert.strictEqual(s.available, false);
+  });
+  await checkAsync("website: blocks localhost", async () => {
+    const s = await fetchWebsiteSignals("http://localhost:8080/");
+    assert.strictEqual(s.available, false);
+  });
+  await checkAsync("website: blocks link-local 169.254", async () => {
+    const s = await fetchWebsiteSignals("http://169.254.169.254/latest/meta-data/");
+    assert.strictEqual(s.available, false);
+  });
+  await checkAsync("website: blocks non-http scheme", async () => {
+    const s = await fetchWebsiteSignals("ftp://example.com/file");
+    assert.strictEqual(s.available, false);
+  });
+  await checkAsync("website: empty input -> not available", async () => {
+    const s = await fetchWebsiteSignals("");
+    assert.strictEqual(s.available, false);
+  });
+
+  console.log(`\n${passed} checks passed${process.exitCode ? " (with failures above)" : ""}.`);
+})();

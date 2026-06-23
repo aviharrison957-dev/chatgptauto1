@@ -8,7 +8,9 @@ const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
 // that prevent fabrication and generic output in a data-tied audit. Verified available on OpenRouter.
 // Owner overrides with OPENROUTER_MODEL (no code change).
 const DEFAULT_MODEL = "anthropic/claude-sonnet-4.5";
-const DEFAULT_TIMEOUT_MS = 45000;
+// The background worker has a 15-minute budget, so a generous default is safe. Override with
+// OPENROUTER_TIMEOUT_MS if you run the pipeline somewhere with a tighter ceiling.
+const DEFAULT_TIMEOUT_MS = Number(optionalEnv("OPENROUTER_TIMEOUT_MS")) || 45000;
 
 function resolveModel() {
   return optionalEnv("OPENROUTER_MODEL") || DEFAULT_MODEL;

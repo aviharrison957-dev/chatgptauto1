@@ -32,6 +32,7 @@ available during the build (`OPENROUTER_API_KEY`, `GOOGLE_PLACES_API_KEY`). No s
 | Free scorecard (lead magnet) | `assets/js/scorecard.js` |
 | Payment link config (you paste 1 URL) | `assets/js/config.js` |
 | Webhook entry point | `netlify/functions/stripe-webhook.js` |
+| Background fulfillment worker | `netlify/functions/audit-worker-background.js` |
 | Pipeline modules | `netlify/functions/lib/*.js` |
 | Netlify config + `/api/stripe-webhook` route | `netlify.toml` |
 | Manual fallback report tool | `report-builder.html` |
@@ -149,11 +150,13 @@ Optional offline check anytime (no keys needed): `npm test`.
 1. Customer clicks **Buy the audit** → Stripe Checkout collects payment, email, and the Google
    Business Profile field.
 2. Stripe sends `checkout.session.completed` to `/api/stripe-webhook`.
-3. The function **verifies the Stripe signature** (forged/unsigned → HTTP 400, no work done).
-4. It fetches the business's public data from **Google Places API (New)** and reads the homepage for
-   on-page signals (title, click-to-call, schema, HTTPS).
+3. The webhook **verifies the Stripe signature** (forged/unsigned → HTTP 400, no work done), then hands
+   the order to a **background worker** and acknowledges Stripe immediately. (This is automatic — both
+   functions deploy from this repo; you don't configure anything.)
+4. The worker fetches the business's public data from **Google Places API (New)** and reads the homepage
+   for on-page signals (title, click-to-call, schema, HTTPS).
 5. **OpenRouter** generates the audit as structured data; our template renders premium, email-safe HTML.
-6. **Resend** emails the audit to the customer.
+6. **Resend** emails the audit to the customer — typically within a minute of checkout.
 7. **If any step fails, the customer is NOT emailed.** You get a fallback alert with the order details
    + error so you can fulfill manually with `report-builder.html`.
 
@@ -166,10 +169,14 @@ Optional offline check anytime (no keys needed): `npm test`.
 ## Good to know
 - **Cost per audit:** ~$0.02–0.03 (OpenRouter) + Google Places (within free allowance) + Resend (free
   tier covers low volume). Effectively pennies against $249.
-- **Speed / timeouts:** the function does the work before replying. If you ever see timeouts in the
-  Netlify function logs, set `OPENROUTER_MODEL=google/gemini-2.5-flash` (faster) — no code change. A
-  fully async background-worker design is written up in `PROPOSALS.md` (P2) if volume ever needs it.
+- **Speed / timeouts:** the slow work (model + APIs) runs in the **background worker**, which has a
+  15-minute budget, so a slow model can't time out the webhook or drop an order. Background functions
+  are available on all Netlify plans (including Free). You don't need to tune anything; if you ever want
+  faster delivery, set `OPENROUTER_MODEL=google/gemini-2.5-flash`.
 - **Switching models** is just the `OPENROUTER_MODEL` env var.
+- **The two functions share `STRIPE_WEBHOOK_SECRET`:** the webhook uses it to verify Stripe, and to sign
+  its internal hand-off to the worker (so the worker only acts on genuine, signed requests). No extra
+  secret needed.
 
 ## Guardrails (baked into the audit prompt; keep them in any future edits)
 - Never guarantee rankings, Map Pack / 3-pack placement, calls, or revenue.

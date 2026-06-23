@@ -1,20 +1,19 @@
 // Stripe webhook entry point for MapGap Report automated fulfillment.
 //
 // Flow:
-//   1. POST only; verify the Stripe signature (invalid/unsigned -> HTTP 400).
+//   1. POST only; verify the Stripe signature (invalid/unsigned -> HTTP 400, no work done).
 //   2. Ignore everything except checkout.session.completed (-> 200).
-//   3. On a completed checkout, run the fulfillment pipeline:
-//        hydrate session -> Google Places (New) -> website signals -> OpenRouter audit -> Resend to customer.
-//   4. On ANY failure, the customer is NOT emailed; the owner gets a fallback alert with the order
-//      context + error so they can fulfill by hand with report-builder.html.
+//   3. Hand the verified session to the background worker (audit-worker-background) and return 200 fast.
+//      The slow pipeline (Places -> website -> OpenRouter -> Resend) then runs off the request path with
+//      a 15-minute budget, so a slow model can never time out the webhook or silently drop a paid order.
+//   4. If the background trigger itself fails (rare), fulfill inline as a last resort.
+//   5. On ANY fulfillment failure the customer is NOT emailed; the owner gets a fallback alert so they
+//      can fulfill by hand with report-builder.html.
 //
 // All heavy lifting lives in ./lib/* so it can be unit-/smoke-tested independently of Stripe.
 const { requiredEnv, jsonResponse } = require("./lib/util");
-const {
-  getRawBody,
-  verifyStripeWebhook,
-  getOrderContext
-} = require("./lib/stripe");
+const { getRawBody, verifyStripeWebhook, getOrderContext } = require("./lib/stripe");
+const { triggerAuditWorker } = require("./lib/internal");
 const { runFulfillment } = require("./lib/pipeline");
 const { sendFallbackAlert } = require("./lib/email");
 
@@ -25,10 +24,12 @@ exports.handler = async function handler(event) {
 
   // Verify FIRST so forged/unsigned requests are rejected with 400 and never trigger any work.
   let stripeEvent;
+  let webhookSecret;
   try {
-    const rawBody = getRawBody(event);
-    stripeEvent = verifyStripeWebhook(rawBody, event.headers || {}, requiredEnv("STRIPE_WEBHOOK_SECRET"));
-  } catch (_error) {
+    webhookSecret = requiredEnv("STRIPE_WEBHOOK_SECRET");
+    stripeEvent = verifyStripeWebhook(getRawBody(event), event.headers || {}, webhookSecret);
+  } catch (error) {
+    console.error("Stripe webhook rejected:", error?.message || error);
     return jsonResponse(400, { error: "Invalid Stripe webhook signature" });
   }
 
@@ -37,23 +38,35 @@ exports.handler = async function handler(event) {
   }
 
   const session = stripeEvent.data?.object || {};
+
+  // Happy path: hand off to the background worker and acknowledge Stripe immediately.
+  try {
+    await triggerAuditWorker(event, session, webhookSecret);
+    return jsonResponse(200, { received: true, queued: true });
+  } catch (triggerError) {
+    // The async hand-off mechanism failed (rare). Fall back to fulfilling inline so the order isn't lost.
+    console.error("Audit worker trigger failed; running inline:", triggerError?.message || triggerError);
+    return fulfillInline(session);
+  }
+};
+
+async function fulfillInline(session) {
   try {
     const result = await runFulfillment(session);
-    return jsonResponse(200, { received: true, fulfilled: true, business: result.businessName });
+    return jsonResponse(200, { received: true, fulfilled: true, inline: true, business: result.businessName });
   } catch (error) {
-    // Never surface a broken audit to the customer; alert the owner for manual fulfillment instead.
     try {
       await sendFallbackAlert(error, getOrderContext(session), session);
       // Owner notified -> manual path chosen; tell Stripe it's handled so it does not retry.
       return jsonResponse(200, { received: true, fulfilled: false, ownerAlerted: true });
     } catch (alertError) {
-      // Could not even reach the owner (e.g. the email provider is down). Return 5xx so Stripe retries
-      // later, when a transient outage may have cleared. The customer was not emailed on this attempt.
+      // Could not even reach the owner. Return 5xx so Stripe retries later, when a transient outage may
+      // have cleared. The customer was not emailed on this attempt.
       console.error("Fallback alert also failed:", alertError?.message || alertError);
       return jsonResponse(500, { received: false, error: "fulfillment_and_alert_failed" });
     }
   }
-};
+}
 
 // Backwards-compatible test surface (used by scripts/ and any prior tooling).
 exports._private = {
