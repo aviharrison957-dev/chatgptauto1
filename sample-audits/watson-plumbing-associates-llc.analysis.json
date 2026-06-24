@@ -1,7 +1,7 @@
 {
   "business_name": "Watson Plumbing & Associates LLC",
-  "audit_headline": "Watson Plumbing has no phone number on its Google Business Profile, blocking the primary way plumbing customers make contact.",
-  "summary": "Watson Plumbing & Associates LLC holds a 4.0-star rating from 70 reviews and operates as a storefront plumber in Macon, GA. The profile is missing three critical contact elements: no phone number, no website link, and no business hours. Recent reviews from a year ago praise responsiveness and fair pricing, but without a visible phone number or hours, potential customers cannot easily reach this business when they need emergency plumbing help.",
+  "audit_headline": "Watson Plumbing has no phone number on its Google Business Profile, which means potential customers searching for a plumber in Macon cannot call you directly from Google Search or Maps.",
+  "summary": "Watson Plumbing & Associates LLC has a solid 4.0-star rating from 70 reviews and a strong reputation for responsiveness and fair pricing based on recent review themes. However, the profile is missing three critical contact elements: no phone number is listed, no website is linked, and no hours are posted. These gaps make it significantly harder for searchers to reach you or confirm you're available, even though your reviews show you respond quickly.",
   "snapshot": [
     {
       "label": "Phone Number",
@@ -9,54 +9,49 @@
       "state": "bad"
     },
     {
-      "label": "Business Hours",
-      "value": "Not listed",
+      "label": "Hours",
+      "value": "Not posted",
       "state": "bad"
     },
     {
-      "label": "Reviews",
-      "value": "70 reviews, 4.0★",
+      "label": "Rating",
+      "value": "4.0 stars (70 reviews)",
       "state": "good"
     },
     {
       "label": "Website",
       "value": "Not linked",
       "state": "warn"
-    },
-    {
-      "label": "Photos",
-      "value": "10 or more",
-      "state": "neutral"
     }
   ],
   "sections": [
     {
       "key": "gbp",
       "title": "Google Business Profile",
-      "summary": "The profile is marked as a storefront plumber (not service-area-only) but is missing the three most basic contact fields: phone, website, and hours.",
+      "summary": "Your profile is set to Plumber and shows 10 or more photos, but it's missing the three most important contact signals: phone, hours, and website.",
       "findings": [
         {
-          "observation": "No phone number is listed on the Google Business Profile. For a plumbing business where emergency calls drive most jobs, this is a critical gap.",
+          "observation": "No phone number is listed on the profile. When someone searches 'plumber near me' or 'emergency plumber Macon GA' and finds your business, they see no way to call you directly from the search result or map listing.",
           "severity": "high",
-          "recommendation": "Add your business phone number immediately in the Google Business Profile editor."
+          "recommendation": "Add your business phone number to the profile immediately. This is the single most important fix for a service business."
         },
         {
-          "observation": "No business hours are listed. Customers searching for a plumber cannot tell when Watson Plumbing is open or available.",
+          "observation": "No hours are posted. Searchers cannot see when you're open, which creates uncertainty about whether you're available now or if they should call.",
           "severity": "high",
-          "recommendation": "Add complete business hours, including after-hours or emergency availability if offered."
+          "recommendation": "Add your operating hours, including any after-hours or emergency availability if you offer it. If hours vary or you're on-call, post your standard office hours and note emergency service in the business description."
         },
         {
-          "observation": "No website is linked on the profile. This removes a key trust signal and a second path for customers to learn about services and contact the business.",
+          "observation": "No website is linked. The profile offers no way for a searcher to learn more about your services, see pricing context, or contact you online.",
           "severity": "medium",
-          "recommendation": "Link a website if one exists, or create a simple one-page site with services, contact info, and service area."
+          "recommendation": "If you have a website, link it in the profile. If you don't have one, consider at minimum a simple one-page site with your services, contact info, and service area, or use a free Google Site as a placeholder."
         },
         {
-          "observation": "The primary category is correctly set to 'Plumber,' which matches the business name and the services described in reviews.",
+          "observation": "Your primary category is correctly set to Plumber, which matches your business type and helps Google surface you for plumbing searches in Macon.",
           "severity": "ok",
           "recommendation": ""
         },
         {
-          "observation": "The profile shows 10 or more photos, which provides some visual presence, though the exact count above 10 is not visible.",
+          "observation": "The profile shows 10 or more photos, which is a floor — the API caps visibility at 10, so you may have more. Photos help searchers recognize your trucks, team, and work quality.",
           "severity": "ok",
           "recommendation": ""
         }
@@ -65,66 +60,61 @@
     {
       "key": "reviews",
       "title": "Reviews & Reputation",
-      "summary": "Watson Plumbing has earned 70 reviews at a 4.0-star average, but the most recent visible review is from a year ago, signaling a slowdown in review velocity.",
+      "summary": "You have a 4.0-star rating from 70 reviews, which is a solid foundation. Recent reviews consistently mention responsiveness, fair pricing, and professionalism, though the most recent visible review is from a year ago.",
       "findings": [
         {
-          "observation": "The business has 70 total reviews with a 4.0-star rating. This is a solid volume and rating for a local plumber in Macon.",
+          "observation": "Your 70 reviews give you meaningful volume for a local plumber, and the 4.0-star rating is strong. Four of the five most recent reviews are 5-star and highlight quick response times — one mentions you 'showed up the day after Christmas' for a sewer backup, and another notes you came 'a day before they thought they could originally get to it.'",
           "severity": "ok",
           "recommendation": ""
         },
         {
-          "observation": "The five most recent reviews available are all from 11 months to 2 years ago. No reviews from the past several months are visible, which may signal reduced customer volume or a gap in asking for reviews.",
+          "observation": "The most recent review visible in the data is from a year ago. If you've received reviews more recently, they're not surfacing here; if not, a year without fresh reviews can signal to searchers that your business may be less active.",
           "severity": "medium",
-          "recommendation": "Resume asking satisfied customers for Google reviews after each completed job to maintain recency and visibility."
+          "recommendation": "Ask recent customers for reviews. A steady trickle of new reviews — even one or two per month — keeps your profile current and reinforces trust."
         },
         {
-          "observation": "Three of the five recent reviews explicitly mention responsiveness, quick service, or prompt communication. One review praises fair pricing compared to a competitor's quote. One 1-star review concerns a water delivery service (not core plumbing) and cites poor office communication.",
+          "observation": "One of the five recent reviews is 1-star and mentions a pool water delivery service and 'unprofessionalism' from office staff. This review describes a service (pool water delivery) that doesn't align with your Plumber category, which may confuse searchers about what you actually do.",
           "severity": "low",
-          "recommendation": "Leverage the responsiveness theme in marketing. Address the communication concern by ensuring all staff interactions are professional, even for ancillary services."
+          "recommendation": "If pool water delivery is not a core service, consider clarifying your service offerings in your business description so searchers understand your focus is plumbing and septic work."
         },
         {
-          "observation": "The Google Places API does not reveal whether the owner has responded to reviews. Responding to reviews—especially the 1-star review—is a recognized trust signal.",
+          "observation": "The Google Places API does not reveal whether you've responded to reviews. Responding to reviews — especially negative ones — is a recognized trust signal and shows engagement.",
           "severity": "medium",
-          "recommendation": "Log into the Google Business Profile and verify that you have responded to recent reviews, particularly the critical one. If not, reply professionally and address the concern."
+          "recommendation": "Log into your Google Business Profile and check if you've replied to your reviews, particularly the 1-star review about pool water. If not, reply professionally and briefly. Make it a habit to respond to new reviews within a few days."
         }
       ]
     },
     {
       "key": "website",
       "title": "Website & Online Presence",
-      "summary": "No website is linked on the Google Business Profile, so this audit could not evaluate homepage signals like title tags, click-to-call, or structured data.",
+      "summary": "No website is linked on your profile, so this audit could not evaluate your site's local-search signals.",
       "findings": [
         {
-          "observation": "No website is linked on the Google Business Profile. This means potential customers have no way to learn more about services, see service areas, read FAQs, or contact the business outside of Google.",
-          "severity": "high",
-          "recommendation": "If a website exists, link it in the Google Business Profile immediately. If not, create a simple one-page site with your phone number, services, service area (Macon and surrounding), and a contact form."
+          "observation": "No website is linked on the Google Business Profile. This means searchers who want to learn more about your services, see a full service list, check service-area coverage, or contact you online have no path to do so from your profile.",
+          "severity": "medium",
+          "recommendation": "If you have a website, add the URL to your profile under 'Edit profile -> Website.' If you don't have one, consider building a simple one-page site with your services, contact info, and service area — even a free Google Site or basic WordPress page is better than nothing."
         },
         {
-          "observation": "Without a website to analyze, this audit cannot confirm whether the homepage includes local SEO signals like a title tag with 'Plumber' and 'Macon,' click-to-call phone links, HTTPS, mobile viewport, or LocalBusiness structured data.",
-          "severity": "medium",
-          "recommendation": "Once a website is live, ensure the homepage title tag reads something like 'Watson Plumbing – Licensed Plumber in Macon, GA,' includes a prominent click-to-call phone link, uses HTTPS, is mobile-friendly, and has LocalBusiness schema markup."
+          "observation": "Because no website is linked, this audit could not check for local-search signals like a homepage title that includes 'Plumber' and 'Macon GA,' click-to-call phone links, HTTPS, mobile-friendliness, or LocalBusiness structured data.",
+          "severity": "low",
+          "recommendation": "Once you link a website, revisit these elements. A homepage title like 'Watson Plumbing – Licensed Plumber in Macon, GA' and a prominent click-to-call button are quick wins for local relevance and conversion."
         }
       ]
     },
     {
       "key": "missed_call",
-      "title": "Missed Calls & Lead Capture",
-      "summary": "Plumbing calls are often urgent, and missed calls mean lost jobs. With no phone number visible on the profile and no website to offer alternative contact paths, Watson Plumbing risks losing leads at the first point of contact.",
+      "title": "Call Handling & Availability",
+      "summary": "With no phone number on the profile and no hours posted, searchers have no way to call you or know when you're available.",
       "findings": [
         {
-          "observation": "The Google Business Profile shows no phone number, so customers cannot call directly from search results or Google Maps. This is the single biggest barrier to capturing inbound leads.",
+          "observation": "No phone number is listed on the profile, which means Google Search and Maps results show no call button. Your reviews mention quick response and emergency availability, but searchers can't act on that without a number to dial.",
           "severity": "high",
-          "recommendation": "Add your phone number to the Google Business Profile immediately. This is the fastest way to start capturing calls from local search."
+          "recommendation": "Add your phone number to the profile. This is the most direct path for a searcher to become a caller."
         },
         {
-          "observation": "With no website linked, there is no backup contact path (contact form, email, or chat) if a customer prefers not to call or calls outside business hours.",
+          "observation": "No hours are posted, so searchers don't know if you're open now, if you offer evening or weekend service, or if you handle after-hours emergencies. One review mentions you responded 'the day after Christmas,' which suggests you may offer emergency service, but that's invisible to new searchers.",
           "severity": "medium",
-          "recommendation": "Once a website is live, add a contact form and consider a missed-call text-back service or after-hours voicemail that promises a callback time."
-        },
-        {
-          "observation": "This audit cannot measure your actual call answer rate or missed-call rate. However, plumbing is a high-urgency trade where customers often call multiple providers until someone picks up.",
-          "severity": "medium",
-          "recommendation": "Call your own business number after hours and on weekends to confirm your voicemail is professional and sets expectations. Consider a service that texts callers back if you miss their call."
+          "recommendation": "Post your hours. If you offer 24/7 emergency service, note that in your business description and consider setting hours to reflect on-call availability or standard office hours with a note about emergency dispatch."
         }
       ]
     }
@@ -133,73 +123,66 @@
     {
       "rank": 1,
       "action": "Add your business phone number to the Google Business Profile.",
-      "rationale": "No phone number is listed, blocking the primary way plumbing customers make contact. This is the highest-impact fix and takes under a minute.",
-      "where": "Google Business Profile -> Edit profile -> Contact -> Add phone number",
+      "rationale": "No phone number is listed, which means searchers cannot call you from Google Search or Maps. Your reviews show you respond quickly, but without a number, that responsiveness is invisible. This is the highest-impact fix for a service business.",
+      "where": "Google Business Profile -> Edit profile -> Contact -> Phone",
       "impact": "high",
       "effort": "quick"
     },
     {
       "rank": 2,
-      "action": "Add complete business hours to the Google Business Profile.",
-      "rationale": "No hours are listed, so customers cannot tell when Watson Plumbing is open. Hours are a core trust and relevance signal.",
-      "where": "Google Business Profile -> Edit profile -> Hours -> Add regular hours (and mark special hours if you offer emergency service)",
+      "action": "Post your operating hours on the profile.",
+      "rationale": "No hours are posted, so searchers don't know when you're available. One review mentions you responded on a holiday, which suggests flexibility, but new customers can't see that. Posting hours reduces uncertainty and can surface your business in 'open now' searches.",
+      "where": "Google Business Profile -> Edit profile -> Hours",
       "impact": "high",
       "effort": "quick"
     },
     {
       "rank": 3,
-      "action": "Link a website on the Google Business Profile, or create a simple one-page site if none exists.",
-      "rationale": "No website is linked. A website provides a second contact path, builds trust, and allows you to control your message and local SEO signals.",
-      "where": "Google Business Profile -> Edit profile -> Contact -> Add website URL. If building a site, include services, phone, service area, and a contact form.",
-      "impact": "high",
+      "action": "Link your website to the profile, or create a simple one-page site if you don't have one.",
+      "rationale": "No website is linked, so searchers who want more detail about your services, pricing context, or service area have no path. A website also allows you to add local-search signals like a city-specific homepage title and click-to-call links.",
+      "where": "Google Business Profile -> Edit profile -> Website. If you need to build a site, consider a free Google Site or a basic WordPress page with services, contact info, and service area.",
+      "impact": "medium",
       "effort": "moderate"
     },
     {
       "rank": 4,
-      "action": "Resume asking satisfied customers for Google reviews after each completed job.",
-      "rationale": "The most recent visible review is from a year ago. Fresh reviews signal active business and improve local search visibility. You have 70 reviews at 4.0 stars, which is a strong base to build on.",
-      "where": "In person or via follow-up text/email after the job. Provide a short link to your Google review page.",
+      "action": "Check if you've responded to your reviews, and reply to any you've missed — especially the 1-star review about pool water delivery.",
+      "rationale": "The API does not show whether you've replied to reviews. Responding to reviews, particularly negative ones, is a recognized trust signal. The 1-star review mentions a service (pool water) that may not be your focus; a brief, professional reply can clarify your core services.",
+      "where": "Google Business Profile -> Reviews -> Click on a review -> Reply",
       "impact": "medium",
       "effort": "quick"
     },
     {
       "rank": 5,
-      "action": "Verify that you have responded to recent reviews, especially the 1-star review about water delivery.",
-      "rationale": "Owner responses are a recognized trust signal. The 1-star review cites poor communication; a professional reply can show prospective customers how you handle concerns.",
-      "where": "Google Business Profile -> Reviews -> Reply to each review, particularly critical ones",
+      "action": "Ask recent customers for Google reviews to bring your review recency up to date.",
+      "rationale": "Your most recent visible review is from a year ago. Fresh reviews signal that your business is active and help maintain trust. Your 70 reviews are a strong base; a few new ones per month keep momentum.",
+      "where": "After completing a job, send a follow-up text or email with a direct link to your Google review page (find it at Google Business Profile -> Home -> 'Get more reviews').",
       "impact": "medium",
-      "effort": "quick"
+      "effort": "moderate"
     },
     {
       "rank": 6,
-      "action": "Once the website is live, ensure the homepage title tag includes 'Plumber' and 'Macon, GA.'",
-      "rationale": "The homepage title tag is a core local SEO signal. It should match your primary category (Plumber) and your city (Macon) to help Google understand relevance.",
-      "where": "Website homepage <title> tag in the HTML <head> section, or via your website builder's SEO settings",
+      "action": "Add a business description that highlights your core plumbing and septic services and mentions emergency availability if you offer it.",
+      "rationale": "One recent review mentions pool water delivery, which may confuse searchers about your focus. A clear description that emphasizes plumbing, sewer line work, and septic systems (themes from your positive reviews) helps searchers understand what you do. Mentioning emergency service ties to your 'day after Christmas' responsiveness.",
+      "where": "Google Business Profile -> Edit profile -> Business description",
       "impact": "medium",
       "effort": "quick"
     },
     {
       "rank": 7,
-      "action": "Add a prominent click-to-call phone link on the website homepage.",
-      "rationale": "Mobile users expect to tap a phone number to call. A tel: link makes this seamless and reduces friction for urgent plumbing calls.",
-      "where": "Website homepage header or hero section: <a href='tel:+1234567890'>Call (123) 456-7890</a>",
-      "impact": "medium",
-      "effort": "quick"
-    },
-    {
-      "rank": 8,
-      "action": "Call your own business number after hours to test your voicemail and consider a missed-call text-back service.",
-      "rationale": "Plumbing calls are often urgent. If you miss a call, the customer will call the next plumber. A professional voicemail and a text-back service can capture leads you would otherwise lose.",
-      "where": "Test by calling your number outside business hours. For text-back, search 'missed call text back service' or ask your phone provider.",
+      "action": "Once you link a website, ensure the homepage title includes 'Plumber' and 'Macon GA' and add a prominent click-to-call button.",
+      "rationale": "A homepage title like 'Watson Plumbing – Licensed Plumber in Macon, GA' is a known local-search relevance signal. A click-to-call button (a tel: link) makes it easy for mobile visitors to dial you immediately, which is critical for emergency plumbing searches.",
+      "where": "Your website's homepage <title> tag (ask your web developer or edit in your site builder) and homepage header or hero section for the click-to-call button.",
       "impact": "medium",
       "effort": "moderate"
     }
   ],
   "not_checked": [
-    "Whether the owner has responded to reviews — the Google Places API does not expose this. Log into your Google Business Profile and check the Reviews tab.",
-    "The exact photo count above 10 — the API caps visible photos at 10. Log into your profile to see the full count and consider adding more job photos.",
-    "Whether a website exists but is not linked — this audit only sees what is on the Google Business Profile. Search your business name to confirm.",
-    "Your actual call answer rate and missed-call count — this audit cannot measure inbound call handling. Review your phone logs or use call tracking to identify missed opportunities."
+    "Whether you've responded to your Google reviews — the API does not reveal this. Log into your Google Business Profile and check the Reviews section to see if you've replied.",
+    "Your actual photo count beyond 10 — the API caps visibility at 10, so you may have more. Check your profile's Photos section to see the full count.",
+    "Whether you have a website that's simply not linked — if you do have a site, add the URL to your profile immediately.",
+    "Your call answer rate or missed-call volume — this audit has no access to phone data. Consider calling your own number after hours to test your voicemail, or set up a missed-call text-back system if you don't already have one.",
+    "Whether you offer 24/7 emergency service — your reviews suggest you respond quickly, but this isn't stated on the profile. If you do, add it to your hours or description."
   ],
-  "closing_note": "Watson Plumbing has a strong reputation with 70 reviews at 4.0 stars and clear customer praise for responsiveness and fair pricing. The three missing contact fields—phone, hours, and website—are the only barriers between that reputation and new customers finding and reaching you. Fixing these basics will put your profile on par with your service quality."
+  "closing_note": "Watson Plumbing has a strong reputation and solid review themes around responsiveness and fair pricing, but your profile is missing the three most basic contact elements. Adding a phone number, hours, and a website link are quick fixes that will make it significantly easier for searchers to reach you. These are recognized local-search best practices, not guarantees, but they remove friction between a search and a call."
 }
