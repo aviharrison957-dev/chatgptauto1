@@ -1,20 +1,24 @@
 # Journal
 
 > ## ▶ RESUME / STATUS (2026-06-24)
-> **QUALITY GATE PASSED. 3 real sample audits generated, committed, and assessed. Timeout root-caused
-> & fixed in both the test and production paths. Nothing faked.**
+> **RE-TESTED ON REALISTIC TARGETS — and refined. 5 real audits for rough, owner-operated, single-
+> location locals generated, assessed three independent ways, and improved with one conservative
+> prompt-tuning round. Honest verdict: specific and non-fabricated; worth $249 when it surfaces a real
+> hidden defect, thinner on an already-healthy profile. NOTHING DEPLOYED (Stripe/Netlify untouched, by design).**
 >
-> **This session (2026-06-24):** Diagnosed the "operation was aborted due to timeout" failure on
-> `generate:samples`. OpenRouter credit confirmed healthy first (paid account, no per-key cap, billing
-> today) — not the problem. Two real root causes, proven by timing a live call rather than guessing:
-> (1) the in-code 45s fetch timeout sat below the **~75.6s** cold latency of a real Sonnet-4.5 audit;
-> (2) `max_tokens:4000` truncated the ~3.7–4.3k-token JSON (Roto-Rooter alone emitted 4,287 output
-> tokens). Fixed both in the shared `netlify/functions/lib/openrouter.js` (→ 150s timeout + 6,000-token
-> cap, both env-configurable; plus an explicit `finish_reason==="length"` truncation error), which
-> covers the sample script AND the production webhook/background-worker path (single import chain).
-> `npm run generate:samples` now writes **3/3 real audits** to `sample-audits/`. Default model stays
-> `anthropic/claude-sonnet-4.5`. Honest quality verdict: worth $249 for the real target customer; full
-> assessment in the dated entry below.
+> **This session (2026-06-24, max-effort re-test):** The engine was proven *honest* on 3 national chains
+> last session, but their near-perfect profiles made those audits thin — no proof the product is *sellable*.
+> So this session re-tested on 5 genuinely rough targets, chosen from live Places recon (not guessed):
+> Rimmer Electric, Watson Plumbing, Jimmy Lock & Key, Spot On Lawn Care, Youngstown HVAC — 5 trades, all 3
+> website states. Generated 5/5 real audits; reviewed three independent ways (builder + fresh Opus subagent
+> + Codex CLI) on the same blind buyer's question. Consensus: real data + real review text, not fabricated;
+> top value = catches an owner can't self-find (Watson's missing phone on a 70-review profile; "Services" &
+> "General Contractor" miscategories); weakest = a generic Missed-Call section, one unsourced "30-40%" stat,
+> two absolute over-claims. Made ONE conservative prompt-tuning round (audit.js only): killed the invented
+> stat, banned absolute over-claims, trimmed Missed-Call padding — specificity verified preserved, re-reviewed
+> three ways (before/after in `QUALITY_REVIEW.md`). Default model unchanged (`anthropic/claude-sonnet-4.5`).
+> The final $249 go/no-go is the owner's, from reading the 5 audits. Prior session's timeout/token fix
+> (150s + 6000-token cap in `lib/openrouter.js`) remains in place.
 >
 > **Left (all owner-side, see `NEEDS_FROM_AVI.md`):**
 > 1. Tier-2 keys (`RESEND_API_KEY`, `OWNER_FALLBACK_EMAIL`, `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`).
@@ -22,6 +26,52 @@
 >    not executed). Full step-by-step in `HANDOFF.md`.
 > 3. Optional: in Netlify, `OPENROUTER_TIMEOUT_MS` / `OPENROUTER_MAX_TOKENS` are now tunable knobs;
 >    the in-code defaults are already safe, so this is only if a slower provider ever shows up.
+
+## 2026-06-24 02:14 America/New_York — 5 real audits generated, reviewed 3 ways, tuned once; quality verdict (STOP — no deploy)
+
+Operator: Claude (Opus 4.8, max effort). Completed the realistic-target re-test. **No deploy, no Stripe, no
+Netlify, nothing marked live** — stopped at a quality verdict as instructed.
+
+**Generated (5/5 real, nothing faked).** `generate:samples` with the 5 locked Place IDs → real Places data +
+real homepage signals + real Sonnet-4.5 output. Token counts all under the 6000 cap (no truncation). Files in
+`sample-audits/`. The 3 earlier chain audits were archived to `sample-audits/archive-national-chains/`.
+
+**Reviewed three independent ways** (all on the same blind buyer's question — "paid $249, ripped off? rate 1–5
+on specificity/actionability/value"; full record + verbatim verdicts in `QUALITY_REVIEW.md`):
+1. Builder's own harsh review. First checked the two most suspicious "specific" claims for fabrication:
+   Spot On's "HTTP 400" is REAL (verified `website.js` live-fetches the Facebook URL and Facebook returns 400);
+   Rimmer's "30–40% of calls" is an unsourced industry stat → flagged.
+2. Independent fresh Opus subagent (no knowledge I built the prompt; free to disagree).
+3. Codex CLI (`codex exec -s read-only`, authenticated, exit 0 — invoked for real, not fabricated).
+
+**Three-way consensus.** All agree the audits are **honest and genuinely specific — not generic, not
+fabricated** (real categories, phone/hours state, photo counts, and themes quoted from actual review text).
+Highest value = the catches an owner can't self-find: Watson's **missing phone number on a 70-review profile**,
+Spot On's **"Services" miscategory**, Youngstown's **"General Contractor" miscategory**. Unanimous weakest spot:
+the **Missed-Call section** — generic, repeated, and home to the one unsourced "30–40%" stat. Codex (harshest on
+price: "$49–99") also caught two **absolute over-claims** ("will not appear", "can't read or rank"). Rimmer is
+the thinnest audit (a healthy profile yields obvious findings).
+
+**One conservative tuning round** (gated on the unanimous, concrete weakness; `audit.js` system prompt only —
+no scope/schema/design change): ban invented stats/percentages; forbid absolute negative claims (require
+calibrated language); keep Missed-Call short (≤2 findings) and tied to real data, no padding. `npm test` green.
+
+**Before → after (verified, in `QUALITY_REVIEW.md`):** invented stats 2→0; "will not appear"/"can't read or
+rank" 1/1→0/0; Missed-Call findings 3/3/3/3/3→2/2/2/1/1; audits shorter. **Specificity preserved** — all 5
+signature catches survived. Re-reviewed three ways: Codex softened (Watson/Youngstown value 3→4, dropped the
+"$49–99"); subagent flat-to-slightly-lower (different fresh instance, rater noise). Headline verdict unchanged.
+
+**Honest verdict.** Sellable, with a clear condition: the audit earns $249 when it surfaces a real hidden defect
+(a converted call pays for it); it feels closer to ~$79–129 on an already-healthy profile. The audits are honest
+and specific — the thing the session set out to prove. The single biggest remaining quality risk is **sameness/
+thinness on healthy profiles** — the recurring "get reviews / add photos / get a website" advice that 2 of 3
+auditors called not-$249-specific. The biggest value lever (deferred to `PROPOSALS.md` P5/P9, **not built**):
+**competitor/Map-Pack context** + **done-for-you assets** (schema snippet, review-request template).
+
+**Owner's call.** Whether this is worth $249 is Avi's decision from reading the 5 `sample-audits/*.html`. Suggest
+opening Watson Plumbing first (clearest "worth it"), then Rimmer Electric (the borderline case) — the gap between
+them is the product's value question in two files. Commits this session: business list → 5 audits → QUALITY_REVIEW
+(builder) → 3-way verdicts + synthesis → tuning + regen + before/after.
 
 ## 2026-06-24 01:35 America/New_York — Re-test on REALISTIC rough targets: 5 owner-operated locals chosen (pre-generation)
 
