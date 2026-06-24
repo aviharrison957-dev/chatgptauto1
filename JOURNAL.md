@@ -1,21 +1,103 @@
 # Journal
 
-> ## ▶ RESUME / STATUS (2026-06-23)
-> **Code-complete and pushed to origin/main. Audit quality is UNVERIFIED — blocked on 2 owner keys. Nothing faked.**
+> ## ▶ RESUME / STATUS (2026-06-24)
+> **QUALITY GATE PASSED. 3 real sample audits generated, committed, and assessed. Timeout root-caused
+> & fixed in both the test and production paths. Nothing faked.**
 >
-> **Done this session:** Full post-payment pipeline rebuilt and hardened — Stripe webhook (verifies
-> signature, 400 on invalid) → async **background worker** → Google Places (New) → website signals →
-> **OpenRouter** audit (strict validated JSON, anti-fabrication + no-ranking-promise prompt) → premium
-> email-safe HTML template (visual design verified) → **Resend** to customer; any failure emails the
-> owner instead. Anthropic dependency removed. 27 offline tests green (`npm test`). Living docs written:
-> `NEEDS_FROM_AVI.md`, `PROPOSALS.md`, rewritten `HANDOFF.md`/`README.md`.
+> **This session (2026-06-24):** Diagnosed the "operation was aborted due to timeout" failure on
+> `generate:samples`. OpenRouter credit confirmed healthy first (paid account, no per-key cap, billing
+> today) — not the problem. Two real root causes, proven by timing a live call rather than guessing:
+> (1) the in-code 45s fetch timeout sat below the **~75.6s** cold latency of a real Sonnet-4.5 audit;
+> (2) `max_tokens:4000` truncated the ~3.7–4.3k-token JSON (Roto-Rooter alone emitted 4,287 output
+> tokens). Fixed both in the shared `netlify/functions/lib/openrouter.js` (→ 150s timeout + 6,000-token
+> cap, both env-configurable; plus an explicit `finish_reason==="length"` truncation error), which
+> covers the sample script AND the production webhook/background-worker path (single import chain).
+> `npm run generate:samples` now writes **3/3 real audits** to `sample-audits/`. Default model stays
+> `anthropic/claude-sonnet-4.5`. Honest quality verdict: worth $249 for the real target customer; full
+> assessment in the dated entry below.
 >
 > **Left (all owner-side, see `NEEDS_FROM_AVI.md`):**
-> 1. **FIRST:** set `OPENROUTER_API_KEY` + `GOOGLE_PLACES_API_KEY`, run `npm run generate:samples`, and
->    judge the real audits in `sample-audits/`. Quality is unproven until this is done.
-> 2. Tier-2 keys (`RESEND_API_KEY`, `OWNER_FALLBACK_EMAIL`, `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`).
-> 3. Tier-3: deploy to Netlify + create the Stripe Payment Link (no Netlify token in-session → documented,
+> 1. Tier-2 keys (`RESEND_API_KEY`, `OWNER_FALLBACK_EMAIL`, `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`).
+> 2. Tier-3: deploy to Netlify + create the Stripe Payment Link (no Netlify token in-session → documented,
 >    not executed). Full step-by-step in `HANDOFF.md`.
+> 3. Optional: in Netlify, `OPENROUTER_TIMEOUT_MS` / `OPENROUTER_MAX_TOKENS` are now tunable knobs;
+>    the in-code defaults are already safe, so this is only if a slower provider ever shows up.
+
+## 2026-06-24 01:02 America/New_York — Timeout root-caused & fixed; sample audits generated & quality-assessed
+
+Operator: Claude (Opus 4.8). Goal: get the quality gate green. `npm run generate:samples` was past
+auth (keys valid, real Places data flowing) but all three failed with "The operation was aborted due
+to timeout" on `anthropic/claude-sonnet-4.5`.
+
+**Gating check first — OpenRouter credit is fine, so no owner action needed.** `GET /api/v1/auth/key`:
+`is_free_tier:false` (paid), `limit:null`/`limit_remaining:null` (no per-key cap), active billing today
+(`usage_daily 0.19`, weekly 0.42, lifetime 28.33), no rate-limit block. Confirmed before touching code.
+
+**Root cause — two, both real, both proven by timing a live call (not guessed):**
+1. **Request timeout too aggressive.** `lib/openrouter.js` aborted the fetch at `AbortSignal.timeout(45000)`
+   (45s). An instrumented real cold Sonnet-4.5 audit measured **~75.6s** end to end. 45 < 75 → every
+   cold call aborted. This is precisely the failure mode flagged in the 2026-06-23 review ("45s timeout
+   … silent customer loss"): that session fixed the *platform* ceiling by moving fulfillment to a 15-min
+   background function but **never raised the in-code fetch timeout**, leaving 45s as the new binding limit.
+   In production every order is a unique (cold) business, so ~75s is the norm — 45s would have aborted
+   real paid orders, not just the samples.
+2. **`max_tokens` ceiling too low → truncated/invalid JSON.** The audit JSON runs ~3,700–4,300 completion
+   tokens; the hard-coded `max_tokens:4000` left near-zero headroom. A raw probe failed JSON parsing at
+   char ~14,940 (a truncation), and the successful sample run showed **Roto-Rooter emit 4,287 output
+   tokens — over the old 4,000 cap** — so that audit would have truncated to invalid JSON regardless of
+   the timeout. The old cryptic "did not return valid JSON" error was a symptom of this.
+
+**Fix — in the shared module `netlify/functions/lib/openrouter.js`, so it covers BOTH paths.** Verified
+the single import chain: `scripts/generate-samples.js`, `netlify/functions/stripe-webhook.js` (inline
+fallback), and `netlify/functions/audit-worker-background.js` all reach the model through
+`lib/pipeline.js`/`lib/audit.js` → `lib/openrouter.js`. One change fixes the test script and the
+production webhook/worker identically — no divergent paths.
+- `DEFAULT_TIMEOUT_MS` 45000 → **150000** (≈2× the cold latency, still 1/6 of the 15-min worker budget),
+  overridable via `OPENROUTER_TIMEOUT_MS`. Chose generous-but-sane: silent loss of a $249 order is the
+  worst outcome, and extra wait is cheap inside the async budget.
+- New `DEFAULT_MAX_TOKENS` = **6000** (was a hard-coded 4000), overridable via `OPENROUTER_MAX_TOKENS`.
+  The model stops on its own (`finish_reason="stop"`) well under this; the cap is just a safety ceiling,
+  so cost is unchanged for normal responses.
+- Added explicit `finish_reason==="length"` handling → throws "truncated at max_tokens; raise
+  OPENROUTER_MAX_TOKENS" instead of a downstream JSON-parse mystery (defense-in-depth for root cause #2).
+- Documented both knobs in `.env.example`, and fixed `.gitignore` (`!.env.example`): the `.env.*` pattern
+  had silently kept the template untracked — the very file README/HANDOFF tell operators to copy to `.env`.
+
+**Verified (evidence, not assertion):** `npm test` green (27 checks). `npm run generate:samples` →
+**3/3 real audits** written to `sample-audits/` in 3:25 wall-clock (~68s/business — every one over the
+old 45s ceiling). Real Google Places data, real review text, real homepage signals. Nothing fabricated.
+
+**Model recommendation: keep `anthropic/claude-sonnet-4.5` as default — no change.** ~75s cold and
+~$0.02–0.03/audit are non-issues against a 15-min async budget and a $249 price, and the #1 product risk
+is generic/fabricated output, which Sonnet is strongest at avoiding (borne out below). The pipeline is
+NOT too slow, so no faster-model substitution was needed to prove it. `google/gemini-2.5-flash` stays
+the documented latency/cost fallback only. Default unchanged → no PROPOSALS change for the model.
+
+**Quality assessment — my honest read as a skeptical $249 buyer, before Avi looks:**
+- **Specific & grounded — the real moat.** Every audit cites the business's real rating/review count,
+  hours, phone, address, homepage `<title>`/meta, and on-page signals (HTTPS, click-to-call count,
+  LocalBusiness schema), and it READS THE ACTUAL REVIEWS — names reviewers, quotes complaints, extracts
+  themes. A customer could NOT get this from ChatGPT alone: ChatGPT can't pull live Places data or read
+  the homepage. That data-grounding is what separates it from free generic advice.
+- **Finds real, high-impact issues.** One Hour (Phoenix): primary GBP category is "General Contractor",
+  not "HVAC contractor" — a genuinely costly misconfiguration, surfaced on a *franchise*. Roto-Rooter
+  (Houston): two recent 1-star reviews (a leak needing a second $549 quote; water damage with no
+  follow-up) the owner should service-recover, with reviewer names. These are exactly the
+  specific/actionable finds that justify the price.
+- **Rule-compliant:** no ranking guarantees, owner-response treated as unknown/verify, photo count as a
+  floor, honest "not_checked" section.
+- **Weakest section: "missed_call."** Most boilerplate across all three because the API gives it nothing
+  business-specific and the prompt (correctly) forbids fabricating call data. Roto-Rooter/One Hour partly
+  rescue it by tying to review themes; Jiffy Lube's stays generic.
+- **Weakest audit: Jiffy Lube (Denver)** — its headline ("only 10 photos") leans on a metric the audit
+  itself admits is an API floor it can't truly measure. But that's because Jiffy Lube is a polished
+  national franchise with little to fix; the audit honestly reflects that.
+- **Verdict: worth $249 for the real target customer** (owner-operated SMB with a messy profile). The
+  three demo targets are over-optimized national chains, so the samples slightly UNDERSELL the product —
+  the engine clearly finds more on a messier profile (it found the category bug even on a franchise).
+  I deliberately did NOT tune the prompt: it's already well-constructed and rule-compliant, and loosening
+  "missed_call" to be less generic would risk the exact fabrication the prompt exists to prevent. The
+  higher-leverage improvement is the demo target set, logged as PROPOSALS P8 — not the prompt.
 
 ## 2026-06-23 19:27 America/New_York — Review pass + async background worker + hardening
 

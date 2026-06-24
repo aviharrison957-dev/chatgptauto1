@@ -1,0 +1,221 @@
+{
+  "business_name": "Roto-Rooter Plumbing & Water Cleanup",
+  "audit_headline": "With 3,653 reviews at 4.7 stars, the profile is strong, but two of the five most recent reviews cite unresolved issues and poor follow-up—addressing service-recovery response patterns is the single highest-impact opportunity.",
+  "summary": "Roto-Rooter Plumbing & Water Cleanup in Houston has a solid Google Business Profile foundation: 3,653 reviews at 4.7 stars, 24/7 hours listed, primary category set to Plumber, and a professional website with all technical signals in place. However, the most recent reviews reveal a critical pattern—two 1-star reviews (from 2 and 3 months ago) describe unresolved problems and lack of follow-up, while three 5-star reviews praise responsiveness and professionalism. This inconsistency in service recovery is visible to every prospect reading the profile and represents the biggest trust risk in an otherwise well-optimized presence.",
+  "snapshot": [
+    {
+      "label": "Google Rating",
+      "value": "4.7 stars (3,653 reviews)",
+      "state": "good"
+    },
+    {
+      "label": "Recent Review Themes",
+      "value": "Mixed: responsiveness praised in 3 reviews, follow-up failures cited in 2",
+      "state": "warn"
+    },
+    {
+      "label": "Hours Listed",
+      "value": "Open 24 hours, all 7 days",
+      "state": "good"
+    },
+    {
+      "label": "Website Technical Signals",
+      "value": "HTTPS, mobile-ready, 5 click-to-call links, LocalBusiness schema present",
+      "state": "good"
+    },
+    {
+      "label": "Profile Photos",
+      "value": "10 or more visible",
+      "state": "neutral"
+    },
+    {
+      "label": "Primary Category",
+      "value": "Plumber",
+      "state": "good"
+    }
+  ],
+  "sections": [
+    {
+      "key": "gbp",
+      "title": "Google Business Profile",
+      "summary": "The profile is complete and accurate: primary category is Plumber, 24/7 hours are listed for all seven days, phone and website are present, and at least 10 photos are visible. The profile is marked as a physical location rather than service-area-only, which is appropriate for a storefront at 3403 North Sam Houston Pkwy W.",
+      "findings": [
+        {
+          "observation": "Primary category is set to Plumber, which correctly matches the core service offering and is the strongest relevance signal for plumbing searches in Houston.",
+          "severity": "ok",
+          "recommendation": ""
+        },
+        {
+          "observation": "Hours show 'Open 24 hours' for all seven days, which is a critical trust signal for emergency plumbing and aligns with the 24/7 messaging on the website.",
+          "severity": "ok",
+          "recommendation": ""
+        },
+        {
+          "observation": "The profile lists seven categories including 'store', 'general_contractor', and 'supplier' in addition to 'plumber'—this breadth may dilute relevance for core plumbing searches.",
+          "severity": "low",
+          "recommendation": "Review the secondary categories in the Google Business Profile editor and remove any that do not directly serve customer search intent for your primary plumbing and water cleanup services. Keep only categories that reflect services you actively promote."
+        },
+        {
+          "observation": "At least 10 photos are visible on the profile (the API caps visibility at 10, so the true count may be higher), which provides visual proof of the business.",
+          "severity": "ok",
+          "recommendation": ""
+        }
+      ]
+    },
+    {
+      "key": "reviews",
+      "title": "Reviews & Reputation",
+      "summary": "With 3,653 reviews at 4.7 stars, the profile has strong volume and a solid rating. However, the five most recent reviews reveal a critical inconsistency: three 5-star reviews praise technician professionalism and responsiveness, while two 1-star reviews (from 2 and 3 months ago) describe unresolved issues, lack of follow-up, and additional damage—this visible pattern undermines trust for prospects reading the profile today.",
+      "findings": [
+        {
+          "observation": "The business has 3,653 reviews at 4.7 stars, which is exceptional volume and a strong rating for a plumber in Houston—this is a significant trust and ranking asset.",
+          "severity": "ok",
+          "recommendation": ""
+        },
+        {
+          "observation": "Three of the five most recent reviews (5-star ratings from 1 and 5 months ago) specifically mention responsiveness, professionalism, and technician knowledge—these are strong positive signals.",
+          "severity": "ok",
+          "recommendation": ""
+        },
+        {
+          "observation": "Two of the five most recent reviews (1-star ratings from 2 and 3 months ago) describe unresolved problems: one cites a leak that wasn't fixed and required a second $549 quote, the other describes water damage, displacement, and lack of follow-up after mitigation work—both reviews explicitly mention poor communication and lack of meaningful engagement.",
+          "severity": "high",
+          "recommendation": "Implement a service-recovery protocol for any job where a customer reports an unresolved issue or requests follow-up. Assign a manager to personally contact the customer within 24 hours, document the resolution attempt, and follow up in writing. This pattern is visible to every prospect and directly impacts conversion."
+        },
+        {
+          "observation": "The Google Places API does not reveal whether the business has responded to reviews, so it is unknown whether the two critical 1-star reviews received owner replies.",
+          "severity": "medium",
+          "recommendation": "Log into the Google Business Profile and verify whether you have responded to the two recent 1-star reviews (from Modern Management LLC and Hadassah Maples). If not, post a professional, empathetic response acknowledging the issue and offering a direct contact for resolution. Then establish a process to respond to every review—especially critical ones—within 48 hours."
+        },
+        {
+          "observation": "The most recent review visible in the data is from 2 months ago, indicating ongoing review activity, which supports profile freshness and relevance.",
+          "severity": "ok",
+          "recommendation": ""
+        }
+      ]
+    },
+    {
+      "key": "website",
+      "title": "Website & Conversion Signals",
+      "summary": "The website at rotorooter.com/houston is technically sound: HTTPS is enabled, the homepage title includes 'Plumber in Houston, TX', there are 5 click-to-call links, LocalBusiness structured data is present, and the site is mobile-ready. All core local-search and conversion signals are in place.",
+      "findings": [
+        {
+          "observation": "The homepage title is 'Trusted, Expert Plumber in Houston, TX | Roto-Rooter', which includes both the trade (Plumber) and the city (Houston, TX)—this is a strong relevance signal for local search.",
+          "severity": "ok",
+          "recommendation": ""
+        },
+        {
+          "observation": "The site uses HTTPS, has a mobile viewport meta tag, and includes LocalBusiness structured data, which are recognized technical best practices for local search and user trust.",
+          "severity": "ok",
+          "recommendation": ""
+        },
+        {
+          "observation": "There are 5 click-to-call (tel:) links on the homepage, making it easy for mobile users to initiate a call—this is critical for emergency plumbing conversion.",
+          "severity": "ok",
+          "recommendation": ""
+        },
+        {
+          "observation": "The site has 2 forms in addition to the phone links, providing multiple conversion paths for users who prefer not to call immediately.",
+          "severity": "ok",
+          "recommendation": ""
+        }
+      ]
+    },
+    {
+      "key": "missed_call",
+      "title": "Call Handling & Response Time",
+      "summary": "For emergency plumbing, every missed call is lost revenue. The profile lists 24/7 hours and the website shows 5 click-to-call links, but this audit cannot measure your actual answer rate, hold times, or after-hours call handling.",
+      "findings": [
+        {
+          "observation": "The profile advertises 'Open 24 hours' for all seven days, and the website homepage states '24/7 plumbing services'—this sets a customer expectation that calls will be answered around the clock.",
+          "severity": "medium",
+          "recommendation": "Call your own business line (713) 470-0080 after hours and on weekends to verify that calls are answered live or routed to a service that can book jobs immediately. If calls go to voicemail, you are losing emergency jobs to competitors who answer. Document your test and address any gaps in live coverage."
+        },
+        {
+          "observation": "The two recent 1-star reviews both mention lack of follow-up and difficulty getting responses after the initial service—this suggests a gap in post-service communication, which can also apply to inbound call follow-up.",
+          "severity": "medium",
+          "recommendation": "Implement a missed-call text-back system or a callback protocol so that any unanswered call receives a response within 15 minutes during business hours and within 30 minutes after hours. Track callback time as a key metric and tie it to the service-recovery process."
+        },
+        {
+          "observation": "Plumbing is a high-intent, high-urgency trade where prospects typically call 2-3 competitors and book with the first to answer—this is a general industry pattern, not a claim about this business's performance.",
+          "severity": "medium",
+          "recommendation": "If you do not already track answer rate and time-to-answer, add basic call tracking or ask your phone provider for a report. Aim to answer 90%+ of calls within 3 rings during the hours you advertise as open. Display a response-time promise on your website (e.g. 'We answer live 24/7' or 'Calls returned within 15 minutes') to differentiate from competitors."
+        }
+      ]
+    }
+  ],
+  "fix_list": [
+    {
+      "rank": 1,
+      "action": "Verify you have responded to the two recent 1-star reviews (Modern Management LLC, Hadassah Maples) and post empathetic, solution-focused replies if you have not.",
+      "rationale": "Two of the five most recent reviews describe unresolved issues and lack of follow-up—these are the first reviews prospects see, and a visible owner response demonstrates accountability and can recover trust. This is a high-impact, quick action.",
+      "where": "Google Business Profile -> Reviews tab -> Find the two 1-star reviews from 2-3 months ago -> Click 'Reply'",
+      "impact": "high",
+      "effort": "quick"
+    },
+    {
+      "rank": 2,
+      "action": "Implement a service-recovery protocol: assign a manager to personally contact any customer who reports an unresolved issue within 24 hours and document the resolution attempt.",
+      "rationale": "The two 1-star reviews explicitly cite lack of follow-up and unresolved problems after the initial service. This pattern is visible to prospects and directly undermines the positive responsiveness themes in the 5-star reviews. Fixing the internal process prevents future reputation damage.",
+      "where": "Internal operations: create a checklist or CRM trigger for any job where a customer requests follow-up or reports dissatisfaction. Assign a specific manager as the escalation contact.",
+      "impact": "high",
+      "effort": "moderate"
+    },
+    {
+      "rank": 3,
+      "action": "Call your own business line (713) 470-0080 after hours and on weekends to verify live answer or immediate callback capability.",
+      "rationale": "You advertise 'Open 24 hours' on the profile and '24/7 plumbing services' on the website. If calls go to voicemail or are not answered promptly, you are losing emergency jobs. This is a quick self-check with high revenue impact.",
+      "where": "Use a personal phone or ask a friend to call (713) 470-0080 at 9 PM on a weekday and on a Sunday morning. Document what happens.",
+      "impact": "high",
+      "effort": "quick"
+    },
+    {
+      "rank": 4,
+      "action": "Set up a missed-call text-back system or callback protocol so any unanswered call receives a response within 15 minutes during business hours and 30 minutes after hours.",
+      "rationale": "The two 1-star reviews mention difficulty getting follow-up, and plumbing is a high-urgency trade where speed-to-response wins jobs. A text-back system is a recognized best practice for local service businesses and can be implemented with most phone systems or third-party tools.",
+      "where": "Contact your phone provider or search for 'missed call text back service' to add this feature to (713) 470-0080. Many VoIP and call-tracking platforms include this as a standard feature.",
+      "impact": "high",
+      "effort": "moderate"
+    },
+    {
+      "rank": 5,
+      "action": "Establish a process to respond to every Google review—especially 1-star and 2-star reviews—within 48 hours.",
+      "rationale": "With 3,653 reviews, ongoing review response is a trust signal for prospects and a relevance signal for Google. The two recent 1-star reviews are the most urgent, but a consistent response habit prevents future gaps.",
+      "where": "Google Business Profile -> Reviews tab. Set a recurring calendar reminder (e.g. every Monday and Thursday) to check for new reviews and reply. Assign this task to a specific team member.",
+      "impact": "medium",
+      "effort": "quick"
+    },
+    {
+      "rank": 6,
+      "action": "Review the secondary categories on your Google Business Profile and remove 'store', 'supplier', and any others that do not reflect services you actively promote to plumbing customers.",
+      "rationale": "The profile lists seven categories including 'store' and 'supplier', which may dilute relevance for core plumbing searches. Keeping only categories that match customer search intent is a recognized local-search best practice.",
+      "where": "Google Business Profile -> Edit profile -> Categories section. Keep 'Plumber' as primary and remove any secondary categories that do not match services you want to be found for.",
+      "impact": "low",
+      "effort": "quick"
+    },
+    {
+      "rank": 7,
+      "action": "Add a visible response-time promise to your website homepage (e.g. 'We answer live 24/7' or 'Calls returned within 15 minutes') to differentiate from competitors.",
+      "rationale": "The website has strong technical signals and 5 click-to-call links, but does not display a specific response-time commitment. In emergency plumbing, a visible promise can increase call conversion and set clear customer expectations.",
+      "where": "Contact your website team or developer and ask them to add a response-time statement near the phone number in the header or hero section of rotorooter.com/houston.",
+      "impact": "medium",
+      "effort": "moderate"
+    },
+    {
+      "rank": 8,
+      "action": "If you do not already track answer rate and time-to-answer, request a call report from your phone provider or add basic call tracking to measure performance against your 24/7 promise.",
+      "rationale": "You cannot improve what you do not measure. Tracking answer rate and speed-to-answer allows you to identify gaps in live coverage and hold your team accountable to the 24/7 standard you advertise.",
+      "where": "Contact your phone provider (the carrier for 713-470-0080) and ask for a monthly report showing total calls, answered calls, and average answer time. Alternatively, search for 'call tracking for local service business' to add a tracking layer.",
+      "impact": "medium",
+      "effort": "moderate"
+    }
+  ],
+  "not_checked": [
+    "Whether you have posted owner responses to the two recent 1-star reviews—the Google Places API does not reveal this. Log into your Google Business Profile and check the Reviews tab to verify.",
+    "Your actual call answer rate, hold times, and after-hours call handling—this audit cannot measure these. Call your own number after hours and on weekends to test, or request a call report from your phone provider.",
+    "The true total photo count on your profile—the API shows 10 or more, but the exact count is not exposed. Log into your Google Business Profile to see the full gallery.",
+    "Whether the website displays a response-time promise or service guarantee—the homepage text snippet does not show this level of detail. Visit rotorooter.com/houston and review the hero section and contact area to confirm.",
+    "Your current process for following up with customers who report unresolved issues—this is an internal operations question. Review your CRM, dispatch notes, or customer service logs to document how these cases are currently handled."
+  ],
+  "closing_note": "Roto-Rooter Houston has a strong foundation—3,653 reviews, a 4.7 rating, and a technically sound web presence. The highest-leverage opportunity is addressing the service-recovery and follow-up gaps visible in the two recent 1-star reviews, which are the first impression for every prospect reading your profile today. The fixes above are recognized local-search and customer-service best practices; none guarantee rankings or revenue, but each removes a specific friction point that is costing you trust and calls right now."
+}

@@ -1,0 +1,176 @@
+{
+  "business_name": "Jiffy Lube",
+  "audit_headline": "With 2,687 reviews at 4.6 stars, this Jiffy Lube has exceptional social proof but only 10 visible photos on its Google Business Profile—adding more customer-facing images of the team and facility would strengthen trust for searchers comparing shops.",
+  "summary": "This Jiffy Lube location at 5869 Leetsdale Dr in Denver has built a strong local reputation with 2,687 reviews and a 4.6-star rating. The Google Business Profile is complete with accurate hours, phone, and website, and the primary category 'Car repair and maintenance service' fits the business. The website is technically sound with HTTPS, mobile optimization, LocalBusiness schema, and click-to-call. The main opportunity is visual: only 10 photos are visible on the profile, and recent reviews consistently praise staff professionalism and service speed—images showcasing the team and the drive-through service bay would give searchers the confidence these reviews describe.",
+  "snapshot": [
+    {
+      "label": "Google Rating",
+      "value": "4.6 stars (2,687 reviews)",
+      "state": "good"
+    },
+    {
+      "label": "Profile Completeness",
+      "value": "Hours, phone, website present",
+      "state": "good"
+    },
+    {
+      "label": "Visible Photos",
+      "value": "10 or more",
+      "state": "warn"
+    },
+    {
+      "label": "Recent Review Activity",
+      "value": "Last review a month ago",
+      "state": "good"
+    },
+    {
+      "label": "Website Technical Health",
+      "value": "HTTPS, mobile-ready, schema present",
+      "state": "good"
+    },
+    {
+      "label": "Local SEO Signals",
+      "value": "Title includes trade + city",
+      "state": "good"
+    }
+  ],
+  "sections": [
+    {
+      "key": "gbp",
+      "title": "Google Business Profile",
+      "summary": "The profile is accurate and complete with the correct primary category, full hours for all seven days, and contact details. The main gap is visual content—only 10 photos are visible, which is the API floor and likely means limited variety for searchers.",
+      "findings": [
+        {
+          "observation": "Only 10 photos are visible on the profile (the API exposes a maximum of 10, so the actual count may be 10 or slightly more). For a high-volume shop with 2,687 reviews, this is a missed opportunity to visually convey the professionalism and efficiency that recent reviews highlight.",
+          "severity": "medium",
+          "recommendation": "Add 15-20 new photos over the next month: team members at work, the drive-through service bay, before-and-after shots of common services (oil change, tire rotation), and exterior signage. Prioritize images that show faces and the customer experience, since reviews emphasize staff friendliness and speed."
+        },
+        {
+          "observation": "The primary category is 'Car repair and maintenance service,' which accurately reflects the business and aligns with the services described in reviews (oil changes, transmission service, spark plugs, tire rotation, brake checks).",
+          "severity": "ok",
+          "recommendation": ""
+        },
+        {
+          "observation": "Hours are listed for all seven days (Monday-Friday 7:30 AM – 7:00 PM, Saturday 7:30 AM – 6:00 PM, Sunday 9:00 AM – 4:00 PM), and the profile correctly shows this is a storefront location, not a service-area business.",
+          "severity": "ok",
+          "recommendation": ""
+        },
+        {
+          "observation": "Phone number (303) 329-3402 and website https://www.jiffylube.com/locations/co/denver/164 are both present on the profile.",
+          "severity": "ok",
+          "recommendation": ""
+        }
+      ]
+    },
+    {
+      "key": "reviews",
+      "title": "Reviews & Reputation",
+      "summary": "With 2,687 reviews at 4.6 stars, this location has built exceptional volume and quality. The five most recent reviews (from a month to five months ago) are all 5-star and share consistent themes: staff professionalism, speed of service, and honest recommendations without hard selling.",
+      "findings": [
+        {
+          "observation": "The 4.6-star rating across 2,687 reviews is strong for the auto service category and provides significant trust signals. The most recent review is from a month ago, indicating ongoing customer engagement.",
+          "severity": "ok",
+          "recommendation": ""
+        },
+        {
+          "observation": "All five recent reviews are 5-star and mention specific staff members by name (Ricardo, Deontay), praise the speed ('in and out in 15 minutes,' 'in no time'), and highlight honest service ('made suggestions without a hard sell,' 'really appreciated their honesty'). These themes are powerful differentiators for a quick-service shop.",
+          "severity": "ok",
+          "recommendation": ""
+        },
+        {
+          "observation": "The Google Places API does not reveal whether the owner has responded to reviews. Responding to reviews—especially detailed positive ones that name staff—reinforces the customer relationship and signals active management to searchers reading the profile.",
+          "severity": "medium",
+          "recommendation": "Log into the Google Business Profile and check whether recent reviews have owner responses. If not, begin responding to new reviews within 24-48 hours with a brief, personalized thank-you that acknowledges specific details (e.g., 'Thanks for recognizing Ricardo and Deontay—we'll pass along your kind words'). This is a recognized trust signal in local search."
+        }
+      ]
+    },
+    {
+      "key": "website",
+      "title": "Website & Online Presence",
+      "summary": "The website at jiffylube.com/locations/co/denver/164 is technically sound and includes the core local-search signals: HTTPS, mobile viewport, LocalBusiness structured data, and click-to-call. The homepage title 'Quick Oil Change at 5869 Leetsdale Dr in Denver, CO | Jiffy Lube' includes both the service type and the city.",
+      "findings": [
+        {
+          "observation": "The homepage <title> tag reads 'Quick Oil Change at 5869 Leetsdale Dr in Denver, CO | Jiffy Lube' (64 characters), which includes the trade ('Oil Change') and the city ('Denver, CO'). This aligns with the primary category 'Car repair and maintenance service' and the actual address.",
+          "severity": "ok",
+          "recommendation": ""
+        },
+        {
+          "observation": "The site uses HTTPS, has a mobile viewport meta tag, includes LocalBusiness structured data, and has one click-to-call link. These are recognized relevance and usability signals for local service businesses.",
+          "severity": "ok",
+          "recommendation": ""
+        },
+        {
+          "observation": "The meta description reads '15-minute oil changes, brake inspection & battery replacement in Denver, CO. See full services, business hours, & more!' which reinforces the speed theme from reviews and includes the city.",
+          "severity": "ok",
+          "recommendation": ""
+        }
+      ]
+    },
+    {
+      "key": "missed_call",
+      "title": "Call Handling & Contact Path",
+      "summary": "For a quick-service auto shop, inbound calls are critical—customers often call to confirm hours, ask about wait times, or get pricing before driving over. The website has click-to-call, and the phone number is prominent on the Google profile, but the business cannot measure its own answer rate without a self-check.",
+      "findings": [
+        {
+          "observation": "The phone number (303) 329-3402 is listed on both the Google Business Profile and the website, and the website includes a click-to-call link. However, this audit cannot verify the business's call answer rate, voicemail setup, or after-hours handling.",
+          "severity": "medium",
+          "recommendation": "Call your own number after hours and on a busy weekday afternoon to confirm the voicemail message is professional, mentions the business name and hours, and sets an expectation for callback timing. If calls go unanswered during posted hours, consider a missed-call text-back system or a brief hold message that acknowledges wait times during peak periods (e.g., Saturday mornings)."
+        },
+        {
+          "observation": "Quick-service auto shops often see call volume spike around opening time and lunch hours, and customers may hang up if they reach voicemail or a long hold. A clear response-time promise on the website or voicemail ('We'll call you back within 2 hours') can reduce abandonment, but this audit cannot confirm whether one is in place.",
+          "severity": "low",
+          "recommendation": "If not already present, add a brief response-time statement to the contact section of the website and the voicemail greeting (e.g., 'We return calls within 2 hours during business hours'). This manages expectations and reduces the chance a caller tries a competitor next."
+        }
+      ]
+    }
+  ],
+  "fix_list": [
+    {
+      "rank": 1,
+      "action": "Add 15-20 new photos to the Google Business Profile, focusing on team members, the drive-through service bay, and common services in progress.",
+      "rationale": "Only 10 photos are visible, and recent reviews consistently praise staff professionalism and speed. Visual content showing the team and the service process will strengthen trust for searchers comparing shops and reinforce the themes in the 2,687 reviews.",
+      "where": "Google Business Profile -> Photos tab -> Upload photos (use the Google Business Profile app or desktop manager)",
+      "impact": "high",
+      "effort": "moderate"
+    },
+    {
+      "rank": 2,
+      "action": "Check whether recent reviews have owner responses, and begin responding to new reviews within 24-48 hours with personalized thank-yous.",
+      "rationale": "The API does not reveal response status, but responding to reviews—especially the detailed 5-star ones that name staff—is a recognized trust signal and reinforces the customer relationship. This location has exceptional review volume (2,687) and quality (4.6 stars), so engagement is a high-leverage activity.",
+      "where": "Google Business Profile -> Reviews tab -> Reply to each review",
+      "impact": "high",
+      "effort": "quick"
+    },
+    {
+      "rank": 3,
+      "action": "Call your own business number after hours and during a busy period to verify voicemail quality and answer rate.",
+      "rationale": "The phone number is prominent on the profile and website, but this audit cannot measure call handling. Quick-service auto shops lose customers to competitors if calls go unanswered or voicemail is unclear. A self-check ensures the first contact experience matches the professionalism in the reviews.",
+      "where": "Call (303) 329-3402 from a personal phone after 7 PM on a weekday and around 10 AM on a Saturday",
+      "impact": "medium",
+      "effort": "quick"
+    },
+    {
+      "rank": 4,
+      "action": "Add a response-time promise to the website contact section and voicemail greeting (e.g., 'We return calls within 2 hours during business hours').",
+      "rationale": "Managing callback expectations reduces the chance a caller tries a competitor next, especially during peak periods. This is a low-effort addition that supports the 'in and out in no time' speed theme from reviews.",
+      "where": "Website contact page and voicemail system settings",
+      "impact": "medium",
+      "effort": "quick"
+    },
+    {
+      "rank": 5,
+      "action": "If not already in place, set up a missed-call text-back system or hold message that acknowledges wait times during peak hours.",
+      "rationale": "Quick-service shops often see call spikes on Saturday mornings and around opening time. A brief hold message or automated text ('We see your call—we'll get back to you within 2 hours') reduces abandonment and signals responsiveness, which aligns with the 'professional' and 'efficient' themes in recent reviews.",
+      "where": "Phone system settings or a third-party missed-call service (e.g., Hiya, CallRail, or carrier voicemail-to-text)",
+      "impact": "medium",
+      "effort": "moderate"
+    }
+  ],
+  "not_checked": [
+    "Whether the owner has responded to recent reviews—the Google Places API does not expose response status. Log into the Google Business Profile and check the Reviews tab to verify.",
+    "The business's actual call answer rate and voicemail setup—this audit cannot measure call handling. Call your own number after hours and during a busy period to confirm the experience.",
+    "Whether the business uses any call-tracking or missed-call alert system—this is not visible in public data. Check with your phone provider or any third-party services you may have set up.",
+    "The total number of photos on the profile beyond the 10 visible in the API—Google caps the API response at 10. Log into the Google Business Profile to see the full photo library and upload history."
+  ],
+  "closing_note": "This Jiffy Lube location has built a strong foundation with 2,687 reviews at 4.6 stars, a complete profile, and a technically sound website. The highest-leverage next step is adding visual content that matches the professionalism and speed customers describe in reviews, followed by consistent review engagement and a quick self-check of call handling. These are recognized local-search best practices, though no audit can guarantee ranking outcomes or lead volume."
+}

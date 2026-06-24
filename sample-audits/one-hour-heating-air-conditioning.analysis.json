@@ -1,0 +1,191 @@
+{
+  "business_name": "One Hour Heating & Air Conditioning",
+  "audit_headline": "Your Google Business Profile lists your primary category as 'General Contractor' instead of an HVAC-specific category, which directly undermines your visibility when Phoenix homeowners search for heating and air conditioning services.",
+  "summary": "One Hour Heating & Air Conditioning has built an exceptional reputation with a perfect 5.0 rating from 442 reviews and operates 24/7 as shown in your profile. However, your Google Business Profile is categorized as 'General Contractor' rather than an HVAC trade category, which means you're competing in the wrong search results. Your website is solid with HTTPS, mobile optimization, and click-to-call, but it's missing LocalBusiness structured data that helps Google connect your site to your service area.",
+  "snapshot": [
+    {
+      "label": "Primary Category",
+      "value": "General Contractor",
+      "state": "bad"
+    },
+    {
+      "label": "Rating & Reviews",
+      "value": "5.0 (442 reviews)",
+      "state": "good"
+    },
+    {
+      "label": "Hours Listed",
+      "value": "24/7 shown",
+      "state": "good"
+    },
+    {
+      "label": "LocalBusiness Schema",
+      "value": "Missing",
+      "state": "warn"
+    }
+  ],
+  "sections": [
+    {
+      "key": "gbp",
+      "title": "Google Business Profile",
+      "summary": "Your profile shows complete hours (24/7), a phone number, and a website link, but the primary category is fundamentally misaligned with your HVAC business.",
+      "findings": [
+        {
+          "observation": "Your primary category is set to 'General Contractor' instead of an HVAC-specific category like 'HVAC contractor' or 'Heating contractor.' This is the single most damaging issue because Google uses the primary category to determine which searches show your business — you're currently competing with remodelers and builders instead of appearing when someone searches 'AC repair Phoenix' or 'furnace installation near me.'",
+          "severity": "high",
+          "recommendation": "Change your primary category to 'HVAC contractor' immediately. This is a recognized relevance signal that directly affects which search queries trigger your Map listing."
+        },
+        {
+          "observation": "Your profile shows 10 or more photos (the API exposes a minimum of 10), and your recent reviews mention specific technicians by name (Zane, Cory, Daphne, Chad), which suggests you have team photos and service documentation available.",
+          "severity": "medium",
+          "recommendation": "Add 20-30 more photos showing your technicians at work, your trucks with branding, before/after HVAC installations, and your team. Fresh photos are a known trust signal and help homeowners recognize your trucks in their neighborhood."
+        },
+        {
+          "observation": "Your profile is not marked as a service-area business despite operating across the Phoenix metro (your reviews mention Ahwatukee, Buckeye, Goodyear, and other cities). Your physical address is listed as '9831 S 51st St Ste D133,' which appears to be an office suite.",
+          "severity": "medium",
+          "recommendation": "If this suite address is not a customer-facing storefront, convert your profile to a service-area business and define your service areas (Phoenix metro cities). This prevents confusion and ensures you appear in searches across all the areas you serve, not just near the suite."
+        },
+        {
+          "observation": "Your profile does not show a business description or services list in the data provided. HVAC businesses benefit from listing specific services (AC repair, furnace installation, duct cleaning, emergency service) because Google matches these to search queries.",
+          "severity": "low",
+          "recommendation": "Add a business description that includes 'HVAC,' 'heating,' 'air conditioning,' and 'Phoenix' in natural sentences. Add your specific services (AC repair, furnace installation, duct cleaning, 24/7 emergency) to the Services section."
+        }
+      ]
+    },
+    {
+      "key": "reviews",
+      "title": "Reviews & Reputation",
+      "summary": "Your 5.0 rating from 442 reviews is exceptional and rare in the HVAC trade. The five recent reviews available span 2-5 months ago and consistently mention technician professionalism and honesty.",
+      "findings": [
+        {
+          "observation": "You have 442 total reviews with a perfect 5.0 rating. The five recent reviews provided are all 5-star and were posted between 2 and 5 months ago. Three of the five reviews specifically name technicians (Zane, Cory, Daphne, Chad) and praise their professionalism, and two reviews emphasize that technicians did not upsell or push unnecessary services.",
+          "severity": "ok",
+          "recommendation": ""
+        },
+        {
+          "observation": "The Google Places API does not reveal whether you respond to reviews. Owner responses are a recognized engagement signal and show prospective customers that you're attentive.",
+          "severity": "medium",
+          "recommendation": "Check your Google Business Profile to confirm you're responding to reviews — especially the detailed positive ones that mention technicians by name. If you're not responding, start with a simple thank-you that acknowledges the specific technician or detail the reviewer mentioned."
+        },
+        {
+          "observation": "Your review velocity appears steady (five reviews across a 3-month window), but HVAC businesses with 24/7 emergency service often generate more frequent reviews during peak cooling season (summer in Phoenix).",
+          "severity": "low",
+          "recommendation": "After every completed job, send a follow-up text or email with a direct link to leave a Google review. Consistent review flow helps maintain visibility and freshness in local search."
+        }
+      ]
+    },
+    {
+      "key": "website",
+      "title": "Website & Online Presence",
+      "summary": "Your website at onehourheatandair.com/west-valley uses HTTPS, is mobile-optimized, and includes five click-to-call links, but it's missing a key technical signal that ties your site to your Phoenix service area.",
+      "findings": [
+        {
+          "observation": "Your homepage title is 'Phoenix HVAC Services | One Hour Heating & Air Conditioning® of West Valley,' which includes both your trade (HVAC) and your city (Phoenix). The page has five click-to-call links and is mobile-responsive.",
+          "severity": "ok",
+          "recommendation": ""
+        },
+        {
+          "observation": "Your website does not include LocalBusiness structured data (JSON-LD schema). This is a recognized technical signal that helps Google understand your business name, phone number, address, service area, and hours in a machine-readable format, and it reinforces the connection between your website and your Google Business Profile.",
+          "severity": "medium",
+          "recommendation": "Add LocalBusiness schema to your homepage. Include your business name, phone number, address, service areas (Phoenix metro cities), hours (24/7), and a link to your Google profile. This is a best practice for local service businesses."
+        },
+        {
+          "observation": "The website URL linked from your Google profile includes UTM tracking parameters (?utm_source=google&utm_medium=organic&utm_campaign=gbp_listing&utm_content=website_button), which is good for analytics but makes the link appear long and complex to users who see it.",
+          "severity": "low",
+          "recommendation": "Consider using a clean URL (onehourheatandair.com/west-valley) on your Google profile and handle UTM tagging via server-side redirects or Google Tag Manager. This is purely cosmetic but improves user trust."
+        }
+      ]
+    },
+    {
+      "key": "missed_call",
+      "title": "Missed Calls & Lead Capture",
+      "summary": "HVAC emergencies happen at night and on weekends — when a Phoenix homeowner's AC fails in July, they call the first company that answers. Your profile shows 24/7 hours, but this audit cannot measure your actual answer rate.",
+      "findings": [
+        {
+          "observation": "Your Google profile lists 24/7 hours and your website has five click-to-call links, which is strong. However, this audit cannot verify whether calls are answered after hours, routed to voicemail, or handled by an answering service. HVAC businesses report that 30-40% of emergency calls come outside standard business hours, and unanswered calls go immediately to the next company in the search results.",
+          "severity": "high",
+          "recommendation": "Call your own number at 9 PM on a weeknight and on a Sunday to verify the experience a customer gets. If calls go to voicemail after hours, set up an automated text-back system that replies within 60 seconds with 'We received your call and will respond by [time]' or route after-hours calls to an answering service that can book appointments."
+        },
+        {
+          "observation": "Your website does not prominently display a response-time promise (e.g., 'We return all calls within 1 hour' or 'Same-day emergency service'). Two of your recent reviews specifically praise responsiveness and honesty, which suggests this is a strength you're not advertising.",
+          "severity": "medium",
+          "recommendation": "Add a visible response-time or service-speed promise to your homepage and Google business description (e.g., 'Emergency service within 2 hours'). This differentiates you from competitors and sets customer expectations."
+        }
+      ]
+    }
+  ],
+  "fix_list": [
+    {
+      "rank": 1,
+      "action": "Change your primary Google Business Profile category from 'General Contractor' to 'HVAC contractor'",
+      "rationale": "Your primary category determines which searches show your business. 'General Contractor' makes you invisible to homeowners searching for AC repair, furnace installation, or heating service in Phoenix. This is the highest-impact fix because it directly controls your search visibility.",
+      "where": "Google Business Profile -> Edit profile -> Category (select 'HVAC contractor' as primary)",
+      "impact": "high",
+      "effort": "quick"
+    },
+    {
+      "rank": 2,
+      "action": "Test your after-hours call handling by calling (602) 638-2884 at 9 PM and on a Sunday",
+      "rationale": "Your profile shows 24/7 hours, but this audit cannot verify whether calls are answered. HVAC emergencies happen at night and on weekends, and unanswered calls go to the next company. Two of your five recent reviews mention responsiveness, so this is a known strength to protect.",
+      "where": "Call your own number after hours; if it goes to voicemail, set up auto-reply texting or an answering service",
+      "impact": "high",
+      "effort": "quick"
+    },
+    {
+      "rank": 3,
+      "action": "Add LocalBusiness structured data (JSON-LD schema) to your homepage",
+      "rationale": "Your website is missing LocalBusiness schema, which is a recognized technical signal that helps Google connect your site to your service area and business details. This reinforces the relationship between your website and your Google Business Profile.",
+      "where": "Website homepage code (add JSON-LD script in <head> or before </body>); include name, phone, address, service areas, hours, and Google profile URL",
+      "impact": "medium",
+      "effort": "moderate"
+    },
+    {
+      "rank": 4,
+      "action": "Convert your profile to a service-area business and define your service areas",
+      "rationale": "Your address is a suite (9831 S 51st St Ste D133), and your reviews mention service across Phoenix metro cities (Ahwatukee, Buckeye, Goodyear). If this is not a customer-facing storefront, marking it as a service-area business ensures you appear in searches across all areas you serve.",
+      "where": "Google Business Profile -> Edit profile -> Location settings -> 'I serve customers at their locations' -> Define service areas",
+      "impact": "medium",
+      "effort": "quick"
+    },
+    {
+      "rank": 5,
+      "action": "Verify you're responding to Google reviews, especially the detailed ones that name technicians",
+      "rationale": "The API does not show whether you respond to reviews. Owner responses are a recognized engagement signal. Three of your five recent reviews name specific technicians (Zane, Cory, Daphne, Chad), and responding with a thank-you that acknowledges the technician reinforces your team culture.",
+      "where": "Google Business Profile -> Reviews tab -> Reply to each review",
+      "impact": "medium",
+      "effort": "quick"
+    },
+    {
+      "rank": 6,
+      "action": "Add 20-30 new photos showing your technicians, trucks, and recent HVAC installations",
+      "rationale": "Your profile shows 10 or more photos, but fresh photos are a known trust signal. Your reviews mention specific technicians by name, so you have team members to feature. Photos help homeowners recognize your branded trucks and build familiarity.",
+      "where": "Google Business Profile -> Photos -> Upload (add team photos, truck photos, before/after installations)",
+      "impact": "medium",
+      "effort": "moderate"
+    },
+    {
+      "rank": 7,
+      "action": "Add a business description and services list to your Google Business Profile",
+      "rationale": "Your profile data does not show a description or services. Google matches services to search queries, so listing 'AC repair,' 'furnace installation,' 'duct cleaning,' and '24/7 emergency service' helps you appear in more relevant searches.",
+      "where": "Google Business Profile -> Edit profile -> Business description and Services section",
+      "impact": "medium",
+      "effort": "quick"
+    },
+    {
+      "rank": 8,
+      "action": "Add a response-time promise to your homepage and Google description",
+      "rationale": "Two of your five recent reviews praise responsiveness and honesty, but your website does not advertise a response-time promise. A visible commitment (e.g., 'Emergency service within 2 hours') differentiates you and sets customer expectations.",
+      "where": "Website homepage (add near phone number) and Google Business Profile description",
+      "impact": "low",
+      "effort": "quick"
+    }
+  ],
+  "not_checked": [
+    "Whether you respond to Google reviews — the API does not reveal this. Check your Google Business Profile -> Reviews tab to confirm you're replying to customers.",
+    "Your actual call answer rate after hours — this audit cannot measure it. Call your own number at 9 PM and on a Sunday to verify the customer experience.",
+    "Your exact photo count beyond 10 — the API caps visible photos at 10. Log into your Google Business Profile to see your full photo library.",
+    "Whether your physical address is a customer-facing storefront or an office suite — if customers do not visit this location, convert to a service-area business.",
+    "Your current Google search rankings for 'AC repair Phoenix' or similar queries — rankings fluctuate and depend on the searcher's location. Search from an incognito browser in different Phoenix neighborhoods to see where you appear."
+  ],
+  "closing_note": "Your reputation is exceptional, but your primary category is costing you visibility every day. Fixing the category to 'HVAC contractor' and adding LocalBusiness schema are the two highest-leverage changes you can make this week. The data shows you're doing the hard part — delivering great service — so make sure Google is showing you to the right searches."
+}

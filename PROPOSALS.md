@@ -65,6 +65,20 @@ Legend — Effort: S (≤1 session) · M (1–2 sessions) · L (multi-session). 
 - **Why it helps:** Natural bridge into the maintenance subscription; demonstrates value delivered.
 - **Depends on:** Storing buyer + Place ID + purchase date, and a scheduler. Overlaps with P3.
 
+### P8 — Swap the demo sample targets to owner-operated SMBs  · Effort: S
+- **Idea:** The committed `sample-audits/` were generated against three big national chains
+  (Roto-Rooter, One Hour, Jiffy Lube) because they reliably resolve in Places. They're great proof the
+  engine cites real data — but they're *over-optimized*, so the audits find less to fix and slightly
+  undersell the product. Regenerate (or add) 1–2 samples against genuinely messy owner-operated local
+  shops (the actual customer profile) to show the audit at full value.
+- **Why it helps:** Stronger sales/demo artifact: a messy profile surfaces more high-impact findings
+  (missing hours, wrong category, thin reviews, no website schema) — exactly what the buyer is paying to
+  have caught. `generate:samples` already accepts CLI targets, so this is just choosing better businesses.
+- **Why it's a proposal, not a silent change:** picking which real businesses to feature publicly is a
+  judgment/marketing call for you, and it costs a few more live model calls. The existing three are real
+  and stay as-is until you decide. **Model default is unchanged** (`anthropic/claude-sonnet-4.5` is right
+  for a $249 deliverable; see JOURNAL 2026-06-24).
+
 ---
 
 If you want any of these, say which and I'll spec + build it in a focused session. Until then the
