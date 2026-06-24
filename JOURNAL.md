@@ -23,6 +23,68 @@
 > 3. Optional: in Netlify, `OPENROUTER_TIMEOUT_MS` / `OPENROUTER_MAX_TOKENS` are now tunable knobs;
 >    the in-code defaults are already safe, so this is only if a slower provider ever shows up.
 
+## 2026-06-24 01:35 America/New_York — Re-test on REALISTIC rough targets: 5 owner-operated locals chosen (pre-generation)
+
+Operator: Claude (Opus 4.8, max effort). Goal this session: the engine was proven *honest* on 3 national
+chains (Jiffy Lube / Roto-Rooter / One Hour Heating) but those profiles are near-perfect, so the audits
+came back thin — that proved nothing about whether the product is *sellable*. The real paying customer is
+a messy, owner-operated, single-location local service business with a rough Google profile. This session
+re-tests the engine against 5 such targets and rigorously assesses quality. **No deploy, no Stripe, no
+go-live — stop at a quality verdict.** Location confirmed first (`pwd` = .../chatgptauto1, remote =
+aviharrison957-dev/chatgptauto1). Keys load from `~/.config/secrets/keys.env` (OpenRouter + Places both
+present; codex-cli 0.142.0 installed for the external audit).
+
+**Target selection was grounded in REAL Places data, not guessed.** A throwaway recon (scratchpad, not
+committed) ran Google Places Text Search across the 6 requested trades in mid-size markets (Flint, Macon,
+Toledo/Wauseon, Lakeland, Shreveport, Youngstown, Augusta, Bakersfield, Spokane…), filtered out every
+known franchise/chain brand and anything outside a low-moderate review band, then pulled full Place
+Details + the real homepage signals for a shortlist to confirm the neglect signals (photos, hours,
+website state, review recency) *before* committing. Selection criteria: single-location (serviceArea
+false, real street address), independent/owner-operated (no franchise marker), operational, ~10–80
+reviews, and visible roughness. Deliberately avoided chains, franchises, and polished profiles.
+
+**The 5 locked targets (exact Place IDs — audit runs on precisely these):**
+
+| # | Business | Trade | City | Rating / Reviews | Photos | Hours | Website state | Place ID |
+|---|----------|-------|------|------------------|--------|-------|---------------|----------|
+| 1 | Rimmer Electric | Electrician | Shreveport, LA | 4.6★ / 10 | 10 | yes | **Real site, weak** (HTTPS + click-to-call, but **no LocalBusiness schema**; reviews 3–5 yrs stale) | `ChIJaxY9zmbNNoYRQYHiAihZdtM` |
+| 2 | Watson Plumbing & Associates LLC | Plumber | Macon, GA | **4.0★** / 70 | 10+ | **no** | **None** | `ChIJLfNjOlVV8YgRiwkExQM9RGU` |
+| 3 | Jimmy Lock & Key | Locksmith | Wauseon, OH | 4.9★ / 17 | **1** | yes | **None** | `ChIJCS07CgdLPIgRSmvzQvYGdNI` |
+| 4 | Spot On Lawn Care | Lawn/Landscaping | Lakeland, FL | 5★ / 15 | 10 | yes | **Social-only** (Facebook page; "Services" miscategory; reviews ~5 yrs stale) | `ChIJn2q7ZOpH3YgRHIkm5Tf9Wkg` |
+| 5 | Youngstown HVAC Services | HVAC | Youngstown, OH | 4.9★ / 9 | **0** | yes | **None** (listed as "General Contractor") | `ChIJM2JL9ablM4gRESIempzwEFg` |
+
+**Why each qualifies as the real customer (not a chain):**
+1. **Rimmer Electric** — independent electrician with a *real but under-optimized* site and stalled reviews
+   (newest is 3 yrs old). The "built a site once, coasting" owner. Chosen to exercise the readable-website
+   analysis path (schema gap, title targeting, click-to-call) — so I can judge whether the engine gives
+   *specific* website findings vs generic "get a website."
+2. **Watson Plumbing** — established single-location plumber with real volume (70 reviews) but a **mediocre
+   4.0★** (a genuine reputation problem → review themes to mine) and **no website at all**. The "busy but
+   digitally neglected, rating quietly bleeding trust" owner.
+3. **Jimmy Lock & Key** — tiny rural owner-op locksmith: **one photo**, no website, mostly old reviews. The
+   word-of-mouth shop with a barebones listing.
+4. **Spot On Lawn Care** — single-op lawn care whose only "website" is a **Facebook page**, with a generic
+   primary category and 5-yr-stale reviews. Exercises the explicit "social page is itself the finding" path.
+5. **Youngstown HVAC Services** — small single-location HVAC shop with **zero photos**, no website, and a
+   likely wrong primary category ("General Contractor"). The brand-new-to-digital owner.
+
+Coverage: 5 distinct trades (electrical / plumbing / locksmith / lawn / HVAC) × all three website states
+(readable-weak / none / social-only) × review profiles from 9 thin-and-stale to 70-but-mediocre. This
+stresses the engine far harder than 3 polished chains did.
+
+**Reproducible command** (resolves each Place ID directly; writes `<slug>.html` + `<slug>.analysis.json`):
+```bash
+set -a; source ~/.config/secrets/keys.env; set +a
+node scripts/generate-samples.js \
+  "ChIJaxY9zmbNNoYRQYHiAihZdtM" "ChIJLfNjOlVV8YgRiwkExQM9RGU" "ChIJCS07CgdLPIgRSmvzQvYGdNI" \
+  "ChIJn2q7ZOpH3YgRHIkm5Tf9Wkg" "ChIJM2JL9ablM4gRESIempzwEFg"
+```
+
+Housekeeping: the 3 earlier national-chain audits were moved to `sample-audits/archive-national-chains/`
+(via `git mv`, history preserved) so the quality review focuses unambiguously on these 5 realistic targets.
+Next: generate the 5 real audits, then a three-way buyer's-eye quality review (self / independent subagent /
+Codex CLI).
+
 ## 2026-06-24 01:02 America/New_York — Timeout root-caused & fixed; sample audits generated & quality-assessed
 
 Operator: Claude (Opus 4.8). Goal: get the quality gate green. `npm run generate:samples` was past

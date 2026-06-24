@@ -2,17 +2,18 @@
 
 This folder is for **real** generated audits — the quality gate for the whole product.
 
-## Status: EMPTY ON PURPOSE — audit quality is currently UNVERIFIED
+## Status: REAL audits generated — quality under active review (realistic targets)
 
-Generating a real sample requires two live keys that were **not available** in the build
-environment, so no samples could be produced honestly:
+These are **real** pipeline outputs (live Google Places data + live model), never faked or hand-written.
 
-- `OPENROUTER_API_KEY` — the model that writes the audit
-- `GOOGLE_PLACES_API_KEY` — the real business data the audit is about
-
-Both are listed as Tier-1 blockers in [`../NEEDS_FROM_AVI.md`](../NEEDS_FROM_AVI.md).
-
-**No samples were faked or hand-written.** Real outputs or none.
+- **Active quality test (this folder):** 5 audits for *realistic* targets — small, single-location,
+  owner-operated local service businesses (electrical, plumbing, locksmith, lawn, HVAC) with **visibly
+  rough** Google profiles (low review counts, missing hours/photos, no real website or only a social page).
+  These resemble the actual paying customer. See `../JOURNAL.md` (2026-06-24) for the target list + why
+  each qualifies, and `../QUALITY_REVIEW.md` for the three-way buyer's-eye assessment.
+- **Archived:** the first 3 audits were national chains (Jiffy Lube / Roto-Rooter / One Hour Heating).
+  Their profiles are near-perfect, so the audits came back thin — useful to prove the engine is *honest*,
+  but not a fair test of whether the product is *sellable*. Moved to `archive-national-chains/`.
 
 ## Generate the real samples (≈1 minute once you have the keys)
 
