@@ -43,11 +43,15 @@ Legend — Effort: S (≤1 session) · M (1–2 sessions) · L (multi-session). 
   function or an HTML→PDF API). The brief intentionally scoped the deliverable to the email only,
   so this is a second deliverable type → fenced.
 
-### P5 — Light competitor context in the audit  · Effort: M
+### P5 — Light competitor context in the audit  · Effort: M  · ⭐ TOP-VALIDATED GAP (2026-06-24 review)
 - **Idea:** Use Places "search nearby/text" to find a few same-trade businesses in the same city and
   show how the buyer's review count / rating / photo count compares to the local field.
 - **Why it helps:** "You have 14 reviews; nearby plumbers that show up have 60–200" is a powerful,
   concrete motivator and a real differentiator vs. generic audits.
+- **Validated:** The three-way quality review (QUALITY_REVIEW.md, 2026-06-24) independently surfaced this
+  as the **single biggest thing standing between "the $249 feels okay" and "the $249 is clearly justified."**
+  Both the independent subagent and Codex flagged that the audits offload competitive research back onto the
+  buyer ("search these terms yourself"). This is the #1 candidate if you want to raise perceived value.
 - **Depends on:** More Places API calls (cost + latency) and very careful prompt guardrails to avoid
   fabrication or naming/disparaging specific competitors. Real risk of crossing the no-fabrication
   line, so it needs deliberate design + your sign-off — not a silent add.
@@ -65,19 +69,27 @@ Legend — Effort: S (≤1 session) · M (1–2 sessions) · L (multi-session). 
 - **Why it helps:** Natural bridge into the maintenance subscription; demonstrates value delivered.
 - **Depends on:** Storing buyer + Place ID + purchase date, and a scheduler. Overlaps with P3.
 
-### P8 — Swap the demo sample targets to owner-operated SMBs  · Effort: S
-- **Idea:** The committed `sample-audits/` were generated against three big national chains
-  (Roto-Rooter, One Hour, Jiffy Lube) because they reliably resolve in Places. They're great proof the
-  engine cites real data — but they're *over-optimized*, so the audits find less to fix and slightly
-  undersell the product. Regenerate (or add) 1–2 samples against genuinely messy owner-operated local
-  shops (the actual customer profile) to show the audit at full value.
-- **Why it helps:** Stronger sales/demo artifact: a messy profile surfaces more high-impact findings
-  (missing hours, wrong category, thin reviews, no website schema) — exactly what the buyer is paying to
-  have caught. `generate:samples` already accepts CLI targets, so this is just choosing better businesses.
-- **Why it's a proposal, not a silent change:** picking which real businesses to feature publicly is a
-  judgment/marketing call for you, and it costs a few more live model calls. The existing three are real
-  and stay as-is until you decide. **Model default is unchanged** (`anthropic/claude-sonnet-4.5` is right
-  for a $249 deliverable; see JOURNAL 2026-06-24).
+### P8 — Swap the demo sample targets to owner-operated SMBs  · ✅ DONE THIS SESSION (2026-06-24)
+- **Done:** Generated 5 real audits against genuinely rough, single-location, owner-operated locals
+  (Rimmer Electric, Watson Plumbing, Jimmy Lock & Key, Spot On Lawn Care, Youngstown HVAC) covering 5
+  trades and all three website states. The 3 chain audits were archived to
+  `sample-audits/archive-national-chains/`. These messy profiles surfaced exactly the high-impact findings
+  the chains couldn't (wrong category ×2, missing phone on a 70-review plumber, social-only/unreadable site,
+  missing schema). Target list + rationale in JOURNAL 2026-06-24; quality assessed in QUALITY_REVIEW.md.
+  **Model default unchanged** (`anthropic/claude-sonnet-4.5`). Left here for the record.
+
+### P9 — "Done-for-you" assets inside the audit  · Effort: M
+- **Idea:** Instead of only telling the owner what to fix, ship ready-to-paste artifacts: a filled-in
+  LocalBusiness JSON-LD snippet (their NAP/hours/areas), a 2-line review-request SMS/email template, a
+  suggested GBP business-description paragraph, and a homepage `<title>` string — all pre-populated from
+  the data the audit already has.
+- **Why it helps:** Codex's review (QUALITY_REVIEW.md, 2026-06-24) named the absence of "schema snippets,
+  review-request templates, website copy, or any implementation" as a key reason $249 can feel steep.
+  Generating these from data already in hand is cheap and converts "homework" into "done." Likely the
+  highest value-per-effort lever after P5.
+- **Depends on:** Only prompt + render changes (no new data source), but it adds a new output surface and
+  changes the deliverable's shape, so it's a deliberate product decision, not a silent add. Guardrail: the
+  generated schema/copy must stay strictly within verified data (no invented hours/areas).
 
 ---
 
