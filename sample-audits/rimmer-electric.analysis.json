@@ -1,0 +1,221 @@
+{
+  "business_name": "Rimmer Electric",
+  "audit_headline": "With only 10 reviews and the most recent from 5 years ago, Rimmer Electric's biggest opportunity is to restart review collection to show current activity and relevance to searchers in Shreveport.",
+  "summary": "Rimmer Electric has a solid 4.6-star rating from 10 reviews, but all visible recent reviews are 3-5 years old, signaling stalled review momentum. The Google Business Profile is complete with accurate hours (7 AM – 4 PM weekdays), a linked website, and 10 or more photos. The website is HTTPS-enabled with click-to-call and a mobile viewport, but lacks LocalBusiness structured data that helps Google understand the business's service area and contact details.",
+  "snapshot": [
+    {
+      "label": "Rating",
+      "value": "4.6 stars",
+      "state": "good"
+    },
+    {
+      "label": "Review Count",
+      "value": "10 reviews",
+      "state": "warn"
+    },
+    {
+      "label": "Most Recent Review",
+      "value": "5 years ago",
+      "state": "bad"
+    },
+    {
+      "label": "Hours Listed",
+      "value": "Complete",
+      "state": "good"
+    },
+    {
+      "label": "Photos",
+      "value": "10+",
+      "state": "neutral"
+    },
+    {
+      "label": "Website HTTPS",
+      "value": "Yes",
+      "state": "good"
+    }
+  ],
+  "sections": [
+    {
+      "key": "gbp",
+      "title": "Google Business Profile",
+      "summary": "The profile is complete with the correct primary category (Electrician), accurate weekday hours (7 AM – 4 PM, closed weekends), a linked website, a phone number, and 10 or more photos.",
+      "findings": [
+        {
+          "observation": "The primary category is set to 'Electrician,' which correctly matches the business's trade and the homepage title ('Electrical Services | Shreveport...').",
+          "severity": "ok",
+          "recommendation": ""
+        },
+        {
+          "observation": "Hours are listed and complete: Monday–Friday 7 AM – 4 PM, closed Saturday and Sunday.",
+          "severity": "ok",
+          "recommendation": ""
+        },
+        {
+          "observation": "The profile shows 10 photos; the API caps visibility at 10, so the actual count may be higher, but regular photo uploads keep the profile fresh and engaging.",
+          "severity": "low",
+          "recommendation": "Add recent project photos every month—interior panel work, new installations, team on-site—to keep the profile visually current and build trust with searchers."
+        },
+        {
+          "observation": "The phone number (318) 221-7490 and website (https://rimmerelectric.com/) are both present on the profile.",
+          "severity": "ok",
+          "recommendation": ""
+        }
+      ]
+    },
+    {
+      "key": "reviews",
+      "title": "Reviews & Reputation",
+      "summary": "Rimmer Electric has a 4.6-star rating from 10 reviews, but the most recent visible review is from 5 years ago, signaling zero recent review activity and making the profile appear inactive to potential customers.",
+      "findings": [
+        {
+          "observation": "The business has 10 total reviews with a 4.6-star average, which is a strong rating but a very low review count for an established electrical contractor.",
+          "severity": "high",
+          "recommendation": "Implement a consistent review-request process: ask every satisfied customer for a Google review via text or email immediately after job completion, and aim to collect at least 2-3 reviews per month."
+        },
+        {
+          "observation": "All five visible recent reviews are dated 3-5 years ago, with the most recent from 5 years ago. This signals to searchers that the business may be inactive or not prioritizing customer feedback.",
+          "severity": "high",
+          "recommendation": "Restart review collection immediately. Fresh reviews are a critical trust and relevance signal in local search."
+        },
+        {
+          "observation": "The five visible reviews mention themes of professionalism, promptness, customer service, and willingness to handle small jobs (one reviewer noted other electricians were 'too busy or uninterested' in small work, while Rimmer Electric responded quickly).",
+          "severity": "ok",
+          "recommendation": ""
+        },
+        {
+          "observation": "The Google Places API does not reveal whether the owner has responded to reviews. Responding to reviews—especially any critical ones—shows engagement and can improve conversion.",
+          "severity": "medium",
+          "recommendation": "Log into the Google Business Profile and check if you've responded to all reviews. If not, reply to each one with a brief, genuine thank-you or acknowledgment. Make owner responses a standard practice going forward."
+        }
+      ]
+    },
+    {
+      "key": "website",
+      "title": "Website & Online Presence",
+      "summary": "The website at rimmerelectric.com is HTTPS-enabled, mobile-friendly, and includes click-to-call links, but it lacks LocalBusiness structured data that helps search engines understand the business's location and contact details.",
+      "findings": [
+        {
+          "observation": "The homepage title is 'Electrical Services | Shreveport, Bossier Parish, Benton & Minden, LA | Rimmer Electric Inc,' which includes the trade (electrical) and the primary city (Shreveport), a recognized local-search relevance signal.",
+          "severity": "ok",
+          "recommendation": ""
+        },
+        {
+          "observation": "The site is served over HTTPS and has a mobile viewport meta tag, both of which are baseline technical requirements for modern local-service websites.",
+          "severity": "ok",
+          "recommendation": ""
+        },
+        {
+          "observation": "The homepage includes 3 click-to-call (tel:) links, making it easy for mobile visitors to call directly.",
+          "severity": "ok",
+          "recommendation": ""
+        },
+        {
+          "observation": "The website has structured data present, but it does not include LocalBusiness schema. LocalBusiness schema helps Google parse the business name, address, phone, hours, and service area, which can improve local-search visibility and rich-result eligibility.",
+          "severity": "medium",
+          "recommendation": "Add LocalBusiness (or Electrician) JSON-LD structured data to the homepage with the business name, address, phone, hours, and service areas (Shreveport, Bossier Parish, Benton, Minden). Use Google's Rich Results Test to validate it."
+        },
+        {
+          "observation": "The homepage has no visible contact form (form count is 0). While click-to-call is present, a contact form gives non-phone users a way to reach out and can capture leads outside business hours.",
+          "severity": "low",
+          "recommendation": "Add a simple contact form to the homepage or a dedicated Contact page, and ensure form submissions trigger an email or CRM notification so no inquiry is missed."
+        }
+      ]
+    },
+    {
+      "key": "missed_call",
+      "title": "Call Handling & Lead Capture",
+      "summary": "Electrical service calls are time-sensitive and high-intent, but this audit cannot measure how many inbound calls Rimmer Electric answers or how quickly they respond after hours.",
+      "findings": [
+        {
+          "observation": "The phone number (318) 221-7490 is listed on both the Google profile and the website with click-to-call links, making it easy for customers to reach out. However, one 5-year-old review specifically praised the business for calling back at 4:30 PM and having a technician on-site by 7:30 AM the next day, highlighting responsiveness as a competitive advantage.",
+          "severity": "medium",
+          "recommendation": "Preserve that responsiveness advantage: call your own number after 4 PM and on weekends to confirm what callers hear. If calls go to voicemail, set up an auto-reply text ('We got your message and will call back within 1 hour') or a missed-call alert so no lead sits unattended."
+        },
+        {
+          "observation": "The profile hours show the business is closed Saturday and Sunday. For emergency electrical work, after-hours and weekend calls are common, and competitors who answer or offer emergency service may capture those leads.",
+          "severity": "medium",
+          "recommendation": "If you offer emergency or after-hours service, add that to the Google Business Profile description and homepage prominently. If you don't, consider a voicemail message that directs urgent callers to a partner or sets a clear callback expectation for Monday morning."
+        },
+        {
+          "observation": "Industry-wide, electrical contractors report that 30-40% of inbound calls go unanswered during business hours, and many of those callers move on to the next search result. This audit cannot verify Rimmer Electric's answer rate, but the risk is universal.",
+          "severity": "medium",
+          "recommendation": "Track your call answer rate for one week using call logs or a call-tracking number. If you're missing calls, consider a dedicated office line, a call-answering service during peak times, or a simple 'text us' option on the website for customers who prefer not to leave voicemail."
+        }
+      ]
+    }
+  ],
+  "fix_list": [
+    {
+      "rank": 1,
+      "action": "Ask every satisfied customer for a Google review immediately after job completion, via text or email, and aim to collect 2-3 reviews per month.",
+      "rationale": "The most recent review is from 5 years ago, making the profile appear inactive. Fresh reviews are a top local-search relevance and trust signal, and the current 10-review count is very low for an established electrician.",
+      "where": "After each job: send a text or email with a direct link to your Google review page (find it at google.com/business or in the Google Business Profile app under 'Get more reviews').",
+      "impact": "high",
+      "effort": "quick"
+    },
+    {
+      "rank": 2,
+      "action": "Log into Google Business Profile and respond to all existing reviews, then make owner responses a standard practice for every new review.",
+      "rationale": "The API does not show whether you've replied to reviews. Responding demonstrates engagement and can improve conversion, especially for future reviews.",
+      "where": "Google Business Profile dashboard -> Reviews tab -> Click 'Reply' under each review.",
+      "impact": "medium",
+      "effort": "quick"
+    },
+    {
+      "rank": 3,
+      "action": "Call your own business number after 4 PM and on weekends to confirm what callers hear, and set up a missed-call text-back or alert if calls go to voicemail.",
+      "rationale": "One past review praised your 4:30 PM callback and next-morning service. Preserving that responsiveness is a competitive advantage, but unanswered calls are lost leads. The profile shows you're closed weekends, so after-hours handling is critical.",
+      "where": "Test by calling (318) 221-7490 after hours. Set up auto-reply via your phone carrier, a Google Voice number, or a call-tracking service.",
+      "impact": "high",
+      "effort": "quick"
+    },
+    {
+      "rank": 4,
+      "action": "Add LocalBusiness (or Electrician) JSON-LD structured data to the homepage with name, address, phone, hours, and service areas.",
+      "rationale": "The site has structured data but not LocalBusiness schema. Adding it helps Google parse your contact details and service area, a recognized local-search relevance signal.",
+      "where": "Ask your web developer to add JSON-LD to the <head> or footer of rimmerelectric.com, then validate at search.google.com/test/rich-results.",
+      "impact": "medium",
+      "effort": "moderate"
+    },
+    {
+      "rank": 5,
+      "action": "Upload 3-5 recent project photos to the Google Business Profile every month—panel work, new installations, team on-site.",
+      "rationale": "The profile shows 10+ photos, but regular uploads keep the profile visually fresh and engaging, and photos are a trust signal for searchers comparing electricians.",
+      "where": "Google Business Profile app or dashboard -> Photos -> Add photos (label them with short descriptions like 'Panel upgrade in Shreveport' for context).",
+      "impact": "medium",
+      "effort": "quick"
+    },
+    {
+      "rank": 6,
+      "action": "Add a simple contact form to the homepage or Contact page, and ensure submissions trigger an email or CRM alert.",
+      "rationale": "The site has click-to-call but no form. A form gives non-phone users a way to reach out and can capture leads outside business hours (7 AM – 4 PM weekdays).",
+      "where": "Ask your web developer to add a form to rimmerelectric.com with fields for name, phone, email, and message, connected to your email or CRM.",
+      "impact": "medium",
+      "effort": "moderate"
+    },
+    {
+      "rank": 7,
+      "action": "If you offer emergency or after-hours electrical service, add that prominently to the Google Business Profile description and homepage headline.",
+      "rationale": "The profile shows you're closed weekends. If you do handle emergencies, stating that can capture high-intent after-hours searches; if you don't, a clear voicemail message sets expectations.",
+      "where": "Google Business Profile -> Edit profile -> Business description. Homepage: add '24/7 Emergency Service' or similar to the hero section if applicable.",
+      "impact": "medium",
+      "effort": "quick"
+    },
+    {
+      "rank": 8,
+      "action": "Track your call answer rate for one week using call logs or a call-tracking number, and address any gaps with a dedicated line, answering service, or 'text us' option.",
+      "rationale": "Electrical contractors industry-wide miss 30-40% of inbound calls. This audit cannot measure your answer rate, but the risk is universal and every missed call is a lost lead.",
+      "where": "Review your phone system's call log, or sign up for a call-tracking service like CallRail or CallTrackingMetrics to see missed-call data.",
+      "impact": "high",
+      "effort": "moderate"
+    }
+  ],
+  "not_checked": [
+    "Whether you've responded to your 10 existing Google reviews — the API does not reveal owner replies. Log into your Google Business Profile and check the Reviews tab to confirm.",
+    "Your actual call answer rate and after-hours voicemail message — call (318) 221-7490 yourself after 4 PM and on a weekend to hear what customers hear.",
+    "Whether competitors in Shreveport are outranking you for 'electrician near me' or similar searches — this audit does not access ranking data. Search those terms yourself on a mobile device to see where Rimmer Electric appears.",
+    "Your website's page load speed on mobile — use Google PageSpeed Insights (pagespeed.web.dev) with your homepage URL to check performance and get specific recommendations.",
+    "Whether your Google Business Profile description mentions emergency service, service areas, or key differentiators — review and update it in the Google Business Profile dashboard under 'Edit profile.'"
+  ],
+  "closing_note": "Rimmer Electric has a strong foundation—a 4.6-star rating, complete profile, and a solid website—but the 5-year review gap is the single biggest drag on local-search visibility and trust. Restarting review collection and tightening call handling will have the most immediate impact. These fixes are recognized local-search best practices, not guarantees of rankings or leads, but they address real gaps in your current online presence."
+}

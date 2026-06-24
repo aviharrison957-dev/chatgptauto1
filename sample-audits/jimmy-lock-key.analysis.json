@@ -1,0 +1,200 @@
+{
+  "business_name": "Jimmy Lock & Key",
+  "audit_headline": "Jimmy Lock & Key has no website linked on its Google Business Profile, forcing potential customers to call or leave — a critical gap for a 4.9-rated locksmith in a high-urgency trade.",
+  "summary": "Jimmy Lock & Key operates as a Locksmith in Wauseon, OH with a strong 4.9-star rating from 17 reviews and detailed hours covering 24/7 weekend availability. The profile lists a phone number and hours but links no website, meaning customers searching online see no way to learn more, verify services, or contact the business beyond calling. The single photo and absence of a web presence are the two largest missed opportunities to capture emergency lockout searches and build trust before the phone rings.",
+  "snapshot": [
+    {
+      "label": "Rating",
+      "value": "4.9 stars (17 reviews)",
+      "state": "good"
+    },
+    {
+      "label": "Website",
+      "value": "None linked",
+      "state": "bad"
+    },
+    {
+      "label": "Photos",
+      "value": "1 photo",
+      "state": "warn"
+    },
+    {
+      "label": "Hours",
+      "value": "Listed, 24/7 weekends",
+      "state": "good"
+    }
+  ],
+  "sections": [
+    {
+      "key": "gbp",
+      "title": "Google Business Profile",
+      "summary": "The profile has accurate hours, a phone number, and the correct primary category (Locksmith), but it has only 1 photo and no website link — two high-impact gaps for a service business.",
+      "findings": [
+        {
+          "observation": "No website is linked on the Google Business Profile, so searchers see no way to learn about services, pricing, or contact options beyond the phone number.",
+          "severity": "high",
+          "recommendation": "Add a website to the profile — even a simple one-page site with services, service area, click-to-call, and hours — or create a free Google Site if budget is tight. This gives searchers confidence and a fallback if they can't call immediately."
+        },
+        {
+          "observation": "The profile has only 1 photo, far below the visual depth that builds trust in local search, especially for a trade where customers want to see the technician, vehicle, or work examples.",
+          "severity": "high",
+          "recommendation": "Upload 10-15 photos: your service vehicle with branding, you or your team at work, close-ups of locksmith tools or completed jobs, and the service area. Aim for at least one new photo every month."
+        },
+        {
+          "observation": "Hours are listed and show 24/7 availability on Saturday and Sunday, plus extended weekday hours — a strong signal for emergency locksmith searches.",
+          "severity": "ok",
+          "recommendation": ""
+        },
+        {
+          "observation": "The primary category is Locksmith, which correctly matches the business and the trade, and the phone number (419) 784-6846 is present.",
+          "severity": "ok",
+          "recommendation": ""
+        },
+        {
+          "observation": "The profile is marked as a physical location (not a service-area business), but the address is a county road in Wauseon — verify that this setting matches how you operate (storefront vs mobile service).",
+          "severity": "medium",
+          "recommendation": "If you serve customers at their locations and do not have walk-in traffic at 18863 Co Rd D, edit your profile to 'I deliver goods and services to my customers' and hide the street address. This can improve relevance for searches across your service area."
+        }
+      ]
+    },
+    {
+      "key": "reviews",
+      "title": "Reviews & Reputation",
+      "summary": "A 4.9-star rating from 17 reviews is excellent and well above the trust threshold, but review volume is modest and the most recent review is 8 months old, signaling low recent momentum.",
+      "findings": [
+        {
+          "observation": "The 4.9-star rating from 17 reviews is strong, and the five available recent reviews are all positive (four 5-star, one 4-star), with no negative themes.",
+          "severity": "ok",
+          "recommendation": ""
+        },
+        {
+          "observation": "Three of the five recent reviews explicitly mention car key services and expertise ('making car keys', 'locked her only set of keys in her car', 'worked relentlessly trying to get the ignition to fire'), highlighting a clear service strength.",
+          "severity": "ok",
+          "recommendation": ""
+        },
+        {
+          "observation": "The most recent review is from 8 months ago, and the review count (17 total) suggests slow velocity — new reviews are a recurring relevance and trust signal in local search.",
+          "severity": "medium",
+          "recommendation": "Ask every satisfied customer for a Google review immediately after the job, via text or a printed card with a short link. Aim for at least one new review per month to maintain recency and momentum."
+        },
+        {
+          "observation": "One review mentions the owner calling back and apologizing for a delay, showing responsiveness, but the Google Places API does not reveal whether you reply to reviews publicly.",
+          "severity": "low",
+          "recommendation": "Log in to your Google Business Profile and check whether you have replied to all reviews. If not, respond to every review (thank positive ones, address concerns in negative ones) — public responses signal active management and care."
+        }
+      ]
+    },
+    {
+      "key": "website",
+      "title": "Website & Online Presence",
+      "summary": "No website is linked on the Google Business Profile, and no site could be found — a critical gap for a locksmith, where searchers need to verify legitimacy, see services, and find contact options beyond a phone call.",
+      "findings": [
+        {
+          "observation": "No website is linked on the Google Business Profile, so potential customers searching for 'locksmith Wauseon OH' or 'car key replacement near me' see no way to learn about your services, pricing, or credentials before calling.",
+          "severity": "high",
+          "recommendation": "Create a simple one-page website (or use a free Google Site) with: your services (car keys, lockouts, rekeying, etc.), service area (Wauseon and surrounding towns), click-to-call phone link, hours, and a few photos. Link it on your Google profile immediately."
+        },
+        {
+          "observation": "Without a website, there is no way to verify whether your homepage includes basic local-search signals like the city name in the page title, HTTPS, mobile-friendly design, click-to-call links, or LocalBusiness structured data.",
+          "severity": "high",
+          "recommendation": "Once you have a site, ensure the homepage <title> tag includes 'Locksmith' and 'Wauseon, OH', use HTTPS, make the phone number a clickable tel: link, and add a mobile viewport meta tag. These are table-stakes for local search."
+        }
+      ]
+    },
+    {
+      "key": "missed_call",
+      "title": "Missed Calls & Lead Capture",
+      "summary": "Locksmith calls are often urgent and time-sensitive — if a searcher can't reach you or doesn't see a fast response promise, they move to the next result in seconds.",
+      "findings": [
+        {
+          "observation": "The profile lists a phone number, but there is no way to verify from this data whether calls are answered 24/7 as the hours suggest, or whether missed calls receive a text-back or voicemail follow-up.",
+          "severity": "medium",
+          "recommendation": "Call your own number after hours and on weekends to confirm the experience. If you can't answer live 24/7, set up a missed-call text-back service or a voicemail that promises a callback within 15 minutes — and state that response time on your profile and future website."
+        },
+        {
+          "observation": "With no website, there is no online contact form or chat option for customers who prefer not to call or who are comparing locksmiths before committing.",
+          "severity": "medium",
+          "recommendation": "Once you add a website, include a simple contact form or click-to-text option alongside the phone number. Many searchers will fill out a form even if they won't call, giving you a second chance to follow up."
+        },
+        {
+          "observation": "Locksmith searches often happen during emergencies (car lockouts, home lockouts), and response time is a primary decision factor — but your profile and reviews do not prominently state an average arrival time or response promise.",
+          "severity": "low",
+          "recommendation": "Add a short business description to your Google profile (if the field is available) that includes a response-time promise (e.g. '30-minute average arrival in Wauseon area'). This can differentiate you from competitors in the Map Pack."
+        }
+      ]
+    }
+  ],
+  "fix_list": [
+    {
+      "rank": 1,
+      "action": "Create and link a simple one-page website on your Google Business Profile.",
+      "rationale": "No website is linked, so searchers see no way to verify your services or contact you beyond calling — a critical gap that costs leads. Even a basic site with services, hours, and click-to-call will improve trust and capture customers who won't call blind.",
+      "where": "Build a free Google Site or a simple WordPress page, then add the URL in Google Business Profile -> Edit profile -> Website.",
+      "impact": "high",
+      "effort": "moderate"
+    },
+    {
+      "rank": 2,
+      "action": "Upload 10-15 photos to your Google Business Profile: service vehicle, you at work, tools, completed jobs, and service area.",
+      "rationale": "The profile has only 1 photo, far below the visual depth that builds trust in local search. Locksmiths compete on credibility, and photos of your truck, your face, and your work are proof you're legitimate.",
+      "where": "Google Business Profile -> Photos -> Add photos. Aim for at least one new photo every month.",
+      "impact": "high",
+      "effort": "quick"
+    },
+    {
+      "rank": 3,
+      "action": "Ask every satisfied customer for a Google review immediately after the job, via text or a printed card.",
+      "rationale": "Your most recent review is 8 months old, and 17 total reviews is modest volume. New reviews are a recurring relevance signal, and your 4.9 rating shows customers are happy — you just need to ask consistently.",
+      "where": "Send a text with a short Google review link (find it in your Google Business Profile -> Get more reviews) or hand out cards with a QR code.",
+      "impact": "high",
+      "effort": "quick"
+    },
+    {
+      "rank": 4,
+      "action": "Verify whether your profile should be set as a service-area business (hide address) or a physical location.",
+      "rationale": "The profile is marked as a physical location at 18863 Co Rd D, but if you serve customers at their locations and have no walk-in storefront, hiding the address and setting a service area can improve relevance for searches across Wauseon and nearby towns.",
+      "where": "Google Business Profile -> Edit profile -> Location -> 'I deliver goods and services to my customers' -> Set service area (e.g. Wauseon, Archbold, Delta).",
+      "impact": "medium",
+      "effort": "quick"
+    },
+    {
+      "rank": 5,
+      "action": "Log in to your Google Business Profile and reply to all reviews if you haven't already.",
+      "rationale": "Public review responses signal active management and care. The API does not show whether you've replied, so this is a verify-and-do item. Thank positive reviewers and address any concerns in lower-rated reviews.",
+      "where": "Google Business Profile -> Reviews -> Reply to each review with a short, genuine message.",
+      "impact": "medium",
+      "effort": "quick"
+    },
+    {
+      "rank": 6,
+      "action": "Once you have a website, ensure the homepage <title> includes 'Locksmith' and 'Wauseon, OH', and make the phone number a clickable tel: link.",
+      "rationale": "These are basic local-search signals that help Google understand what you do and where you serve. Without a site, these cannot be checked. A title like 'Jimmy Lock & Key | Locksmith in Wauseon, OH' is a simple, high-value fix.",
+      "where": "Edit your website's homepage <title> tag (in WordPress, Wix, or your site builder's SEO settings) and wrap the phone number in <a href='tel:4197846846'>.",
+      "impact": "medium",
+      "effort": "quick"
+    },
+    {
+      "rank": 7,
+      "action": "Call your own number after hours to confirm the customer experience, and set up a missed-call text-back or a voicemail promising a 15-minute callback.",
+      "rationale": "Locksmith calls are urgent, and if a searcher can't reach you or doesn't hear a fast-response promise, they move to the next result. Your hours show 24/7 weekend availability, but the actual answer rate is unknown.",
+      "where": "Test by calling (419) 784-6846 after hours. Set up missed-call text-back via your carrier or a service like Google Voice, or record a voicemail with a clear response-time promise.",
+      "impact": "medium",
+      "effort": "quick"
+    },
+    {
+      "rank": 8,
+      "action": "Add a short business description to your Google profile that includes a response-time promise (e.g. '30-minute average arrival in Wauseon area').",
+      "rationale": "Response time is a primary decision factor in emergency locksmith searches, but your profile and reviews do not state an arrival promise. This can differentiate you in the Map Pack and reduce the chance a searcher calls a competitor first.",
+      "where": "Google Business Profile -> Edit profile -> Business description (if available) or add it to your future website homepage.",
+      "impact": "low",
+      "effort": "quick"
+    }
+  ],
+  "not_checked": [
+    "Whether you respond publicly to Google reviews — the API does not reveal this. Log in to your Google Business Profile and check the Reviews section to verify.",
+    "Your actual call answer rate and missed-call follow-up process — call your own number after hours to test the customer experience.",
+    "Whether your profile is set correctly as a service-area business vs. physical location — verify in your Google Business Profile settings under Location.",
+    "Local search ranking for key terms like 'locksmith Wauseon OH' or 'car key replacement near me' — search these terms yourself in Google Maps from different devices to see where you appear."
+  ],
+  "closing_note": "Jimmy Lock & Key has a strong reputation and clear service strengths in car key work, but the lack of a website and minimal photos are costing leads every day. The fixes above are ranked by impact and effort — start with the website and photos, and you'll see more searchers choose to call you instead of scrolling past."
+}

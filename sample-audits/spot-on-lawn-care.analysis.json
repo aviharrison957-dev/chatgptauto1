@@ -1,0 +1,211 @@
+{
+  "business_name": "Spot On Lawn Care",
+  "audit_headline": "Your perfect 5.0 rating from 15 reviews is being hidden by a vague 'Services' category and a Facebook-only web presence that Google can't read or rank.",
+  "summary": "Spot On Lawn Care has a flawless 5.0 rating from 15 reviews and complete hours listed, but two critical problems are blocking visibility: the primary category is set to the generic 'Services' instead of a specific lawn care category, and the only website is a Facebook page that returned an error when checked. All five recent reviews are 5 years old, signaling a complete halt in fresh feedback. These issues mean Google has almost no signals to understand what you do or where to show you in search.",
+  "snapshot": [
+    {
+      "label": "Rating",
+      "value": "5.0 from 15 reviews",
+      "state": "good"
+    },
+    {
+      "label": "Primary Category",
+      "value": "Services (too generic)",
+      "state": "bad"
+    },
+    {
+      "label": "Recent Reviews",
+      "value": "None in 5 years",
+      "state": "bad"
+    },
+    {
+      "label": "Website",
+      "value": "Facebook only (unreadable)",
+      "state": "bad"
+    },
+    {
+      "label": "Hours Listed",
+      "value": "7 days, 7 AM–7 PM",
+      "state": "good"
+    },
+    {
+      "label": "Photos",
+      "value": "10 or more",
+      "state": "neutral"
+    }
+  ],
+  "sections": [
+    {
+      "key": "gbp",
+      "title": "Google Business Profile",
+      "summary": "Your profile has hours and contact info, but the 'Services' category tells Google almost nothing about lawn care, and the Facebook-only website gives no rankable content.",
+      "findings": [
+        {
+          "observation": "Primary category is set to 'Services' — a catch-all that does not signal lawn care, landscaping, or any specific trade to Google's algorithm.",
+          "severity": "high",
+          "recommendation": "Change the primary category to 'Lawn care service' or 'Landscaper' to match what you actually do and what customers search for in Lakeland."
+        },
+        {
+          "observation": "The website field points to facebook.com/spotonlawncare863, which returned an HTTP 400 error when checked and provides no structured data, no local keywords, and no click-to-call for Google to index.",
+          "severity": "high",
+          "recommendation": "Either claim a real business website with your services and Lakeland location in the text, or remove the Facebook link and add your phone as the primary contact until you have a site."
+        },
+        {
+          "observation": "Profile shows 10 or more photos, which is a reasonable floor, but the depth and recency of work photos could not be verified from the API data.",
+          "severity": "low",
+          "recommendation": "Log into your profile and confirm you have recent, high-quality before-and-after lawn photos; add more if the gallery is thin or outdated."
+        },
+        {
+          "observation": "Hours are listed for all seven days (7 AM–7 PM), and phone number (352) 232-8259 is present.",
+          "severity": "ok",
+          "recommendation": ""
+        }
+      ]
+    },
+    {
+      "key": "reviews",
+      "title": "Reviews & Reputation",
+      "summary": "You have a perfect 5.0 rating from 15 reviews, but every recent review visible is from 5 years ago — a red flag to both Google's algorithm and potential customers.",
+      "findings": [
+        {
+          "observation": "All five recent reviews in the API data are dated '5 years ago,' meaning no fresh feedback has been captured since roughly 2020.",
+          "severity": "high",
+          "recommendation": "Start a systematic process to ask every satisfied customer for a Google review immediately after the job; even one review per month will signal active business and improve ranking."
+        },
+        {
+          "observation": "The 15 reviews you do have are unanimously 5-star, and themes include 'timely,' 'professional,' 'reasonable pricing,' and 'reliable' — strong trust signals if they were recent.",
+          "severity": "ok",
+          "recommendation": ""
+        },
+        {
+          "observation": "Review volume of 15 is low for a lawn care business operating for at least five years in a market the size of Lakeland.",
+          "severity": "medium",
+          "recommendation": "Set a goal of 50+ reviews over the next 12 months by making review requests a standard part of your workflow (text, email, or in-person ask)."
+        },
+        {
+          "observation": "The API does not reveal whether you respond to reviews; owner responses are a known trust and engagement signal.",
+          "severity": "medium",
+          "recommendation": "Log into your Google Business Profile and verify you have replied to all 15 reviews with a personal thank-you; if not, reply to each one today and make responses standard practice going forward."
+        }
+      ]
+    },
+    {
+      "key": "website",
+      "title": "Website & Online Presence",
+      "summary": "Your profile links to a Facebook page that could not be read (HTTP 400 error), meaning you have no indexable website content for Google to rank or for customers to learn about your services.",
+      "findings": [
+        {
+          "observation": "The only website linked is facebook.com/spotonlawncare863, which returned an HTTP 400 error when accessed and provides no structured data, no Lakeland + lawn care keywords in a page title, and no click-to-call phone links.",
+          "severity": "high",
+          "recommendation": "Build or claim a simple business website (even a one-page site) with your services, Lakeland location, phone number as a clickable link, and a few photos; update the GBP website field to that URL."
+        },
+        {
+          "observation": "Because the Facebook page could not be read, it is unknown whether it has a mobile viewport, HTTPS (Facebook does, but your content is not a standalone site), or LocalBusiness schema — none of which Facebook provides for your business.",
+          "severity": "medium",
+          "recommendation": "If you keep the Facebook page as a supplement, ensure your actual website (once live) has a mobile-friendly design, HTTPS, and LocalBusiness structured data with your NAP and service area."
+        },
+        {
+          "observation": "No homepage title tag could be checked, meaning there is no on-page signal to Google that you are a lawn care service in Lakeland, FL.",
+          "severity": "high",
+          "recommendation": "When you launch a real website, write a homepage <title> tag like 'Spot On Lawn Care – Professional Lawn Service in Lakeland, FL' to match search intent."
+        }
+      ]
+    },
+    {
+      "key": "missed_call",
+      "title": "Missed Calls & Lead Capture",
+      "summary": "Lawn care businesses live and die by phone calls, but with no real website and no way to verify your answer rate or lead-capture setup, you risk losing jobs to competitors who respond faster.",
+      "findings": [
+        {
+          "observation": "Your phone number (352) 232-8259 is listed on the profile, but the Facebook-only web presence has no click-to-call link, and there is no way to verify whether you have voicemail, texting, or after-hours lead capture in place.",
+          "severity": "medium",
+          "recommendation": "Call your own number after 7 PM and on a Sunday to confirm voicemail is professional and clear; consider adding a missed-call text-back service or a simple contact form on a future website."
+        },
+        {
+          "observation": "Lawn care is a high-intent, call-now service category, and customers often move to the next result if they don't reach someone quickly; the lack of a website with a contact form or online quote request means phone is your only lead channel.",
+          "severity": "medium",
+          "recommendation": "Once you have a website, add a prominent 'Call Now' button and a simple contact form so customers who prefer not to call (or call outside your hours) can still reach you."
+        },
+        {
+          "observation": "Your hours show 7 AM–7 PM daily, which is broad availability, but there is no public response-time promise or callback guarantee visible in the profile or on the (unreadable) Facebook page.",
+          "severity": "low",
+          "recommendation": "Add a line to your GBP description like 'We return all calls within 2 hours during business hours' to set expectations and build trust."
+        }
+      ]
+    }
+  ],
+  "fix_list": [
+    {
+      "rank": 1,
+      "action": "Change your primary category from 'Services' to 'Lawn care service' or 'Landscaper'.",
+      "rationale": "The generic 'Services' category gives Google no signal that you do lawn care, so you are invisible in 'lawn care Lakeland' searches. This is a one-click fix with immediate relevance impact.",
+      "where": "Google Business Profile -> Edit profile -> Business category (select primary)",
+      "impact": "high",
+      "effort": "quick"
+    },
+    {
+      "rank": 2,
+      "action": "Ask your next 10 satisfied customers for a Google review immediately after completing their job.",
+      "rationale": "All five recent reviews are 5 years old, signaling stale or inactive business to Google. Fresh reviews are a top-3 local ranking factor and build customer trust.",
+      "where": "In person, via text, or by sending your Google review link (find it in your GBP dashboard under 'Get more reviews')",
+      "impact": "high",
+      "effort": "quick"
+    },
+    {
+      "rank": 3,
+      "action": "Build or claim a simple one-page business website with your services, Lakeland location, phone as a clickable link, and 3–5 work photos.",
+      "rationale": "Your Facebook page returned an error and provides no rankable content. A real website with local keywords and structured data is a core ranking signal and a trust builder for customers who research before calling.",
+      "where": "Use a platform like Wix, Squarespace, or GoDaddy Website Builder; update the website field in your GBP once live",
+      "impact": "high",
+      "effort": "moderate"
+    },
+    {
+      "rank": 4,
+      "action": "Write a homepage <title> tag that includes 'Lawn Care' and 'Lakeland, FL' (e.g. 'Spot On Lawn Care – Professional Lawn Service in Lakeland, FL').",
+      "rationale": "The title tag is the single most important on-page SEO element. Right now there is none because the Facebook page is not a real website. This tells Google exactly what you do and where.",
+      "where": "In your website builder's SEO settings or page settings for the homepage",
+      "impact": "high",
+      "effort": "quick"
+    },
+    {
+      "rank": 5,
+      "action": "Log into your Google Business Profile and reply to all 15 existing reviews with a personal thank-you.",
+      "rationale": "Owner responses are a recognized engagement and trust signal. The API cannot confirm whether you've replied, so this is a verify-and-do item. Make responses standard practice for all future reviews.",
+      "where": "Google Business Profile dashboard -> Reviews tab -> Click 'Reply' under each review",
+      "impact": "medium",
+      "effort": "quick"
+    },
+    {
+      "rank": 6,
+      "action": "Add LocalBusiness structured data (schema.org) to your new website with your business name, address, phone, hours, and service area.",
+      "rationale": "Structured data is a direct feed to Google about your business details and is a known local-search best practice. Facebook does not provide this for your business.",
+      "where": "In your website's HTML <head> or via a plugin if using WordPress; use Google's Structured Data Testing Tool to validate",
+      "impact": "medium",
+      "effort": "moderate"
+    },
+    {
+      "rank": 7,
+      "action": "Call your own number after 7 PM to test voicemail, and set up a missed-call text-back service or callback promise.",
+      "rationale": "Lawn care customers call when they need help now. If you miss calls or have unclear voicemail, they move to the next result. You cannot verify your current setup from the data.",
+      "where": "Test by calling (352) 232-8259 after hours; for text-back, explore tools like Google Voice, Heymarket, or your carrier's business SMS",
+      "impact": "medium",
+      "effort": "quick"
+    },
+    {
+      "rank": 8,
+      "action": "Confirm your Google Business Profile photo gallery has at least 20 recent, high-quality before-and-after lawn photos.",
+      "rationale": "The API shows 10 or more photos, but depth and recency are unknown. Photo volume and freshness are ranking factors and the primary way customers judge quality before calling.",
+      "where": "Google Business Profile -> Photos tab -> Upload new photos (aim for 1–2 per week)",
+      "impact": "low",
+      "effort": "moderate"
+    }
+  ],
+  "not_checked": [
+    "Whether you have replied to any of your 15 reviews — the API does not expose owner responses. Log into your Google Business Profile -> Reviews to verify and reply to all.",
+    "The exact number and recency of photos in your profile — the API caps the visible count at 10. Check your profile directly to see the full gallery and upload date of the most recent photo.",
+    "Whether your Facebook page is currently accessible or has useful content — it returned an HTTP 400 error when checked. Visit facebook.com/spotonlawncare863 yourself to confirm its status.",
+    "Your actual call answer rate or missed-call volume — this audit has no access to your phone system. Call your own number after hours and review your voicemail and callback process.",
+    "Whether your profile description or services list is filled out — the API did not return this data. Check your GBP 'Edit profile' section and add a description with 'lawn care,' 'Lakeland,' and your key services if missing."
+  ],
+  "closing_note": "You have the foundation of a great reputation — a perfect 5.0 rating and loyal customers who praised your reliability and professionalism. The fixes above are about making that reputation visible and current so Google knows what you do, where you do it, and that you're still active. Start with the category and the review push; those two changes alone will make you competitive in local search."
+}
