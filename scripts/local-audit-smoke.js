@@ -1,6 +1,7 @@
 // Quick LIVE smoke test of the audit path for ONE business (does not send email, does not write files).
 // Needs GOOGLE_PLACES_API_KEY + OPENROUTER_API_KEY. For full browser-judgeable samples use
 // `npm run generate:samples` instead.
+require("./_load-env"); // optional: read keys from a local .env file
 const { fetchPlaceDetails, summarizePlaceForPrompt } = require("../netlify/functions/lib/places");
 const { fetchWebsiteSignals } = require("../netlify/functions/lib/website");
 const { generateAuditHtml } = require("../netlify/functions/lib/audit");

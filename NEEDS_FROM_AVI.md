@@ -42,10 +42,19 @@ way to prove that is to run the real pipeline against real businesses. I refused
 - **Blocks:** All data fetching → all audits. Also blocks the quality gate.
 
 ### ▶ Once you've set BOTH Tier-1 keys, run the quality gate (≈1 minute):
+
+**Easiest — put the keys in a file.** In the project folder
+(`/Users/avi/Desktop/claudemac/chatgptauto1`), copy `.env.example` to `.env` and paste your keys in:
 ```bash
 cd chatgptauto1
-OPENROUTER_API_KEY="sk-or-..." GOOGLE_PLACES_API_KEY="AIza..." npm run generate:samples
+cp .env.example .env        # then open .env and paste your keys after the = signs
+npm run generate:samples
 ```
+`.env` is gitignored, so it is never committed. (Prefer not to use a file? Pass them inline instead:
+`OPENROUTER_API_KEY="sk-or-..." GOOGLE_PLACES_API_KEY="AIza..." npm run generate:samples`.)
+
+> Note: this `.env` file is for **local testing on your Mac only**. For the live site, the same keys go
+> in the **Netlify dashboard** (Site configuration → Environment variables), not in any file — see HANDOFF.md.
 This fetches 3 real, well-known businesses, generates real audits, and writes them to
 `sample-audits/`. Open those HTML files in a browser and judge the quality yourself. If they're
 not worth $249, tell me and I'll tune the prompt before you sell anything.

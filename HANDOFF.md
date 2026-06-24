@@ -134,10 +134,17 @@ git push
 ```
 
 ### Step 8 — Prove the audit is good (the quality gate)
-With your two Tier-1 keys, generate real audits for real businesses:
+With your two Tier-1 keys, generate real audits for real businesses. Easiest: put the keys in a local
+`.env` file (gitignored, never committed):
+```bash
+cp .env.example .env        # then edit .env and paste your keys after the = signs
+npm run generate:samples
+```
+Or pass them inline without a file:
 ```bash
 OPENROUTER_API_KEY="sk-or-..." GOOGLE_PLACES_API_KEY="AIza..." npm run generate:samples
 ```
+(The `.env` file is for local testing only — production keys go in the Netlify dashboard, Step 4.)
 Open the `.html` files written to `sample-audits/` in a browser. **Judge them yourself.** If they're
 not worth $249, tell me what's weak and I'll tune the prompt in `netlify/functions/lib/audit.js`.
 

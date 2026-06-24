@@ -6,6 +6,7 @@
 //
 // Optional: pass business queries/Place IDs as CLI args to override the defaults, e.g.
 //   node scripts/generate-samples.js "Roto-Rooter, Houston, TX" "ChIJ....."
+require("./_load-env"); // optional: read keys from a local .env file
 const fs = require("fs");
 const path = require("path");
 const { fetchPlaceDetails, summarizePlaceForPrompt } = require("../netlify/functions/lib/places");
