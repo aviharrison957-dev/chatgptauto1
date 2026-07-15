@@ -3,11 +3,15 @@
   "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": ">=18"
+    "node": "22.x"
+  },
+  "dependencies": {
+    "@vercel/functions": "^3.7.5"
   },
   "scripts": {
-    "test": "node scripts/test-pipeline-units.js && node scripts/test-webhook-nosig.js",
+    "test": "node scripts/test-pipeline-units.js && node scripts/test-webhook-nosig.js && node scripts/test-vercel-webhook.js",
     "test:units": "node scripts/test-pipeline-units.js",
+    "test:vercel-webhook": "node scripts/test-vercel-webhook.js",
     "test:webhook-nosig": "node scripts/test-webhook-nosig.js",
     "test:audit-live": "node scripts/local-audit-smoke.js",
     "generate:samples": "node scripts/generate-samples.js",

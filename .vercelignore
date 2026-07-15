@@ -1,0 +1,13 @@
+# Dev/ops content that must not be uploaded or publicly served from the product site.
+# (lib/, api/, assets/, index.html, report-builder.html, package.json stay in the deploy.)
+node_modules
+netlify
+netlify.toml
+design-preview
+research
+sample-audits
+scripts
+*.md
+.env*
+.DS_Store
+.nojekyll
