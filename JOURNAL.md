@@ -49,6 +49,34 @@ email, customer never emailed.
    pipeline is not namespaced under a host we no longer target. Netlify function entry points stay in place
    (requires updated) as the documented fallback until the Vercel timed proof passes.
 
+## 2026-07-15 17:55 America/New_York — Deployed to Vercel; visual audit (before/afters in audits/visual-2026-07-15/)
+
+**Deployed.** Project `mapgap-report`, production alias **https://mapgap-report.vercel.app**, GitHub repo
+connected (push → auto-deploy). Verified live: home 200; `/api/stripe-webhook` GET→405, unsigned POST→400;
+all five security headers served; dev files (JOURNAL, sample-audits, scripts…) excluded via `.vercelignore`
+and return 404. Env vars set via CLI (production): STRIPE_WEBHOOK_SECRET, STRIPE_SECRET_KEY (**test-mode
+key**), OPENROUTER_API_KEY, GOOGLE_PLACES_API_KEY, OWNER_FALLBACK_EMAIL, SITE_URL. Stripe TEST objects
+created via API: product `prod_UtNTl4fP3xPARv`, price $249, payment link `plink_1TtaiQPL9698yhYPShuM7MHW`
+(livemode:false) with required custom field `google_business_profile_url`, webhook endpoint
+`we_1TtaidPL9698yhYPRDPrbx4U` → signing secret stored in keys.env + Vercel only.
+
+**Visual audit (Step 4, conservative).** Playwright captures desktop 1440w + mobile 390w: landing full-page,
+hero, scorecard empty/filled, pricing, footer, checkout hand-off. Mobile: no horizontal scroll. Scorecard
+works (25/100 render verified). Buy CTA → Stripe test checkout verified.
+Fixes applied (each a concrete defect, not a restyle):
+1. **Empty "Your score" band visible on first load.** `index.html` marks `#scoreResult` `hidden` and
+   scorecard.js:62 reveals it on submit — but `.result-band{display:grid}` overrides the UA `[hidden]`
+   rule, so the empty band rendered anyway. Fix: `.result-band[hidden]{display:none}`.
+2. **Operator tool linked in the customer-facing header.** "Report builder" (Avi's manual-fulfillment UI)
+   sat in the public nav; a buyer clicking it lands in an internal authoring tool. Removed from the nav;
+   `report-builder.html` remains reachable by direct URL for the owner.
+3. **Checkout custom field had no guidance** (the brief's "confused customer pastes the wrong URL" risk).
+   Stripe payment-link custom fields don't support help text via API, so: field label lengthened to
+   "Google Business Profile or Google Maps link" and the product description at checkout now tells the
+   customer exactly what to paste. (Applied via Stripe API to the test link; go-live live link must copy this.)
+NOT changed (owner's call, noted for go-live): Stripe checkout page brands as "saboxai" (account-level
+public business name — affects other Sabox products; decide branding at KYC/go-live time).
+
 > ## ▶ RESUME / STATUS (2026-06-24) — superseded by 2026-07-15 session above
 > **RE-TESTED ON REALISTIC TARGETS — and refined. 5 real audits for rough, owner-operated, single-
 > location locals generated, assessed three independent ways, and improved with one conservative

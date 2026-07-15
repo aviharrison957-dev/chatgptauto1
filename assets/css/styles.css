@@ -261,6 +261,12 @@ textarea {
   margin-top: 4px;
 }
 
+.result-band[hidden] {
+  /* The author display:grid below would otherwise override the UA [hidden] rule, making the
+     empty "Your score" band visible before any scorecard submission. */
+  display: none;
+}
+
 .result-band {
   display: grid;
   grid-template-columns: minmax(220px, 0.8fr) minmax(280px, 1.2fr);
