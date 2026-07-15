@@ -198,6 +198,13 @@ h3 {
   background: var(--yellow);
 }
 
+/* Fixed demo widths as classes so index.html carries no inline style= — lets the CSP use a strict
+   style-src 'self' with no 'unsafe-inline'. These are static illustrative values, not live data. */
+.meter .w24 { width: 24%; }
+.meter .w42 { width: 42%; }
+.meter .w31 { width: 31%; }
+.meter .w68 { width: 68%; }
+
 .section {
   padding: 64px 6vw;
 }

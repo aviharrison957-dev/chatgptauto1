@@ -133,6 +133,15 @@ check("renderAuditHtml: produces email-safe HTML with real content + disclaimers
   assert.ok(html.includes('style="'), "uses inline styles");
 });
 
+check("renderAuditHtml: drops a non-https googleMapsUri (no javascript: href) [SECURITY_AUDIT F1]", () => {
+  const a = normalizeAnalysis(SAMPLE_MODEL_OUTPUT, { name: "Brightwater Plumbing & Drain" });
+  const html = renderAuditHtml(a, { ...SAMPLE_PLACE, googleMapsUri: "javascript:alert(1)" }, {});
+  assert.ok(!/javascript:/i.test(html), "no javascript: URI reaches the output");
+  assert.ok(!/href="javascript/i.test(html), "no javascript href rendered");
+  const httpsHtml = renderAuditHtml(a, { ...SAMPLE_PLACE, googleMapsUri: "https://maps.google.com/?cid=1" }, {});
+  assert.ok(httpsHtml.includes("View on Google Maps"), "a legitimate https maps link still renders");
+});
+
 // --- internal worker-trigger signature -------------------------------------
 const INTERNAL_SECRET = "whsec_test_secret_value";
 check("internal signature: verifies a correct round-trip", () => {
@@ -169,6 +178,14 @@ check("internal signature: rejects a missing header", () => {
   });
   await checkAsync("website: blocks non-http scheme", async () => {
     const s = await fetchWebsiteSignals("ftp://example.com/file");
+    assert.strictEqual(s.available, false);
+  });
+  await checkAsync("website: blocks trailing-dot localhost. [SECURITY_AUDIT F2]", async () => {
+    const s = await fetchWebsiteSignals("http://localhost./");
+    assert.strictEqual(s.available, false);
+  });
+  await checkAsync("website: blocks trailing-dot loopback IP 127.0.0.1. [SECURITY_AUDIT F2]", async () => {
+    const s = await fetchWebsiteSignals("http://127.0.0.1./");
     assert.strictEqual(s.available, false);
   });
   await checkAsync("website: empty input -> not available", async () => {
