@@ -72,6 +72,31 @@ check("extractGoogleBusinessInput: none -> empty", () => {
   assert.strictEqual(extractGoogleBusinessInput([{ key: "name", text: { value: "Bob" } }]), "");
 });
 
+// --- payment validation (Codex HIGH) --------------------------------------
+const { validateOrderContext } = require("../lib/stripe");
+check("validateOrderContext: accepts a paid, payment-mode order", () => {
+  validateOrderContext({ customerEmail: "a@b.com", googleBusinessInput: "ChIJ_x", paymentStatus: "paid", mode: "payment" });
+});
+check("validateOrderContext: rejects an UNPAID session", () => {
+  assert.throws(() => validateOrderContext({ customerEmail: "a@b.com", googleBusinessInput: "ChIJ_x", paymentStatus: "unpaid", mode: "payment" }), /not paid/);
+});
+check("validateOrderContext: rejects a non-payment mode (e.g. subscription/setup)", () => {
+  assert.throws(() => validateOrderContext({ customerEmail: "a@b.com", googleBusinessInput: "ChIJ_x", paymentStatus: "paid", mode: "subscription" }), /one-time payment/);
+});
+check("validateOrderContext: tolerates absent payment_status/mode (still needs email+input)", () => {
+  validateOrderContext({ customerEmail: "a@b.com", googleBusinessInput: "ChIJ_x", paymentStatus: "", mode: "" });
+});
+
+// --- Maps short-link recognition (Codex flow) -----------------------------
+const { isMapsShortLink } = require("../lib/places");
+check("isMapsShortLink: recognizes maps.app.goo.gl / goo.gl / g.co", () => {
+  assert.strictEqual(isMapsShortLink("https://maps.app.goo.gl/abc123"), true);
+  assert.strictEqual(isMapsShortLink("https://goo.gl/maps/xyz"), true);
+  assert.strictEqual(isMapsShortLink("https://g.co/kgs/abc"), true);
+  assert.strictEqual(isMapsShortLink("https://www.google.com/maps/place/X"), false);
+  assert.strictEqual(isMapsShortLink("ChIJ_notaurl"), false);
+});
+
 // --- summarizePlaceForPrompt ----------------------------------------------
 check("summarizePlaceForPrompt: caps reviews at 5 and counts photos", () => {
   const place = {
@@ -186,6 +211,12 @@ check("internal signature: rejects a missing header", () => {
   });
   await checkAsync("website: blocks trailing-dot loopback IP 127.0.0.1. [SECURITY_AUDIT F2]", async () => {
     const s = await fetchWebsiteSignals("http://127.0.0.1./");
+    assert.strictEqual(s.available, false);
+  });
+  await checkAsync("website: blocks a public host that RESOLVES to loopback (DNS SSRF) [Codex HIGH]", async () => {
+    // localtest.me is a real public DNS name that resolves to 127.0.0.1 — the exact public-host->private-IP
+    // bypass Codex flagged. The DNS-resolution guard must skip it. (If offline, dns.lookup fails -> also skipped.)
+    const s = await fetchWebsiteSignals("http://localtest.me/");
     assert.strictEqual(s.available, false);
   });
   await checkAsync("website: empty input -> not available", async () => {

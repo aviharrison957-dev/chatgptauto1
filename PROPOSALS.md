@@ -91,6 +91,32 @@ Legend — Effort: S (≤1 session) · M (1–2 sessions) · L (multi-session). 
   changes the deliverable's shape, so it's a deliberate product decision, not a silent add. Guardrail: the
   generated schema/copy must stay strictly within verified data (no invented hours/areas).
 
+### P10 — Durable order queue (persist every paid order before ack)  · Effort: M  · ⭐ TOP RELIABILITY GAP (2026-07-15 Codex audit)
+- **Idea:** On a verified paid `checkout.session.completed`, write the order to a durable store (Vercel KV /
+  Upstash / a 1-table Postgres) BEFORE returning 200, then fulfill from that record with retry + a
+  dead-letter state that is visible independently of Resend. Mark an order "done" only after delivery is
+  confirmed (or raise an explicit owner alert on bounce/failure).
+- **Why it helps:** Today fulfillment runs in Vercel `waitUntil` after the webhook already returned 200.
+  `waitUntil` is NOT a durable queue — if the instance is killed at the 300s ceiling, OR if BOTH the customer
+  email and the owner fallback alert fail (e.g. a full Resend outage / bad key), the paid order is **silently
+  lost** and Stripe will not retry (it got its 200). Codex's independent audit named this the single most
+  important go-live fix. A durable record makes fulfillment exactly-once AND recoverable.
+- **Depends on:** A datastore — the exact thing the scope fence excludes, so it is a deliberate decision, not
+  a silent add. This also subsumes P1 (idempotency becomes a real unique-key insert) and closes the
+  concurrent-delivery double-send window (SECURITY_AUDIT F6).
+- **Current mitigation (why it's not shipping broken today):** the pipeline fits 300s with ~5x margin, every
+  network call has an explicit timeout, the OpenRouter timeout is clamped so the owner alert always has room,
+  and Resend has its own uptime/retry. The exposure is a rare simultaneous-outage window — real, but not the
+  common case. Carried as the #1 residual risk in HANDOFF.
+
+### P11 — Resend delivery confirmation (delivered vs. accepted)  · Effort: S–M
+- **Idea:** Treat a Resend 2xx as "accepted for delivery," not "delivered." Subscribe to Resend's
+  `email.delivered` / `email.bounced` / `email.delivery_delayed` webhooks and only close an order on
+  `delivered`; on `bounced`, raise an owner alert to fulfill/resend manually.
+- **Why it helps:** Codex flagged that a later bounce currently produces no owner alert — the customer paid,
+  the send was "accepted," but the audit never arrived and nobody knows. Closes that gap.
+- **Depends on:** A Resend webhook endpoint + somewhere to correlate the event to the order (overlaps P10).
+
 ---
 
 If you want any of these, say which and I'll spec + build it in a focused session. Until then the

@@ -59,6 +59,17 @@ async function main() {
   assert.strictEqual((await res.json()).ignored, "invoice.paid");
   ok("vercel webhook: signed non-checkout event -> 200 ignored");
 
+  // 5b. Multiple v1 signatures (secret rotation) — accept if ANY matches, even if it's not last [Codex]
+  const rotBody = JSON.stringify({ type: "invoice.paid" });
+  const ts = Math.floor(Date.now() / 1000);
+  const goodSig = crypto.createHmac("sha256", TEST_SECRET).update(`${ts}.${rotBody}`, "utf8").digest("hex");
+  const rotHeaders = { "stripe-signature": `t=${ts},v1=${goodSig},v1=deadbeefnotarealsig`, "content-type": "application/json" };
+  res = await handler.fetch(new Request("https://example.test/api/stripe-webhook", {
+    method: "POST", headers: rotHeaders, body: rotBody
+  }));
+  assert.strictEqual(res.status, 200);
+  ok("vercel webhook: accepts when one of multiple v1 signatures matches (rotation)");
+
   // 6. Idempotency: payment intent extraction shapes
   assert.strictEqual(paymentIntentIdOf({ payment_intent: "pi_123" }), "pi_123");
   assert.strictEqual(paymentIntentIdOf({ payment_intent: { id: "pi_456" } }), "pi_456");

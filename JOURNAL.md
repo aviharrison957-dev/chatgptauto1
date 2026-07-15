@@ -141,6 +141,42 @@ redeploy):
 2. Failure path — checkout with a garbage GBP URL → NO customer email; failure alert to OWNER_FALLBACK_EMAIL.
 The webhook, Stripe test link (`plink_1TtaiQPL9698yhYPShuM7MHW`), and endpoint (`we_1TtaidPL…`) are already live.
 
+## 2026-07-15 19:30 America/New_York — Codex external audit (Step 6): NO-GO verdict → 5 in-scope fixes (defects named), durable-queue deferred
+
+Codex CLI audited the deployed state independently and returned **NO-GO for live payments** (full verdict
+VERBATIM in SECURITY_AUDIT.md). It surfaced two HIGH defects the internal subagent audit missed. Triage —
+each tested-path change below names its concrete defect first, per the scope fence:
+
+**FIXED this session (in-scope security/correctness defects):**
+1. **Payment never validated (Codex HIGH).** `api/stripe-webhook.mjs` + `lib/stripe.js` accepted ANY signed
+   `checkout.session.completed` and fulfilled it — no check of `payment_status`, `mode`, amount, or product.
+   Defect: an unpaid delayed-payment session, a $0/other-product Checkout on the same Stripe account, or a
+   test-mode replay could trigger a real (paid-for) audit + email. Fix: `validateOrderContext` now rejects
+   unless `payment_status === "paid"` AND `mode === "payment"`. Surgical; the real card path sends `paid`.
+2. **SSRF via redirect-follow + DNS (Codex HIGH).** `lib/website.js` used `redirect:"follow"` (so a redirect
+   reached a private target BEFORE the post-fetch host re-check) and only ever checked hostname TEXT, so a
+   public host resolving to a private IP bypassed the guard entirely. Defect: server-side request to
+   internal/link-local/metadata addresses. Fix: follow ≤3 redirects manually re-validating each hop's host,
+   and resolve the host via DNS rejecting it if ANY resolved address is private/loopback/link-local. Best-
+   effort semantics preserved (still never throws → never breaks fulfillment).
+3. **`maps.app.goo.gl` short links unresolved (Codex flow).** `lib/places.js` `resolvePlaceId` couldn't
+   extract a Place ID from the short link Google Maps' "Share" button produces (the MOST common customer
+   paste); it fell back to Text Search on the raw URL string → unreliable → owner fallback. Defect: the
+   likeliest real-world input silently degrades. Fix: expand `maps.app.goo.gl` / `goo.gl/maps` / `g.co`
+   short links by following the redirect to the real Maps URL before Place-ID extraction / Text Search.
+4. **Multiple `v1` signatures collapsed (Codex, rotation robustness).** `verifyStripeWebhook` kept only the
+   last `v1` (via `Object.fromEntries`), so during Stripe signing-secret rotation (Stripe sends several
+   `v1`s) a legitimate event could be rejected → order not fulfilled. Fix: accept if ANY `v1` matches.
+5. **Unbounded `OPENROUTER_TIMEOUT_MS` (Codex order-loss).** The override had no ceiling, so a large value
+   could push the chain past 300s and leave no time for the owner alert. Fix: clamp the effective OpenRouter
+   timeout to ≤220s so the worst case always reserves owner-alert time inside Vercel's 300s.
+
+**DEFERRED (scope fence — needs a datastore) → PROPOSALS P10/P11 + top residual risk:** Codex's #1 rec —
+persist/durably enqueue every verified paid order before returning 200, reconciled independently of Resend —
+is the correct fix for the deepest order-loss path (both customer email AND owner alert fail during a Resend
+outage → silent loss, since Stripe already got 200). A durable queue is explicitly out of scope this session.
+Documented as the #1 residual risk. Also deferred: Resend delivered-vs-accepted bounce handling (P11).
+
 > ## ▶ RESUME / STATUS (2026-06-24) — superseded by 2026-07-15 session above
 > **RE-TESTED ON REALISTIC TARGETS — and refined. 5 real audits for rough, owner-operated, single-
 > location locals generated, assessed three independent ways, and improved with one conservative
