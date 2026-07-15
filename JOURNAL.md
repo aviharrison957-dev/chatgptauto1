@@ -1,5 +1,28 @@
 # Journal
 
+> ## ▶ RESUME / STATUS (2026-07-15) — DEPLOYED TO VERCEL, SECURED, TEST-WIRED; one human gate + go-live left
+> **MapGap is live on Vercel (https://mapgap-report.vercel.app), migrated off Netlify, security-audited two
+> ways (internal Opus subagent + independent Codex CLI), with the Places→OpenRouter→render pipeline proven to
+> run on real infra and fit the 300s budget (~53–65s, ~5x margin). Stripe TEST mode fully wired by the agent
+> (product + $249 link with the required GBP custom field + webhook endpoint + all env vars). Webhook
+> idempotency built; payment now validated before fulfillment. 44 offline tests green.**
+>
+> **The single blocker to the end-to-end EMAIL proof: `RESEND_API_KEY`.** Resend blocks automated signup
+> (server error every attempt; Turnstile passed, so it's server-side anti-automation), and offers only
+> GitHub/Google OAuth — a human tap. The signup page is open in Avi's browser + a cmux ping names the action.
+> Until the key is set in Vercel, the deployed pipeline runs Places+OpenRouter then stops at the email step
+> (verified). Happy-path + failure-path e2e are scripted and ready to run the moment the key lands.
+>
+> **Codex returned an initial NO-GO** and found 2 HIGH defects the internal audit missed (payment not
+> validated; SSRF via redirect/DNS). Both fixed this session, plus maps short-link expansion, multi-`v1`
+> signature handling, and an OpenRouter-timeout clamp. **One reliability gap knowingly deferred (scope fence):
+> a durable order queue (PROPOSALS P10) — the #1 residual risk: a rare Resend/infra outage can lose a paid
+> order because `waitUntil` runs after the 200. Build P10 before real volume.**
+>
+> **Left for Avi (all human-only):** (1) the ~15s Resend OAuth tap; (2) Stripe live-mode link + keys (KYC looks
+> already complete); (3) THE $249 sellability read of watson-plumbing + rimmer-electric sample audits. Full
+> checklist in HANDOFF.md. **Live payments remain OFF by design.**
+
 ## 2026-07-15 17:10 America/New_York — Vercel migration session START (Step 0–2): repo verified, keys verified, migration defects named
 
 Operator: Claude (Fable 5). Brief: take the code-complete pipeline to a deployed, test-mode-proven product on
