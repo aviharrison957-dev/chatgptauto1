@@ -105,6 +105,42 @@ into the owner-alert path *before* the platform kills the instance — no silent
 chain in the same 300s invocation after the webhook has already 200'd Stripe. NOT recommending a fallback to
 Netlify — Vercel accommodates the pipeline reliably on Avi's current (Hobby) plan.
 
+## 2026-07-15 18:45 America/New_York — Flow audit (Step 5): deployed pipeline execution PROVEN on real infra; email delivery is RESEND-gated
+
+**What is proven on the DEPLOYED URL (real Vercel infra), with evidence:**
+- Webhook **accepts a correctly Stripe-signed** `checkout.session.completed` → HTTP 200 `{received,queued}`.
+  Rejects unsigned POST → 400; GET → 405. (Verified live, repeatedly.)
+- **All required env vars present at runtime except `RESEND_API_KEY`** — verified via a temporary
+  presence-only diagnostic endpoint (booleans, never values; since removed + redeployed):
+  `{STRIPE_WEBHOOK_SECRET:true, STRIPE_SECRET_KEY:true, GOOGLE_PLACES_API_KEY:true, OPENROUTER_API_KEY:true,
+  RESEND_API_KEY:false, OWNER_FALLBACK_EMAIL:true, SITE_URL:true}`.
+- **The pipeline actually executes in `waitUntil` on Vercel:** a probe's runtime log captured
+  `Idempotency check inconclusive (failing open): metadata read failed: HTTP 404` — i.e. the deployed
+  function reached real Stripe with the real secret key (404 for the synthetic PaymentIntent), failed OPEN
+  as designed, and proceeded to fulfillment. Combined with the 52.9s local heavy-chain timing on the identical
+  shared `lib/`, the deployed order path runs Places→OpenRouter→render and can only fail at the email leg.
+
+**Infra gotcha found + fixed (would have silently lost every order):** the six env vars were first set with
+`printf '%s' "$VALUE" | vercel env add …`, which **stored EMPTY values** (confirmed: pipeline failed sub-second
+on the first `requiredEnv`, and a presence check showed all false). Re-created them via the Vercel REST API
+(`POST /v10/projects/{id}/env`, explicit JSON values) and redeployed → presence check now correct. Lesson for
+the go-live doc: set Vercel env via the dashboard or REST API, never trust piped CLI stdin here.
+
+**What is NOT yet proven — the single RESEND-gated item:** the actual customer email landing in the inbox, and
+the failure-path owner alert. BOTH legs call Resend, so both need `RESEND_API_KEY`. Resend **blocks automated
+signup** — every programmatic email/password attempt returns `serverError: "Something went wrong… try again
+later"` (the Turnstile token was obtained — the submit button enabled — so it's a server-side anti-automation
+block, not a CAPTCHA). Resend offers GitHub/Google OAuth signup, which needs Avi's one tap. Per the auth-broker
+skill this is a legitimate human gate: the signup page is open in Avi's browser + a cmux ping names the exact
+action. Gate parked; everything non-RESEND completed.
+
+**Ready-to-run once `RESEND_API_KEY` exists** (mint `agent-mapgap-2026-07-15`, `vercel env add` via REST API +
+redeploy):
+1. Happy path — real 4242 checkout at the test payment link with a messy GBP URL → audit emailed to
+   aviharrison957@gmail.com.
+2. Failure path — checkout with a garbage GBP URL → NO customer email; failure alert to OWNER_FALLBACK_EMAIL.
+The webhook, Stripe test link (`plink_1TtaiQPL9698yhYPShuM7MHW`), and endpoint (`we_1TtaidPL…`) are already live.
+
 > ## ▶ RESUME / STATUS (2026-06-24) — superseded by 2026-07-15 session above
 > **RE-TESTED ON REALISTIC TARGETS — and refined. 5 real audits for rough, owner-operated, single-
 > location locals generated, assessed three independent ways, and improved with one conservative
