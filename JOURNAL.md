@@ -1,6 +1,55 @@
 # Journal
 
-> ## ▶ RESUME / STATUS (2026-06-24)
+## 2026-07-15 17:10 America/New_York — Vercel migration session START (Step 0–2): repo verified, keys verified, migration defects named
+
+Operator: Claude (Fable 5). Brief: take the code-complete pipeline to a deployed, test-mode-proven product on
+**Vercel**, credentials via the auth-broker skill, live payments OFF. Location verified (`pwd` =
+`/Users/avi/Desktop/claudemac/chatgptauto1`, remote = `aviharrison957-dev/chatgptauto1`). Baseline `npm test`
+green (27 checks) before any change.
+
+**Credential verification (Rail 0, read-only calls, no values printed):**
+- `OPENROUTER_API_KEY` valid (paid tier, no per-key cap).
+- `GOOGLE_PLACES_API_KEY` valid (Place Details id-mask → HTTP 200).
+- `STRIPE_API_KEY` in keys.env is **LIVE mode** — account `acct_1TgVZoPL9698yhYP`, and `charges_enabled:true,
+  details_submitted:true` (Stripe KYC appears already complete — shortens the go-live checklist).
+  **This session uses TEST mode only**: `STRIPE_SECRET_KEY_TEST_LUMEN` in keys.env is a test-mode key for the
+  **same account** (verified via `GET /v1/account`), so no new Stripe key is needed.
+- `VERCEL_API_TOKEN` valid; user `aviharrison957-7839`; plan = **Hobby**.
+- `RESEND_API_KEY` missing everywhere (op vault unconfigured on this machine; Gmail archaeology via MCP found
+  ZERO mail from resend.com ever → no existing account). Confirm ping sent; signup parked ~15 min per skill.
+- `OWNER_FALLBACK_EMAIL`: ping sent; proceeding with default `aviharrison957@gmail.com` (reversible env var).
+
+**Vercel platform facts (fetched from vercel.com/docs, last_updated 2026-07-01 — not training data):**
+- Hobby: maxDuration default AND maximum = **300s** (Fluid compute, on by default). Pro would allow 800s.
+- `waitUntil()` (`@vercel/functions`): continues work after the response is sent, **bounded by maxDuration**;
+  promises are cancelled at timeout.
+- Measured pipeline cost (JOURNAL 2026-06-24): ~68–75s/audit cold. Worst-case bounded chain if every network
+  call carries an explicit timeout: ~200s < 300s ceiling. Typical case has ~4x headroom. Proceeding with the
+  port; the go/no-go remains a TIMED end-to-end order on the deployed URL.
+
+**Port architecture:** ONE Vercel function `api/stripe-webhook.js` (web-standard `fetch` handler,
+`maxDuration=300`): verify Stripe signature → 200 to Stripe immediately → full pipeline runs in `waitUntil`.
+This replaces the Netlify webhook→background-worker pair and REMOVES the publicly reachable worker + internal
+HMAC hand-off (smaller attack surface). Failure invariant unchanged: any pipeline error → owner fallback
+email, customer never emailed.
+
+**Changes to tested paths — concrete defects, named before the change (per brief):**
+1. **Unbounded fetches become order-eaters under a 300s ceiling.** `hydrateCheckoutSession` (stripe.js),
+   Places fetches (places.js), and Resend send (email.js) have NO explicit timeout. Under Netlify's 15-min
+   budget that was benign; under Vercel's hard 300s kill, a hung TCP connection would let the platform
+   terminate the instance mid-`waitUntil` → owner never alerted → silent loss of a paid order. Fix: explicit
+   `AbortSignal.timeout` on every network call so the sum of worst-case timeouts stays < 300s and the
+   owner-alert path always gets to run.
+2. **Webhook idempotency (pre-approved: PROPOSALS P1 promoted to in-scope).** Stripe delivers at-least-once;
+   a duplicate delivery would email the customer twice. Fix: durable dedupe via Stripe PaymentIntent metadata
+   (`mapgap_fulfilled_at`) — checked at pipeline start, written after successful send. No new infrastructure;
+   fail-open (a metadata outage degrades to at-most-one-duplicate-email, never a lost order). Residual
+   concurrent-delivery race window documented in SECURITY_AUDIT.md.
+3. **Mechanical relocation** `netlify/functions/lib/` → `lib/` (git mv, history preserved) so the shared
+   pipeline is not namespaced under a host we no longer target. Netlify function entry points stay in place
+   (requires updated) as the documented fallback until the Vercel timed proof passes.
+
+> ## ▶ RESUME / STATUS (2026-06-24) — superseded by 2026-07-15 session above
 > **RE-TESTED ON REALISTIC TARGETS — and refined. 5 real audits for rough, owner-operated, single-
 > location locals generated, assessed three independent ways, and improved with one conservative
 > prompt-tuning round. Honest verdict: specific and non-fabricated; worth $249 when it surfaces a real

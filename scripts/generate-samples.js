@@ -9,9 +9,9 @@
 require("./_load-env"); // optional: read keys from a local .env file
 const fs = require("fs");
 const path = require("path");
-const { fetchPlaceDetails, summarizePlaceForPrompt } = require("../netlify/functions/lib/places");
-const { fetchWebsiteSignals } = require("../netlify/functions/lib/website");
-const { generateAuditHtml } = require("../netlify/functions/lib/audit");
+const { fetchPlaceDetails, summarizePlaceForPrompt } = require("../lib/places");
+const { fetchWebsiteSignals } = require("../lib/website");
+const { generateAuditHtml } = require("../lib/audit");
 
 const REQUIRED = ["OPENROUTER_API_KEY", "GOOGLE_PLACES_API_KEY"];
 const missing = REQUIRED.filter((name) => !process.env[name]);

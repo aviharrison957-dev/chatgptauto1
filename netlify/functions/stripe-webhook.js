@@ -11,11 +11,11 @@
 //      can fulfill by hand with report-builder.html.
 //
 // All heavy lifting lives in ./lib/* so it can be unit-/smoke-tested independently of Stripe.
-const { requiredEnv, jsonResponse } = require("./lib/util");
-const { getRawBody, verifyStripeWebhook, getOrderContext } = require("./lib/stripe");
-const { triggerAuditWorker } = require("./lib/internal");
-const { runFulfillment } = require("./lib/pipeline");
-const { sendFallbackAlert } = require("./lib/email");
+const { requiredEnv, jsonResponse } = require("../../lib/util");
+const { getRawBody, verifyStripeWebhook, getOrderContext } = require("../../lib/stripe");
+const { triggerAuditWorker } = require("../../lib/internal");
+const { runFulfillment } = require("../../lib/pipeline");
+const { sendFallbackAlert } = require("../../lib/email");
 
 exports.handler = async function handler(event) {
   if (event.httpMethod !== "POST") {
@@ -73,9 +73,9 @@ exports._private = {
   verifyStripeWebhook,
   getOrderContext,
   runFulfillment,
-  fetchPlaceDetails: require("./lib/places").fetchPlaceDetails,
-  extractPlaceId: require("./lib/places").extractPlaceId,
-  summarizePlaceForPrompt: require("./lib/places").summarizePlaceForPrompt,
-  extractGoogleBusinessInput: require("./lib/stripe").extractGoogleBusinessInput,
-  generateAuditHtml: require("./lib/audit").generateAuditHtml
+  fetchPlaceDetails: require("../../lib/places").fetchPlaceDetails,
+  extractPlaceId: require("../../lib/places").extractPlaceId,
+  summarizePlaceForPrompt: require("../../lib/places").summarizePlaceForPrompt,
+  extractGoogleBusinessInput: require("../../lib/stripe").extractGoogleBusinessInput,
+  generateAuditHtml: require("../../lib/audit").generateAuditHtml
 };

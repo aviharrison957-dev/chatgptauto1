@@ -3,8 +3,8 @@
 // business data. Real, content-verified samples come from scripts/generate-samples.js (needs keys).
 const fs = require("fs");
 const path = require("path");
-const { normalizeAnalysis } = require("../netlify/functions/lib/audit");
-const { renderAuditHtml } = require("../netlify/functions/lib/render");
+const { normalizeAnalysis } = require("../lib/audit");
+const { renderAuditHtml } = require("../lib/render");
 const { SAMPLE_MODEL_OUTPUT, SAMPLE_PLACE } = require("./_sample-fixture");
 
 const analysis = normalizeAnalysis(SAMPLE_MODEL_OUTPUT, { name: SAMPLE_PLACE.displayName.text });

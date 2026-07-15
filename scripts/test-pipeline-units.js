@@ -1,12 +1,12 @@
 // Offline regression test for the deterministic half of the pipeline (no network, no API keys).
 // Covers Place ID/URL parsing, custom-field extraction, model-output normalization, and HTML rendering.
 const assert = require("assert");
-const { extractPlaceId, cleanQueryFromInput, summarizePlaceForPrompt } = require("../netlify/functions/lib/places");
-const { extractGoogleBusinessInput } = require("../netlify/functions/lib/stripe");
-const { normalizeAnalysis, extractJson } = require("../netlify/functions/lib/audit");
-const { renderAuditHtml } = require("../netlify/functions/lib/render");
-const { fetchWebsiteSignals } = require("../netlify/functions/lib/website");
-const { signInternal, verifyInternalSignature } = require("../netlify/functions/lib/internal");
+const { extractPlaceId, cleanQueryFromInput, summarizePlaceForPrompt } = require("../lib/places");
+const { extractGoogleBusinessInput } = require("../lib/stripe");
+const { normalizeAnalysis, extractJson } = require("../lib/audit");
+const { renderAuditHtml } = require("../lib/render");
+const { fetchWebsiteSignals } = require("../lib/website");
+const { signInternal, verifyInternalSignature } = require("../lib/internal");
 const { SAMPLE_MODEL_OUTPUT, SAMPLE_PLACE } = require("./_sample-fixture");
 
 let passed = 0;

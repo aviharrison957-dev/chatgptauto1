@@ -5,11 +5,11 @@
 //
 // It is publicly reachable, so it only acts on requests carrying a valid internal signature
 // (HMAC of the body with STRIPE_WEBHOOK_SECRET). Everything else gets 401 and does nothing.
-const { requiredEnv } = require("./lib/util");
-const { getRawBody, getOrderContext } = require("./lib/stripe");
-const { verifyInternalSignature } = require("./lib/internal");
-const { runFulfillment } = require("./lib/pipeline");
-const { sendFallbackAlert } = require("./lib/email");
+const { requiredEnv } = require("../../lib/util");
+const { getRawBody, getOrderContext } = require("../../lib/stripe");
+const { verifyInternalSignature } = require("../../lib/internal");
+const { runFulfillment } = require("../../lib/pipeline");
+const { sendFallbackAlert } = require("../../lib/email");
 
 exports.handler = async function handler(event) {
   const rawBody = getRawBody(event);
