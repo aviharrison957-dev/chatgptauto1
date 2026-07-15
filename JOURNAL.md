@@ -77,6 +77,34 @@ Fixes applied (each a concrete defect, not a restyle):
 NOT changed (owner's call, noted for go-live): Stripe checkout page brands as "saboxai" (account-level
 public business name — affects other Sabox products; decide branding at KYC/go-live time).
 
+## 2026-07-15 18:20 America/New_York — TIMING PROOF: pipeline fits Vercel's 300s ceiling with wide margin
+
+**The order-loss question, answered with a real measurement** (not training data). The heavy chain — Google
+Places fetch → website signal fetch → OpenRouter (Sonnet-4.5) generation → HTML render — is the same shared
+`lib/` code the deployed Vercel function runs. Timed against a real messy target (Watson Plumbing, Place ID
+`ChIJLfNjOlVV8YgRiwkExQM9RGU`):
+
+| Leg | Wall-clock |
+|-----|-----------|
+| Places Details | 0.3s |
+| Website fetch | 0.0s (no site → immediate) |
+| OpenRouter + render | 52.6s (3,045 output tokens, `finish_reason=stop`) |
+| **Heavy chain total** | **52.9s** |
+
+Adding the light legs the deployed function also runs — Stripe session hydrate (~1s), idempotency check +
+mark (~1s total), Resend send (~1s) — a **typical full order ≈ 56s**. Vercel **Hobby maxDuration = 300s**
+(fetched from vercel.com/docs 2026-07-01; Hobby default AND max are both 300s with Fluid compute on). That is
+**~5.4x headroom** on the typical case.
+
+**Worst case is also inside the ceiling.** Every network call now carries an explicit `AbortSignal.timeout`:
+Stripe 15s + Places 15s + website 7s + OpenRouter 150s (the configured cap) + Resend 15s + idempotency 10+10s
+= **~222s < 300s**. So even a pathological run where every leg crawls to its timeout either completes or fails
+into the owner-alert path *before* the platform kills the instance — no silent loss of a paid order.
+
+**Verdict: the Vercel port is sound; the pipeline fits with margin.** The `waitUntil` pattern runs the full
+chain in the same 300s invocation after the webhook has already 200'd Stripe. NOT recommending a fallback to
+Netlify — Vercel accommodates the pipeline reliably on Avi's current (Hobby) plan.
+
 > ## ▶ RESUME / STATUS (2026-06-24) — superseded by 2026-07-15 session above
 > **RE-TESTED ON REALISTIC TARGETS — and refined. 5 real audits for rough, owner-operated, single-
 > location locals generated, assessed three independent ways, and improved with one conservative
