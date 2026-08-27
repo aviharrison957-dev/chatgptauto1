@@ -70,6 +70,31 @@ async function main() {
   assert.strictEqual(res.status, 200);
   ok("vercel webhook: accepts when one of multiple v1 signatures matches (rotation)");
 
+  // 5c. Shared-account guard: signed checkout event from a FOREIGN payment link -> 200 ignored,
+  // fulfillment never queued (other products on this Stripe account must not trigger the pipeline).
+  process.env.MAPGAP_PAYMENT_LINK_IDS = "plink_mapgap_test,plink_mapgap_live";
+  const foreignBody = JSON.stringify({
+    type: "checkout.session.completed",
+    data: { object: { id: "cs_foreign", payment_link: "plink_someone_else" } }
+  });
+  res = await handler.fetch(new Request("https://example.test/api/stripe-webhook", {
+    method: "POST", headers: signedHeaders(foreignBody, TEST_SECRET), body: foreignBody
+  }));
+  assert.strictEqual(res.status, 200);
+  assert.strictEqual((await res.json()).ignored, "foreign_payment_link");
+  // Session with NO payment_link (API-created checkout by another project) is also ignored while the guard is on.
+  const noLinkBody = JSON.stringify({
+    type: "checkout.session.completed",
+    data: { object: { id: "cs_nolink" } }
+  });
+  res = await handler.fetch(new Request("https://example.test/api/stripe-webhook", {
+    method: "POST", headers: signedHeaders(noLinkBody, TEST_SECRET), body: noLinkBody
+  }));
+  assert.strictEqual(res.status, 200);
+  assert.strictEqual((await res.json()).ignored, "foreign_payment_link");
+  delete process.env.MAPGAP_PAYMENT_LINK_IDS;
+  ok("vercel webhook: foreign/absent payment_link -> 200 ignored when guard env set");
+
   // 6. Idempotency: payment intent extraction shapes
   assert.strictEqual(paymentIntentIdOf({ payment_intent: "pi_123" }), "pi_123");
   assert.strictEqual(paymentIntentIdOf({ payment_intent: { id: "pi_456" } }), "pi_456");

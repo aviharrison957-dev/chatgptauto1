@@ -51,6 +51,19 @@ export default {
     }
 
     const session = stripeEvent.data?.object || {};
+
+    // The Stripe account is SHARED with other products (slopworks, agentready): their live sales
+    // also arrive here as signed checkout.session.completed events. When MAPGAP_PAYMENT_LINK_IDS
+    // is set (comma-separated plink ids), only sessions from MapGap's own Payment Links are
+    // fulfilled; everything else is acknowledged and dropped so foreign sales can't trigger the
+    // pipeline or the owner-alert path. Unset = no filtering (offline tests, single-product accounts).
+    const allowedPaymentLinks = (process.env.MAPGAP_PAYMENT_LINK_IDS || "")
+      .split(",").map((id) => id.trim()).filter(Boolean);
+    if (allowedPaymentLinks.length && !allowedPaymentLinks.includes(session.payment_link)) {
+      console.log(`Ignoring session ${session.id || "?"}: payment_link ${session.payment_link || "(none)"} is not MapGap's`);
+      return json(200, { received: true, ignored: "foreign_payment_link" });
+    }
+
     // Acknowledge Stripe now; the pipeline keeps running in this instance up to maxDuration.
     waitUntil(fulfill(session, stripeEvent.id));
     return json(200, { received: true, queued: true });
