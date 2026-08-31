@@ -1,7 +1,8 @@
 // Offline regression test for the deterministic half of the pipeline (no network, no API keys).
 // Covers Place ID/URL parsing, custom-field extraction, model-output normalization, and HTML rendering.
 const assert = require("assert");
-const { extractPlaceId, cleanQueryFromInput, summarizePlaceForPrompt } = require("../lib/places");
+const { extractPlaceId, cleanQueryFromInput, summarizePlaceForPrompt,
+        isCidOnlyMapsUrl, namesPlausiblyMatch } = require("../lib/places");
 const { extractGoogleBusinessInput } = require("../lib/stripe");
 const { normalizeAnalysis, extractJson } = require("../lib/audit");
 const { renderAuditHtml } = require("../lib/render");
@@ -57,6 +58,37 @@ check("cleanQueryFromInput: maps /place/ URL", () => {
 });
 check("cleanQueryFromInput: non-URL passthrough", () => {
   assert.strictEqual(cleanQueryFromInput("Brightwater Plumbing Austin"), "Brightwater Plumbing Austin");
+});
+
+// --- cid-link + wrong-business guards (added 2026-08-31 after the cardless proof run found that
+// Google's OWN canonical business URL hard-failed the pipeline on a paid order) ---
+check("isCidOnlyMapsUrl: Google's canonical cid URL is flagged", () => {
+  assert.strictEqual(isCidOnlyMapsUrl("https://maps.google.com/?cid=5985424890209948681"), true);
+  assert.strictEqual(isCidOnlyMapsUrl("https://www.google.com/maps?cid=123456789"), true);
+});
+check("isCidOnlyMapsUrl: a cid URL that ALSO carries place_id is fine (extractable)", () => {
+  assert.strictEqual(isCidOnlyMapsUrl("https://maps.google.com/?cid=1&place_id=ChIJabc-123_DEF"), false);
+});
+check("isCidOnlyMapsUrl: non-URLs and normal maps URLs are not flagged", () => {
+  assert.strictEqual(isCidOnlyMapsUrl("Brightwater Plumbing Austin"), false);
+  assert.strictEqual(isCidOnlyMapsUrl("https://www.google.com/maps/place/Roto-Rooter/@29.7,-95.3"), false);
+});
+check("namesPlausiblyMatch: legal-suffix and trade-word variation still matches", () => {
+  assert.strictEqual(namesPlausiblyMatch("Brightwater Plumbing", "Brightwater Plumbing LLC").ok, true);
+  assert.strictEqual(namesPlausiblyMatch("Watson Plumbing & Associates LLC", "Watson's Plumbing & Heating Corporation").ok, true);
+});
+check("namesPlausiblyMatch: a genuinely different business is BLOCKED", () => {
+  const v = namesPlausiblyMatch("Brightwater Plumbing Austin", "Ace Plumbing & Heating");
+  assert.strictEqual(v.ok, false);
+  assert.strictEqual(v.verdict, "mismatch");
+});
+check("namesPlausiblyMatch: shared trade words ALONE do not count as a match", () => {
+  assert.strictEqual(namesPlausiblyMatch("Rimmer Electric", "Sunrise Electric Company").ok, false);
+});
+check("namesPlausiblyMatch: all-generic input is unverifiable, not blocked", () => {
+  const v = namesPlausiblyMatch("The Plumbing Company LLC", "Ace Plumbing");
+  assert.strictEqual(v.ok, true);
+  assert.strictEqual(v.verdict, "unverifiable");
 });
 
 // --- Stripe custom field extraction ---------------------------------------
