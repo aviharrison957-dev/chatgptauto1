@@ -20,12 +20,14 @@ import stripeLib from "../lib/stripe.js";
 import pipelineLib from "../lib/pipeline.js";
 import emailLib from "../lib/email.js";
 import idempotencyLib from "../lib/idempotency.js";
+import traceLib from "../lib/trace.js";
 
 const { requiredEnv } = utilLib;
 const { verifyStripeWebhook, getOrderContext } = stripeLib;
 const { runFulfillment } = pipelineLib;
 const { sendFallbackAlert } = emailLib;
 const { checkAlreadyFulfilled, markFulfilled } = idempotencyLib;
+const { trace } = traceLib;
 
 export const config = { maxDuration: 300 };
 
@@ -64,6 +66,16 @@ export default {
       return json(200, { received: true, ignored: "foreign_payment_link" });
     }
 
+    // First trace leg: a signed, MapGap-owned checkout is confirmed and about to be fulfilled.
+    trace("checkout_received", session.id, {
+      event: stripeEvent.id,
+      livemode: stripeEvent.livemode === true,
+      amountTotal: session.amount_total ?? null,
+      currency: session.currency || null,
+      paymentLink: session.payment_link || null,
+      email: session.customer_details?.email || session.customer_email || ""
+    });
+
     // Acknowledge Stripe now; the pipeline keeps running in this instance up to maxDuration.
     waitUntil(fulfill(session, stripeEvent.id));
     return json(200, { received: true, queued: true });
@@ -75,19 +87,30 @@ async function fulfill(session, eventId) {
     const dedupe = await checkAlreadyFulfilled(session);
     if (dedupe.fulfilled) {
       console.log(`Duplicate delivery ignored (event ${eventId}); first fulfilled at ${dedupe.at}`);
+      trace("duplicate_ignored", session.id, { event: eventId, firstFulfilledAt: dedupe.at || null });
       return;
     }
     if (dedupe.reason) console.warn("Idempotency check inconclusive (failing open):", dedupe.reason);
 
+    const startedAt = Date.now();
     const result = await runFulfillment(session);
     await markFulfilled(session, eventId);
     console.log("Fulfilled:", result.businessName || result.placeId, `(event ${eventId})`);
+    trace("fulfilled", session.id, {
+      event: eventId,
+      business: result.businessName || null,
+      placeId: result.placeId || null,
+      email: result.customerEmail || "",
+      totalMs: Date.now() - startedAt
+    });
   } catch (error) {
     console.error("Fulfillment failed:", error?.message || error);
+    trace("failed", session.id, { event: eventId, error: String(error?.message || error).slice(0, 300) });
     // Customer is never emailed a broken report; alert the owner for manual fulfillment instead.
     try {
       await sendFallbackAlert(error, getOrderContext(session), session);
       console.log("Owner fallback alert sent for event", eventId);
+      trace("fallback_alert_sent", session.id, { event: eventId });
     } catch (alertError) {
       console.error("Fallback alert ALSO failed:", alertError?.message || alertError);
     }
