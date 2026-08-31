@@ -8,3 +8,12 @@ node_modules/
 .netlify/
 .vercel/
 .vercel
+
+# --- Private operating material. THIS REPO IS PUBLIC (github.com/aviharrison957-dev/chatgptauto1).
+# .flywheel/ holds mission briefs and gate reports, including an account-blast-radius analysis that
+# names personal Google accounts and the services they log into. outreach/ holds scraped prospect
+# contact data. .warrant/ holds completion contracts. None of it may ever be published.
+# If the repo is ever made private, revisit — until then these stay local-only.
+.flywheel/
+.warrant/
+outreach/
